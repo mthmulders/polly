@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>it.mulders.polly</groupId>
+        <artifactId>polly-parent</artifactId>
+        <version>0.1-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>test</artifactId>
+
+    <name>Polly :: Test</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>polly-app</artifactId>
+            <type>ear</type>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>io.openliberty.tools</groupId>
+                <artifactId>liberty-maven-plugin</artifactId>
+                <configuration>
+                    <copyDependencies>
+                        <dependency>
+                            <groupId>org.hsqldb</groupId>
+                            <artifactId>hsqldb</artifactId>
+                            <version>2.6.1</version>
+                        </dependency>
+                    </copyDependencies>
+                    <mergeServerEnv>true</mergeServerEnv>
+                    <runtimeArtifact>
+                        <groupId>io.openliberty</groupId>
+                        <artifactId>openliberty-runtime</artifactId>
+                        <version>23.0.0.3</version>
+                        <type>zip</type>
+                    </runtimeArtifact>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
