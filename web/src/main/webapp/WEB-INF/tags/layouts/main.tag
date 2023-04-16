@@ -15,7 +15,7 @@
         <main>
             <h1>${title}</h1>
 
-            <div class="container mx-auto">
+            <div>
                 <c:forEach var="message" items="${toolbox.messages.all}">
                     <div class="message ${fn:toLowerCase(message.severity)}">
                         ${message.text}
