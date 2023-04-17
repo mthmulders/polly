@@ -23,16 +23,6 @@
         <properties URL="jdbc:hsqldb:mem:polly;sql.syntax_pgs=true;sql.enforce_size=false"
                     user="sa" />
     </dataSource>
-    <!--
-    <dataSource id="polly-datasource" jndiName="jdbc/polly-ds">
-        <jdbcDriver libraryRef="postgresql-jdbc" />
-        <properties.postgresql databaseName="polly"
-                               serverName="localhost"
-                               portNumber="5432"
-                               user="polly"
-                               password="qO8jJ3jJ3yV7xI1z"/>
-    </dataSource>
-    -->
 
     <httpEndpoint id="defaultHttpEndpoint"
                   httpPort="9080"
