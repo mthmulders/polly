@@ -32,10 +32,8 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
 
-      - name: Setup Testcontainers Cloud Client
-        uses: atomicjar/testcontainers-cloud-setup-action@v1
-        with:
-          token: ${{ secrets.TC_CLOUD_TOKEN }}
+      - name: Install EAR in repository
+        run: mvn -B install -pl :polly-app -amd
 
       - name: Build with Maven
-        run: mvn -B verify -pl \!test
+        run: mvn -B verify -pl :test
