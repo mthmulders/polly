@@ -33,7 +33,7 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
 
       - name: Install EAR in repository
-        run: mvn -B install -pl :polly-app -amd
+        run: mvn -B install -pl :polly-app -am
 
       - name: Build with Maven
         run: mvn -B verify -pl :test
