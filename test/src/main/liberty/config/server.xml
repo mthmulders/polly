@@ -20,7 +20,7 @@
     <dataSource id="polly-datasource" jndiName="jdbc/polly-ds">
         <jdbcDriver libraryRef="hsql-jdbc"
                     javax.sql.ConnectionPoolDataSource="org.hsqldb.jdbc.pool.JDBCPooledDataSource" />
-        <properties URL="jdbc:hsqldb:mem:polly;sql.syntax_pgs=true;sql.enforce_size=false"
+        <properties URL="jdbc:hsqldb:file:../../../../../database/pollydb;create=false;sql.syntax_pgs=true;sql.enforce_size=false"
                     user="sa" />
     </dataSource>
 
