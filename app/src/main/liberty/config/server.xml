@@ -38,4 +38,6 @@
      -->
 
     <applicationMonitor dropinsEnabled="false" />
+
+    <webContainer deferServletLoad="false" />
 </server>
