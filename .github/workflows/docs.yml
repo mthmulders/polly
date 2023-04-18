@@ -23,11 +23,6 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v3
 
-      - name: Prepare Node.js
-        uses: actions/setup-node@v3.4.1
-        with:
-          node-version: '16'
-
       - name: Cache Maven packages
         uses: actions/cache@v3
         with:
