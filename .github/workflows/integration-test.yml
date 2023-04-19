@@ -41,6 +41,7 @@ jobs:
 
       - name: Secure OpenLiberty logs
         uses: actions/upload-artifact@v3
+        if: always()
         with:
           name: openliberty-logs
           path: test/target/liberty/wlp/usr/servers/defaultServer/logs/
