@@ -34,6 +34,5 @@
 
     <applicationMonitor dropinsEnabled="false" />
 
-    <cdi12 enableImplicitBeanArchives="false" />
     <webContainer deferServletLoad="false" />
 </server>
