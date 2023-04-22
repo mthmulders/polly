@@ -33,6 +33,7 @@
     </enterpriseApplication>
 
     <applicationMonitor dropinsEnabled="false" />
+    <cdi12 enableImplicitBeanArchives="false" />
     <logging isoDateFormat="true" />
     <webContainer deferServletLoad="false" />
 </server>
