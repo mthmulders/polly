@@ -38,6 +38,6 @@
      -->
 
     <applicationMonitor dropinsEnabled="false" />
-
+    <logging isoDateFormat="true" />
     <webContainer deferServletLoad="false" />
 </server>
