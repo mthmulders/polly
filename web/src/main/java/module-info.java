@@ -4,6 +4,7 @@ module confbuddy.web {
     requires java.net.http;
     requires jakarta.mvc;
     requires jakarta.validation;
+    requires static jakarta.cdi;
     requires jakarta.ws.rs;
     requires mvc.toolbox.core;
 
