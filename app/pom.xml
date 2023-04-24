@@ -9,11 +9,15 @@
     </parent>
 
     <artifactId>polly-app</artifactId>
-    <packaging>ear</packaging>
+    <packaging>war</packaging>
 
     <name>Polly :: Application</name>
 
     <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>domain</artifactId>
+        </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>infrastructure</artifactId>
@@ -50,18 +54,9 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-ear-plugin</artifactId>
-                <version>3.3.0</version>
+                <artifactId>maven-war-plugin</artifactId>
                 <configuration>
-                    <generateModuleId>true</generateModuleId>
-                    <modules>
-                        <webModule>
-                            <groupId>${project.groupId}</groupId>
-                            <artifactId>web</artifactId>
-                            <contextRoot>/</contextRoot>
-                            <moduleId>polly-web</moduleId>
-                        </webModule>
-                    </modules>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>
             </plugin>
         </plugins>
