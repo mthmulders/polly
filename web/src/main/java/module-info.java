@@ -2,6 +2,8 @@ module confbuddy.web {
     requires polly.domain;
     requires java.logging;
     requires java.net.http;
+    requires jakarta.cdi;
+    requires jakarta.inject;
     requires jakarta.mvc;
     requires jakarta.validation;
     requires jakarta.ws.rs;
