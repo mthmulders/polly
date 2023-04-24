@@ -25,7 +25,7 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- Platform -->
+        <!-- Platform dependencies -->
         <dependency>
             <groupId>jakarta.annotation</groupId>
             <artifactId>jakarta.annotation-api</artifactId>
@@ -82,7 +82,7 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- Frameworks -->
+        <!-- Framework dependencies -->
         <dependency>
             <groupId>org.eclipse.krazo</groupId>
             <artifactId>krazo-core</artifactId>
@@ -104,7 +104,7 @@
             <version>2.1.0</version>
         </dependency>
 
-        <!-- Tests -->
+        <!-- Test dependencies -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
