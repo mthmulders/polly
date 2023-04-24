@@ -1,6 +1,7 @@
 package it.mulders.polly.web.display;
 
 import it.mulders.polly.domain.PollInstanceRepository;
+import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.mvc.Controller;
 import jakarta.mvc.Models;
@@ -11,15 +12,13 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.Response;
 
 @Controller
+@RequestScoped
 public class ShowPollController {
-    private final Models models;
-    private final PollInstanceRepository pollInstanceRepository;
+    @Inject
+    private Models models;
 
     @Inject
-    public ShowPollController(final Models models, final PollInstanceRepository pollInstanceRepository) {
-        this.models = models;
-        this.pollInstanceRepository = pollInstanceRepository;
-    }
+    private PollInstanceRepository pollInstanceRepository;
 
     @GET
     @Path("/{poll-slug}/{instance-slug}/show")
