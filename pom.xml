@@ -49,7 +49,7 @@
                 <groupId>${project.groupId}</groupId>
                 <artifactId>polly-app</artifactId>
                 <version>${project.version}</version>
-                <type>ear</type>
+                <type>war</type>
             </dependency>
 
             <dependency>
