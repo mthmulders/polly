@@ -2,6 +2,6 @@
 <%@ taglib prefix="layout" tagdir="/WEB-INF/tags/layouts" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<layout:main title="#${pollInstance.poll().slug()}">
+<layout:main title="${pollInstance.poll().slug()} @ ${pollInstance.slug()}">
   Question: <strong>${pollInstance.poll().question()}</strong>
 </layout:main>
