@@ -14,7 +14,7 @@ public class InMemoryPollInstanceRepository implements PollInstanceRepository {
     private final Map<String, Map<String, PollInstance>> data = new HashMap<>();
 
     public InMemoryPollInstanceRepository() {
-        data.put("demo", Map.of("demo", new PollInstance(new Poll("Do you like me?", "demo"), "demo")));
+        data.put("foo", Map.of("bar", new PollInstance(new Poll("Do you like me?", "bar"), "foo")));
     }
 
     @Override
