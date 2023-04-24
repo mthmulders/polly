@@ -11,6 +11,7 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.Response;
 
+@Path("/show")
 @Controller
 @RequestScoped
 public class ShowPollController {
@@ -21,7 +22,7 @@ public class ShowPollController {
     private PollInstanceRepository pollInstanceRepository;
 
     @GET
-    @Path("/{poll-slug}/{instance-slug}/show")
+    @Path("/{poll-slug}/{instance-slug}")
     @Produces("text/html; charset=UTF-8")
     public Response show(@PathParam("poll-slug") String pollSlug, @PathParam("instance-slug") String instanceSlug) {
         return pollInstanceRepository.findBySlugs(pollSlug, instanceSlug)
