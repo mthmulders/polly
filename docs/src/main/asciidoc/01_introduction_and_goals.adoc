@@ -4,10 +4,10 @@
 https://mthmulders.github.io/polly/[Polly] is a project for
 
 * letting me run live polls during a talk at a conference or meetup.
-* evaluating and learning certain technologies
-** Java 17
-** Jakarta EE
-** Jakarta MVC
+* evaluating and learning certain technologies:
+** https://jakarta.ee/[Jakarta EE]
+** https://jakarta.ee/specifications/mvc/[Jakarta MVC]
+** https://playwright.dev/java[Playwright]
 
 === Requirements Overview
 From a functional point of view, Polly is a web application for running a live poll during a talk or event.

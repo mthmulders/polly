@@ -13,8 +13,9 @@ In addition, I use this project to:
 
 The project uses the following technologies
 - Java 17
-- Jakarta EE
-- Jakarta MVC
+- [Jakarta EE](https://jakarta.ee/)
+- [Jakarta MVC](https://jakarta.ee/specifications/mvc/)
+- [Playwright](https://playwright.dev/java)
 
 ## Documentation
 All documentation is available at the [documentation site](https://mthmulders.github.io/polly/).
