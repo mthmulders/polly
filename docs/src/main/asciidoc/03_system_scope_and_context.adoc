@@ -1,2 +1,19 @@
 [[section-system-scope-and-context]]
 == System Scope and Context
+This chapter describes the environment and context of Polly. Who uses the system and on which other system(s) does Polly depend?
+
+=== Business Context
+plantuml::img/structurizr-polly-SystemContext.puml[format=svg]
+
+==== Speaker
+A speaker at a conference or meetup would like to know how their audience feels about a subject.
+For that, they ask their audience a multiple-choice question, or _poll_.
+
+Also, they would like to immediately see how their audience thinks about the question.
+
+==== Attendee
+Somebody attending a talk by <<_speaker>> who would love to participate in the poll.
+
+Apart from providing their own view, they would also like to see how other <<_attendee, Attendees>> feel about the same question.
+
+=== Technical Context
