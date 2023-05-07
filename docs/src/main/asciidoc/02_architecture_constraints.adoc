@@ -10,7 +10,8 @@
 3+e| Software and programming constraints
 | TC01
 | Use of Java
-| One of the <<introduction-and-goals, goals>> is to learn and evaluate certain technologies. I don't want to learn too much new things at the same, so I stick to Java as the programming language.
+| One of the <<section-introduction-and-goals, goals>> is to learn and evaluate certain technologies.
+I don't want to learn too much new things at the same, so I stick to Java as the programming language.
 
 | TC02
 | Use of open source technology
