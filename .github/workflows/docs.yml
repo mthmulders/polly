@@ -30,6 +30,25 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
 
+      - name: Generate diagrams from Structurizr workspace
+        run: |
+          TMP_DIR=$(mktemp -d)
+          pushd $TMP_DIR
+          curl -LOJ https://github.com/structurizr/cli/releases/download/v${STRUCTURIZR_VERSION}/structurizr-cli-${STRUCTURIZR_VERSION}.zip
+          mkdir structurizr-${STRUCTURIZR_VERSION}
+          pushd structurizr-${STRUCTURIZR_VERSION}
+          unzip ../structurizr-cli-${STRUCTURIZR_VERSION}.zip
+          STRUCTURIZR_DIR=$(pwd)
+          popd
+          popd
+          
+          PATH=$JAVA_HOME_17_X64/bin:$STRUCTURIZR_DIR:$PATH; structurizr.sh export \
+              -o src/main/asciidoc/img \
+              -w src/main/structurizr/workspace.dsl \
+              -f plantuml
+        env:
+          STRUCTURIZR_VERSION: 1.30.0
+
       - name: Generate documentation site
         run: mvn -B package -pl :docs
 
