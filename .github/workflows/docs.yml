@@ -34,6 +34,9 @@ jobs:
 
       - name: Generate diagrams from Structurizr workspace
         run: |
+          sudo apt update -y
+          sudo apt install -y graphviz
+          
           TMP_DIR=$(mktemp -d)
           pushd $TMP_DIR
           curl -sLOJ https://github.com/structurizr/cli/releases/download/v${STRUCTURIZR_VERSION}/structurizr-cli-${STRUCTURIZR_VERSION}.zip
