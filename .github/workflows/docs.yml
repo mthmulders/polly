@@ -44,10 +44,12 @@ jobs:
           popd
           popd
           
+          pushd docs
           PATH=$JAVA_HOME_17_X64/bin:$STRUCTURIZR_DIR:$PATH; structurizr.sh export \
               -o src/main/asciidoc/img \
               -w src/main/structurizr/workspace.dsl \
               -f plantuml
+          popd
         env:
           STRUCTURIZR_VERSION: 1.30.0
 
