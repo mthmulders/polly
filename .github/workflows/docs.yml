@@ -58,6 +58,8 @@ jobs:
 
       - name: Generate documentation site
         run: mvn -B package -pl :docs
+        env:
+          GRAPHVIZ_DOT: /usr/bin/dot
 
       - name: Setup Pages
         id: pages
