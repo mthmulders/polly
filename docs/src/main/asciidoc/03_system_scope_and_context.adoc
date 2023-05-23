@@ -1,9 +1,10 @@
 [[section-system-scope-and-context]]
 == System Scope and Context
-This chapter describes the environment and context of Polly. Who uses the system and on which other system(s) does Polly depend?
+This chapter describes the environment and context of Polly.
+Who uses the system and on which other system(s) does Polly depend?
 
 === Business Context
-plantuml::img/structurizr-Polly-SystemContext.puml[format=svg]
+plantuml::img/structurizr-Context.puml[format=svg]
 
 ==== Speaker
 A speaker at a conference or meetup would like to know how their audience feels about a subject.
@@ -12,8 +13,20 @@ For that, they ask their audience a multiple-choice question, or _poll_.
 Also, they would like to immediately see how their audience thinks about the question.
 
 ==== Attendee
-Somebody attending a talk by <<_speaker>> who would love to participate in the poll.
+Somebody attending a talk by <<_speaker>> who would love to participate in their poll(s).
 
 Apart from providing their own view, they would also like to see how other <<_attendee, Attendees>> feel about the same question.
 
 === Technical Context
+The technical context of Polly is pretty simple.
+Polly runs as a web application and is accessible to users primarily using their web browser:
+
+.Technical interfaces
+[cols="5,20" options="header"]
+|===
+| Interface | Description
+
+| HTTP
+| Serves the views to interact with a poll; this includes both viewing and voting.
+
+|===
