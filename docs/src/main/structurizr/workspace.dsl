@@ -8,7 +8,7 @@ workspace polly {
         attendee -> polly "Vote and view poll"
     }
     views {
-        systemContext "Polly" "Context" {
+        systemContext "Polly" "polly-context" {
             include speaker attendee polly
             autoLayout
         }

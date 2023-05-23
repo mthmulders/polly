@@ -4,7 +4,7 @@ This chapter describes the environment and context of Polly.
 Who uses the system and on which other system(s) does Polly depend?
 
 === Business Context
-plantuml::img/structurizr-Context.puml[format=svg]
+plantuml::img/structurizr-polly-context.puml[format=svg]
 
 ==== Speaker
 A speaker at a conference or meetup would like to know how their audience feels about a subject.
