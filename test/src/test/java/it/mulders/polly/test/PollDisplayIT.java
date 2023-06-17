@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 class PollDisplayIT extends AbstractPlaywrightTest {
     @Test
     void should_display_question() {
-        page.navigate("http://localhost:9080/poll/jakarta-mvc/test/show");
+        page.navigate("http://localhost:9080/show/jakarta-mvc/test-run");
 
         assertThat(page.textContent("//main")).contains("Do you like Jakarta MVC?");
     }
