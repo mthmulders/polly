@@ -57,7 +57,7 @@ jobs:
           STRUCTURIZR_VERSION: 1.30.0
 
       - name: Generate documentation site
-        run: mvn -B package -pl :docs
+        run: mvn -B --no-transfer-progress package -pl :docs
         env:
           GRAPHVIZ_DOT: /usr/bin/dot
 

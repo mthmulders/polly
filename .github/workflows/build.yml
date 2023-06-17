@@ -38,4 +38,4 @@ jobs:
           token: ${{ secrets.TC_CLOUD_TOKEN }}
 
       - name: Build with Maven
-        run: mvn -B verify -pl \!test,\!docs
+        run: mvn -B --no-transfer-progress verify -pl \!test,\!docs
