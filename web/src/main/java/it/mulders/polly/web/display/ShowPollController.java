@@ -27,7 +27,7 @@ public class ShowPollController {
     public Response show(@PathParam("poll-slug") String pollSlug, @PathParam("instance-slug") String instanceSlug) {
         return pollInstanceRepository.findBySlugs(pollSlug, instanceSlug)
                 .map(pollInstance -> models.put("pollInstance", pollInstance))
-                .map(models -> Response.ok("polls/show.jsp").build())
+                .map(x -> Response.ok("polls/show.jsp").build())
                 .orElse(Response.status(Response.Status.NOT_FOUND).build());
     }
 }
