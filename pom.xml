@@ -244,19 +244,12 @@
                         </dependency>
                     </dependencies>
                     <configuration>
-                        <avoidCallsTo>
-                            <avoidCallsTo>org.slf4j</avoidCallsTo>
-                        </avoidCallsTo>
-                        <excludedClasses>
-                            <excludedClass>*Builder</excludedClass>
-                        </excludedClasses>
                         <outputFormats>
                             <format>${pit.format}</format>
                         </outputFormats>
                         <pluginConfiguration>
                             <stryker.moduleName>${project.artifactId}</stryker.moduleName>
                         </pluginConfiguration>
-                        <verbose>true</verbose>
                     </configuration>
                 </plugin>
             </plugins>
