@@ -31,6 +31,10 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
 
       - name: Run Pitest
-        run: mvn -e -B --no-transfer-progress test-compile org.pitest:pitest-maven:mutationCoverage -pl \!app,\!test,\!docs
+        run: |
+          mvn \
+            -e -B -ntp \
+            test-compile org.pitest:pitest-maven:mutationCoverage \
+            -pl \!app,\!test,\!docs
         env:
           STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
