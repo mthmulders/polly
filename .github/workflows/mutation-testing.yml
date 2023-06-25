@@ -34,6 +34,7 @@ jobs:
         run: |
           mvn \
             -e -B -ntp \
+            -Dpit.format=stryker-dashboard \
             test-compile org.pitest:pitest-maven:mutationCoverage \
             -pl \!app,\!test,\!docs
         env:

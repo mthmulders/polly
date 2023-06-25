@@ -16,6 +16,8 @@
         <flyway.version>9.20.0</flyway.version>
         <jakarta-ee.version>10.0.0</jakarta-ee.version>
         <junit.jupiter.version>5.9.3</junit.jupiter.version>
+
+        <pit.format>HTML2</pit.format>
     </properties>
 
     <modules>
@@ -235,6 +237,11 @@
                             <artifactId>pit-dashboard-reporter</artifactId>
                             <version>0.2.1</version>
                         </dependency>
+                        <dependency>
+                            <groupId>io.github.wmaarts</groupId>
+                            <artifactId>pitest-mutation-testing-elements-plugin</artifactId>
+                            <version>0.5.0</version>
+                        </dependency>
                     </dependencies>
                     <configuration>
                         <avoidCallsTo>
@@ -244,7 +251,7 @@
                             <excludedClass>*Builder</excludedClass>
                         </excludedClasses>
                         <outputFormats>
-                            <format>stryker-dashboard</format>
+                            <format>${pit.format}</format>
                         </outputFormats>
                         <pluginConfiguration>
                             <stryker.moduleName>${project.artifactId}</stryker.moduleName>
