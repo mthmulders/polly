@@ -13,6 +13,17 @@ jobs:
     if: contains(github.event.head_commit.message, 'Releasing version') != true && contains(github.event.head_commit.message, 'Prepare next version') != true
     runs-on: ubuntu-latest
 
+    services:
+      postgresql:
+        image: postgres:14.8
+        env:
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
       - name: Check out repository
         uses: actions/checkout@v3
@@ -33,15 +44,10 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
 
-      - name: Setup Testcontainers Cloud Client
-        uses: atomicjar/testcontainers-cloud-setup-action@v1
-        with:
-          token: ${{ secrets.TC_CLOUD_TOKEN }}
-
       - name: Install EAR in repository
         run: mvn -B --no-transfer-progress install -pl :polly-app -am
 
-      - name: Build with Maven
+      - name: Run integration tests
         run: mvn -B --no-transfer-progress verify -pl :test
 
       - name: Secure OpenLiberty logs

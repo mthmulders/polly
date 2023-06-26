@@ -51,35 +51,6 @@
                 <artifactId>maven-failsafe-plugin</artifactId>
             </plugin>
             <plugin>
-                <groupId>org.flywaydb</groupId>
-                <artifactId>flyway-maven-plugin</artifactId>
-                <version>${flyway.version}</version>
-                <executions>
-                    <execution>
-                        <id>populate-database</id>
-                        <phase>pre-integration-test</phase>
-                        <goals>
-                            <goal>migrate</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.hsqldb</groupId>
-                        <artifactId>hsqldb</artifactId>
-                        <version>2.7.2</version>
-                    </dependency>
-                </dependencies>
-                <configuration>
-                    <driver>org.hsqldb.jdbcDriver</driver>
-                    <locations>
-                        <location>classpath:migration</location>
-                    </locations>
-                    <url>jdbc:hsqldb:file:${project.build.directory}/database/pollydb;create=true;shutdown=true;sql.syntax_pgs=true;sql.enforce_size=false</url>
-                    <user>sa</user>
-                </configuration>
-            </plugin>
-            <plugin>
                 <groupId>io.openliberty.tools</groupId>
                 <artifactId>liberty-maven-plugin</artifactId>
                 <configuration>
@@ -103,9 +74,9 @@
                             <copyDependencies>
                                 <dependencyGroup>
                                     <dependency>
-                                        <groupId>org.hsqldb</groupId>
-                                        <artifactId>hsqldb</artifactId>
-                                        <version>2.7.2</version>
+                                        <groupId>org.postgresql</groupId>
+                                        <artifactId>postgresql</artifactId>
+                                        <version>42.6.0</version>
                                     </dependency>
                                     <location>lib/global</location>
                                 </dependencyGroup>
@@ -129,6 +100,41 @@
                         <phase>post-integration-test</phase>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <version>${flyway.version}</version>
+                <executions>
+                    <execution>
+                        <id>populate-database</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>migrate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.postgresql</groupId>
+                        <artifactId>postgresql</artifactId>
+                        <version>42.6.0</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <driver>org.postgresql.Driver</driver>
+                    <locations>
+                        <location>classpath:migration</location>
+                    </locations>
+                    <url>jdbc:postgresql://localhost/postgres</url>
+                    <user>postgres</user>
+                    <password>postgres</password>
+                    <!--
+                    Allows to continue with migrations from the app itself already applied
+                    to the database, even though this Flyway run can't resolve those
+                    -->
+                    <validateOnMigrate>false</validateOnMigrate>
+                </configuration>
             </plugin>
         </plugins>
     </build>
