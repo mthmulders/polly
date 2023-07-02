@@ -26,6 +26,10 @@
                     password="postgres" />
     </dataSource>
 
+    <!-- Enable detailed logging for JPA. -->
+    <logging traceSpecification="eclipselink=all" />
+    <logging traceSpecification="eclipselink.sql=all" />
+
     <httpEndpoint id="defaultHttpEndpoint"
                   httpPort="9080"
                   httpsPort="9443" />
