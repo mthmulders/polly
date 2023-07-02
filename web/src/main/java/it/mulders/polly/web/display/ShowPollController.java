@@ -1,6 +1,6 @@
 package it.mulders.polly.web.display;
 
-import it.mulders.polly.domain.PollInstanceRepository;
+import it.mulders.polly.domain.polls.PollInstanceRepository;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.mvc.Controller;
