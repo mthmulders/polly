@@ -47,7 +47,7 @@
                     <runtimeArtifact>
                         <groupId>io.openliberty</groupId>
                         <artifactId>openliberty-runtime</artifactId>
-                        <version>23.0.0.4</version>
+                        <version>23.0.0.6</version>
                         <type>zip</type>
                     </runtimeArtifact>
                 </configuration>
