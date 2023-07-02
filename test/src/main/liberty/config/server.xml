@@ -18,8 +18,7 @@
     </library>
 
     <dataSource id="polly-datasource" jndiName="jdbc/polly-ds">
-        <jdbcDriver libraryRef="postgresql-jdbc"
-                    javax.sql.XADataSource="org.postgresql.xa.PGXADataSource" />
+        <jdbcDriver libraryRef="postgresql-jdbc" />
         <properties serverName="localhost"
                     databaseName="postgres"
                     portNumber="5432"
