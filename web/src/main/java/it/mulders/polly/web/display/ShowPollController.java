@@ -21,6 +21,13 @@ public class ShowPollController {
     @Inject
     private PollInstanceRepository pollInstanceRepository;
 
+    public ShowPollController() {}
+
+    ShowPollController(Models models, PollInstanceRepository pollInstanceRepository) {
+        this.models = models;
+        this.pollInstanceRepository = pollInstanceRepository;
+    }
+
     @GET
     @Path("/{poll-slug}/{instance-slug}")
     @Produces("text/html; charset=UTF-8")
