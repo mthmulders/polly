@@ -17,6 +17,7 @@ public class SchemaUpdater {
     @Resource(name = "jdbc/polly-ds")
     private DataSource dataSource;
 
+    @SuppressWarnings("java:S1172") // "Unused method parameters should be removed"
     public void init(@Observes @Initialized(ApplicationScoped.class) Object init) {
         final Flyway flyway = Flyway.configure().dataSource(dataSource).load();
         try {
