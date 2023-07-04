@@ -8,6 +8,4 @@ import org.mapstruct.MappingConstants;
 public interface PollMapper {
 
     Poll pollEntityToPoll(PollEntity entity);
-
-    PollEntity pollToPollEntity(Poll conference);
 }
