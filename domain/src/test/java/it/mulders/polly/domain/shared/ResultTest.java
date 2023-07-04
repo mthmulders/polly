@@ -20,7 +20,6 @@ class ResultTest implements WithAssertions {
         assertThat(Result.of(new NullPointerException())).isInstanceOf(Result.Failure.class);
     }
 
-
     @Nested
     class Success {
         private final Result.Success<Integer> success = new Result.Success<>(42);
@@ -96,8 +95,8 @@ class ResultTest implements WithAssertions {
         }
 
         @Test
-        void can_have_no_value() {
-            assertThat(new Result.Success<>().getValue()).isNull();
+        void has_no_value() {
+            assertThatThrownBy(() -> failure.getValue()).isInstanceOf(IllegalStateException.class);
         }
     }
 }
