@@ -16,17 +16,11 @@ public class JpaPollInstanceRepository implements PollInstanceRepository {
 
     @Override
     public Optional<PollInstance> findByPollSlugAndInstanceSlug(String pollSlug, String pollInstanceSlug) {
-        return em.createNamedQuery("Poll.findBySlug", PollEntity.class)
-                .setParameter("slug", pollSlug)
+        return em.createNamedQuery("PollInstance.findBySlugs", PollInstanceEntity.class)
+                .setParameter("instance_slug", pollInstanceSlug)
+                .setParameter("poll_slug", pollSlug)
                 .getResultStream()
                 .findAny()
-                .flatMap(poll -> findInstanceBySlug(poll, pollInstanceSlug));
-    }
-
-    private Optional<PollInstance> findInstanceBySlug(PollEntity poll, String pollInstanceSlug) {
-        return poll.getInstances().stream()
-                .filter(instance -> pollInstanceSlug.equals(instance.getSlug()))
-                .map(instance -> new PollInstance(pollMapper.pollEntityToPoll(poll), pollInstanceSlug))
-                .findAny();
+                .map(pollMapper::pollInstanceEntityToPollInstance);
     }
 }

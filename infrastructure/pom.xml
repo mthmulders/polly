@@ -94,9 +94,21 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${postgresql.jdbc.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>junit-jupiter</artifactId>
             <version>${testcontainers.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.persistence</groupId>
+            <artifactId>org.eclipse.persistence.jpa</artifactId>
+            <version>4.0.1</version>
             <scope>test</scope>
         </dependency>
 
@@ -133,6 +145,15 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
+                <configuration>
+                    <argLine>
+                        <!-- spotless:off -->
+                        @{jacocoArgLine}
+                        --add-opens polly.infrastructure/it.mulders.polly.infra.database=ALL-UNNAMED
+                        --add-opens polly.infrastructure/it.mulders.polly.infra.polls=org.eclipse.persistence.core
+                        <!-- spotless:on -->
+                    </argLine>
+                </configuration>
             </plugin>
         </plugins>
     </build>
