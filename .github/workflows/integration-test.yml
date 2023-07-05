@@ -13,6 +13,19 @@ jobs:
     if: contains(github.event.head_commit.message, 'Releasing version') != true && contains(github.event.head_commit.message, 'Prepare next version') != true
     runs-on: ubuntu-latest
 
+    services:
+      postgres:
+        image: postgres:14.8
+        env:
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
     steps:
       - name: Check out repository
         uses: actions/checkout@v3
@@ -36,7 +49,7 @@ jobs:
       - name: Install EAR in repository
         run: mvn -B --no-transfer-progress install -pl :polly-app -am
 
-      - name: Build with Maven
+      - name: Run integration tests
         run: mvn -B --no-transfer-progress verify -pl :test
 
       - name: Secure OpenLiberty logs

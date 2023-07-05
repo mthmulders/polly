@@ -10,19 +10,25 @@
         <feature>servlet-6.0</feature>
     </featureManager>
 
-    <library id="hsql-jdbc">
+    <library id="postgresql-jdbc">
         <fileset>
             <dir>lib/global/</dir>
-            <include>hsql*jar</include>
+            <include>postgresql*jar</include>
         </fileset>
     </library>
 
     <dataSource id="polly-datasource" jndiName="jdbc/polly-ds">
-        <jdbcDriver libraryRef="hsql-jdbc"
-                    javax.sql.ConnectionPoolDataSource="org.hsqldb.jdbc.pool.JDBCPooledDataSource" />
-        <properties URL="jdbc:hsqldb:file:../../../../../database/pollydb;create=false;sql.syntax_pgs=true;sql.enforce_size=false"
-                    user="sa" />
+        <jdbcDriver libraryRef="postgresql-jdbc" />
+        <properties serverName="localhost"
+                    databaseName="postgres"
+                    portNumber="5432"
+                    user="postgres"
+                    password="postgres" />
     </dataSource>
+
+    <!-- Enable detailed logging for JPA. -->
+    <logging traceSpecification="eclipselink=all" />
+    <logging traceSpecification="eclipselink.sql=all" />
 
     <httpEndpoint id="defaultHttpEndpoint"
                   httpPort="9080"

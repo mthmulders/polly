@@ -1,0 +1,41 @@
+name: Mutation testing
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  mutationtesting:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+        with:
+          # Disabling shallow clone is recommended for improving relevancy of reporting
+          fetch-depth: 0
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3.11.0
+        with:
+          java-version: 17
+          distribution: 'adopt'
+
+      - name: Cache Maven packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+
+      - name: Run Pitest
+        run: |
+          mvn \
+            -e -B -ntp \
+            -Dpit.format=stryker-dashboard \
+            test-compile org.pitest:pitest-maven:mutationCoverage \
+            -pl \!app,\!test,\!docs
+        env:
+          STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
