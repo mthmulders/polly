@@ -33,6 +33,16 @@ public class TransactionSupport {
         });
     }
 
+    private <T> Result<T> tryRunAction(final Supplier<T> action) throws SystemException {
+        try {
+            return Result.of(action.get());
+        } catch (final Exception e) {
+            logger.log(Level.SEVERE, "Error running transaction", e);
+            userTransaction.rollback();
+            return Result.of(e);
+        }
+    }
+
     public <T> Result<T> runTransactional(final Supplier<T> action) {
         logger.fine("Starting transaction.");
         try {
@@ -50,19 +60,11 @@ public class TransactionSupport {
 
         try {
             logger.fine("Running transaction.");
-            final T result;
-            try {
-                result = action.get();
-            } catch (final Exception e) {
-                logger.log(Level.SEVERE, "Error running transaction", e);
-                userTransaction.rollback();
-                return Result.of(e);
-            }
-
+            final Result<T> result = tryRunAction(action);
             logger.fine("Committing transaction.");
             userTransaction.commit();
             logger.fine("Transaction committed successfully.");
-            return Result.of(result);
+            return result;
         } catch (SystemException se) {
             logger.log(Level.SEVERE, "The transaction manager encountered an unexpected error condition.", se);
             return Result.of(new TechnicalTransactionException());
