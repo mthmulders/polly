@@ -262,6 +262,7 @@
                     ${project.basedir}/target/site/jacoco/jacoco.xml,
                     ${project.basedir}/target/site/jacoco-it/jacoco.xml
                 </sonar.coverage.jacoco.xmlReportPaths>
+                <sonar.coverage.exclusions> **/*Entity*.*</sonar.coverage.exclusions>
             </properties>
             <build>
                 <plugins>
