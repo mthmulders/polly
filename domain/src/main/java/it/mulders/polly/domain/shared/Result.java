@@ -78,6 +78,7 @@ public sealed interface Result<T> {
         }
     }
 
+    @SuppressWarnings("java:S6206") // Do not suggest to turn this into a Record
     final class Failure<T> implements Result<T> {
         private final Throwable cause;
 
