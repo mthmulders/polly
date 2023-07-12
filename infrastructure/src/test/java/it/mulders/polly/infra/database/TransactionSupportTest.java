@@ -7,6 +7,7 @@ import jakarta.transaction.NotSupportedException;
 import jakarta.transaction.RollbackException;
 import jakarta.transaction.SystemException;
 import jakarta.transaction.UserTransaction;
+import java.util.concurrent.atomic.AtomicBoolean;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -79,6 +80,16 @@ class TransactionSupportTest implements WithAssertions {
                 .isInstanceOf(Result.Failure.class)
                 .extracting(Result::getCause)
                 .isInstanceOf(TechnicalTransactionException.class);
+    }
+
+    @Test
+    void should_invoke_runnable() {
+        var support = new TransactionSupport(new DummyTransaction());
+        var result = new AtomicBoolean(false);
+
+        support.runTransactional(() -> result.set(true));
+
+        assertThat(result.get()).isTrue();
     }
 
     @Test
