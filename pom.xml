@@ -241,6 +241,9 @@
                         <excludedClasses>
                             <excludedClass>**/*Entity</excludedClass>
                         </excludedClasses>
+                        <excludedTestClasses>
+                            <excludedTestClass>**/*IT</excludedTestClass>
+                        </excludedTestClasses>
                         <outputFormats>
                             <format>${pit.format}</format>
                         </outputFormats>
