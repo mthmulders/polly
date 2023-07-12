@@ -238,6 +238,9 @@
                         </dependency>
                     </dependencies>
                     <configuration>
+                        <excludedClasses>
+                            <excludedClass>**/*Entity</excludedClass>
+                        </excludedClasses>
                         <outputFormats>
                             <format>${pit.format}</format>
                         </outputFormats>
