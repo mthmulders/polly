@@ -1,2 +1,47 @@
 [[section-quality-scenarios]]
-== Quality Scenarios
+== Quality Requirements
+
+=== Quality Tree
+
+The following list contains the quality goals for this application.
+The goals with an identifier between square brackets correspond with one of the <<Main Quality Goals>>.
+
+[cols="5,4,6,2" options="header"]
+.Quality Goals
+|===
+| Quality Category | Quality | Description | Scenario
+
+| Usability
+| Attractiveness **[QG02]**
+| I want to use Polly during events where I speak, so displaying polls should look good.
+|
+
+| Performance
+| Responsiveness
+| Displaying a poll during a talk should take less than 500 milliseconds.
+|
+
+|
+| Responsiveness
+| Voting on a poll should take less than 1 second.
+|
+
+| Operational & Environmental
+| Runtime agnosticism
+| The solution should work on any Jakarta EE 10 compliant application server.
+|
+
+| Maintainability & Support
+| Understandability **[QC01]**
+| Functional requirements should be simple and stay simple.
+This allows me to focus on the other goals (learning, experimenting) as well as writing quality code.
+|
+
+|
+| Testability **[QC03]**
+| The architecture should allow easy testing of all main building blocks.
+|
+
+|===
+
+=== Quality Scenarios

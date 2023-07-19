@@ -27,10 +27,12 @@ The functional requirements aren't too complex, leaving me enough room for atten
 I haven't yet decided if I want or need a management user interface for defining those polls.
 For the first iteration, it may be enough to manually insert them into the persistent storage.
 
-=== Quality Goals
-The following lists contains the most important quality goals for this application.
+=== Main Quality Goals
+The following list contains the most important quality goals for this application.
+The full list is in <<Quality Requirements>>.
+
 [cols="0,1,3" options="header"]
-.Quality Goals
+.Main Quality Goals
 |===
 | ID | Quality | Motivation
 
