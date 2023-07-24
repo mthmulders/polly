@@ -2,6 +2,7 @@ package it.mulders.polly.web.display;
 
 import it.mulders.polly.domain.polls.Poll;
 import it.mulders.polly.domain.polls.PollInstance;
+import it.mulders.polly.web.krazo.ApplicationUrlHelper;
 import it.mulders.polly.web.test.InMemoryPollInstanceRepository;
 import jakarta.ws.rs.core.Response;
 import org.assertj.core.api.WithAssertions;
@@ -14,12 +15,19 @@ import java.util.Set;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class ShowPollControllerTest implements WithAssertions {
+    private final String voteUrl = "http://localhost:9080/vote/my-poll/my-instance";
+    private final ApplicationUrlHelper urlHelper = new ApplicationUrlHelper() {
+        @Override
+        public String voteUrlForPollInstance(PollInstance pollInstance) {
+            return voteUrl;
+        }
+    };
 
     @Test
     void without_matching_poll_instance_should_return_NotFound() {
         var models = new ModelsImpl();
         var repository = new InMemoryPollInstanceRepository(Set.of());
-        var controller = new ShowPollController(models, repository);
+        var controller = new ShowPollController(models, repository, urlHelper);
 
         var response = controller.show("whatever", "whatever");
 
@@ -31,7 +39,7 @@ class ShowPollControllerTest implements WithAssertions {
         var models = new ModelsImpl();
         var pollInstance = new PollInstance(new Poll("", "whatever"), "whatever");
         var repository = new InMemoryPollInstanceRepository(Set.of(pollInstance));
-        var controller = new ShowPollController(models, repository);
+        var controller = new ShowPollController(models, repository, urlHelper);
 
         var response = controller.show("whatever", "whatever");
 
@@ -43,10 +51,11 @@ class ShowPollControllerTest implements WithAssertions {
         var models = new ModelsImpl();
         var pollInstance = new PollInstance(new Poll("", "whatever"), "whatever");
         var repository = new InMemoryPollInstanceRepository(Set.of(pollInstance));
-        var controller = new ShowPollController(models, repository);
+        var controller = new ShowPollController(models, repository, urlHelper);
 
-        var response = controller.show("whatever", "whatever");
+        controller.show("whatever", "whatever");
 
         assertThat(models.get("pollInstance")).isEqualTo(pollInstance);
+        assertThat(models.get("voteUrl")).isEqualTo(voteUrl);
     }
 }
