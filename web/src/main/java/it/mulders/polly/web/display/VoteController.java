@@ -13,31 +13,27 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.Response;
 
-@Path("/show")
+@Path("/vote")
 @Controller
 @RequestScoped
-public class ShowPollController {
+public class VoteController {
     @Inject
     private Models models;
 
     @Inject
     private PollInstanceRepository pollInstanceRepository;
 
-    @Inject
-    private ApplicationUrlHelper urlHelper;
+    public VoteController() {}
 
-    public ShowPollController() {}
-
-    ShowPollController(Models models, PollInstanceRepository pollInstanceRepository, ApplicationUrlHelper urlHelper) {
+    VoteController(Models models, PollInstanceRepository pollInstanceRepository) {
         this.models = models;
         this.pollInstanceRepository = pollInstanceRepository;
-        this.urlHelper = urlHelper;
     }
 
     @GET
     @Path("/{poll-slug}/{instance-slug}")
     @Produces("text/html; charset=UTF-8")
-    public Response show(@PathParam("poll-slug") String pollSlug, @PathParam("instance-slug") String instanceSlug) {
+    public Response displayVotePage(@PathParam("poll-slug") String pollSlug, @PathParam("instance-slug") String instanceSlug) {
         return pollInstanceRepository.findByPollSlugAndInstanceSlug(pollSlug, instanceSlug)
                 .map(this::populateModelAndPrepareResponse)
                 .orElse(Response.status(Response.Status.NOT_FOUND).build());
@@ -45,7 +41,6 @@ public class ShowPollController {
 
     private Response populateModelAndPrepareResponse(final PollInstance pollInstance) {
         models.put("pollInstance", pollInstance);
-        models.put("voteUrl", urlHelper.voteUrlForPollInstance(pollInstance));
-        return Response.ok("polls/show.jsp").build();
+        return Response.ok("polls/vote.jsp").build();
     }
 }

@@ -4,5 +4,4 @@
 
 <layout:main title="${pollInstance.poll().slug()} @ ${pollInstance.slug()}">
   <p>Question: <strong>${pollInstance.poll().question()}</strong></p>
-  <p>Vote? Go to <a href="${voteUrl}">${voteUrl}</a></p>
 </layout:main>
