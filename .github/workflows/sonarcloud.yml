@@ -31,7 +31,7 @@ jobs:
 
       - name: SonarCloud Scan
         run: |
-          mvn -B -P sonarcloud -Dsonar.login=$SONAR_TOKEN --no-transfer-progress -pl \!app,\!test,\!docs verify sonar:sonar
+          mvn -B -P sonarcloud -Dsonar.token=$SONAR_TOKEN --no-transfer-progress -pl \!app,\!test,\!docs verify sonar:sonar
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
