@@ -12,6 +12,10 @@
 
     <name>Polly :: Test</name>
 
+    <properties>
+        <liberty.env.POLLY_CONFIGURATION_FILE>${project.basedir}/src/main/resources/polly.properties</liberty.env.POLLY_CONFIGURATION_FILE>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
