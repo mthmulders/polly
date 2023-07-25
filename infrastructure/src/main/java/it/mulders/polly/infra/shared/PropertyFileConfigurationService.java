@@ -36,7 +36,7 @@ public class PropertyFileConfigurationService implements ConfigurationService {
             throw new IllegalArgumentException("Could not read configuration, no configuration file given");
         }
 
-        logger.info("Loading configuration file %s".formatted(configFileLocation));
+        logger.info(() -> "Loading configuration file %s".formatted(configFileLocation));
         try (var input = Files.newInputStream(Paths.get(configFileLocation))) {
             properties.load(input);
             logger.info(
