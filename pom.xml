@@ -224,9 +224,6 @@
                         <excludedClasses>
                             <excludedClass>it.mulders.polly.**.*Entity</excludedClass>
                         </excludedClasses>
-                        <excludedTestClasses>
-                            <excludedTestClass>it.mulders.polly.**.*IT</excludedTestClass>
-                        </excludedTestClasses>
                         <outputFormats>
                             <format>${pit.format}</format>
                         </outputFormats>
