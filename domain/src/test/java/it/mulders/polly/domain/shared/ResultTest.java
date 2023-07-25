@@ -23,11 +23,13 @@ class ResultTest implements WithAssertions {
     @Nested
     class Success {
         private final Result.Success<Integer> success = new Result.Success<>(42);
+
         @Test
         void should_map_to_different_type() {
             var result = success.map(String::valueOf);
             assertThat(result.getValue()).isEqualTo("42");
         }
+
         @Test
         void should_flatMap_to_different_type() {
             var result = success.flatMap(x -> new Result.Success<>(String.valueOf(x)));
@@ -63,11 +65,13 @@ class ResultTest implements WithAssertions {
     @Nested
     class Failure {
         private final Result.Failure<Integer> failure = new Result.Failure<>(new NullPointerException());
+
         @Test
         void should_not_map_to_different_type() {
             var result = failure.map(String::valueOf);
             assertThat(result.getCause()).isInstanceOf(NullPointerException.class);
         }
+
         @Test
         void should_not_flatMap_to_different_type() {
             var result = failure.flatMap(x -> new Result.Success<>(String.valueOf(x)));

@@ -9,6 +9,15 @@
 
     <name>Polly :: Parent</name>
 
+    <modules>
+        <module>docs</module>
+        <module>domain</module>
+        <module>infrastructure</module>
+        <module>web</module>
+        <module>test</module>
+        <module>app</module>
+    </modules>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.release>17</maven.compiler.release>
@@ -20,15 +29,6 @@
 
         <jacocoArgLine></jacocoArgLine>
     </properties>
-
-    <modules>
-        <module>docs</module>
-        <module>domain</module>
-        <module>infrastructure</module>
-        <module>web</module>
-        <module>test</module>
-        <module>app</module>
-    </modules>
 
     <dependencyManagement>
         <dependencies>
@@ -220,6 +220,20 @@
                     <groupId>org.pitest</groupId>
                     <artifactId>pitest-maven</artifactId>
                     <version>1.14.2</version>
+                    <configuration>
+                        <excludedClasses>
+                            <excludedClass>**/*Entity</excludedClass>
+                        </excludedClasses>
+                        <excludedTestClasses>
+                            <excludedTestClass>**/*IT</excludedTestClass>
+                        </excludedTestClasses>
+                        <outputFormats>
+                            <format>${pit.format}</format>
+                        </outputFormats>
+                        <pluginConfiguration>
+                            <stryker.moduleName>${project.artifactId}</stryker.moduleName>
+                        </pluginConfiguration>
+                    </configuration>
                     <dependencies>
                         <dependency>
                             <groupId>org.pitest</groupId>
@@ -237,20 +251,6 @@
                             <version>0.6.0</version>
                         </dependency>
                     </dependencies>
-                    <configuration>
-                        <excludedClasses>
-                            <excludedClass>**/*Entity</excludedClass>
-                        </excludedClasses>
-                        <excludedTestClasses>
-                            <excludedTestClass>**/*IT</excludedTestClass>
-                        </excludedTestClasses>
-                        <outputFormats>
-                            <format>${pit.format}</format>
-                        </outputFormats>
-                        <pluginConfiguration>
-                            <stryker.moduleName>${project.artifactId}</stryker.moduleName>
-                        </pluginConfiguration>
-                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -264,10 +264,12 @@
                 <sonar.organization>mthmulders-github</sonar.organization>
                 <sonar.projectKey>mthmulders_polly</sonar.projectKey>
                 <sonar.moduleKey>${project.artifactId}</sonar.moduleKey>
+                <!-- spotless:off -->
                 <sonar.coverage.jacoco.xmlReportPaths>
                     ${project.basedir}/target/site/jacoco/jacoco.xml,
                     ${project.basedir}/target/site/jacoco-it/jacoco.xml
                 </sonar.coverage.jacoco.xmlReportPaths>
+                <!-- spotless:on -->
                 <sonar.coverage.exclusions> **/*Entity*.*</sonar.coverage.exclusions>
             </properties>
             <build>
