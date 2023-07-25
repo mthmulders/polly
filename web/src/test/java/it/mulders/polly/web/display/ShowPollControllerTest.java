@@ -1,9 +1,8 @@
 package it.mulders.polly.web.display;
 
 import it.mulders.polly.domain.polls.Poll;
-import it.mulders.polly.domain.polls.PollInstance;
 import it.mulders.polly.web.krazo.ApplicationUrlHelper;
-import it.mulders.polly.web.test.InMemoryPollInstanceRepository;
+import it.mulders.polly.web.test.InMemoryPollRepository;
 import jakarta.ws.rs.core.Response;
 import org.assertj.core.api.WithAssertions;
 import org.eclipse.krazo.core.ModelsImpl;
@@ -18,7 +17,7 @@ class ShowPollControllerTest implements WithAssertions {
     private final String voteUrl = "http://localhost:9080/vote/my-poll/my-instance";
     private final ApplicationUrlHelper urlHelper = new ApplicationUrlHelper() {
         @Override
-        public String voteUrlForPollInstance(PollInstance pollInstance) {
+        public String voteUrlForPoll(Poll poll) {
             return voteUrl;
         }
     };
@@ -26,10 +25,10 @@ class ShowPollControllerTest implements WithAssertions {
     @Test
     void without_matching_poll_instance_should_return_NotFound() {
         var models = new ModelsImpl();
-        var repository = new InMemoryPollInstanceRepository(Set.of());
+        var repository = new InMemoryPollRepository(Set.of());
         var controller = new ShowPollController(models, repository, urlHelper);
 
-        var response = controller.show("whatever", "whatever");
+        var response = controller.show("whatever");
 
         assertThat(response.getStatus()).isEqualTo(Response.Status.NOT_FOUND.getStatusCode());
     }
@@ -37,11 +36,11 @@ class ShowPollControllerTest implements WithAssertions {
     @Test
     void with_matching_poll_instance_should_return_OK() {
         var models = new ModelsImpl();
-        var pollInstance = new PollInstance(new Poll("", "whatever"), "whatever");
-        var repository = new InMemoryPollInstanceRepository(Set.of(pollInstance));
+        var poll = new Poll("", "whatever");
+        var repository = new InMemoryPollRepository(Set.of(poll));
         var controller = new ShowPollController(models, repository, urlHelper);
 
-        var response = controller.show("whatever", "whatever");
+        var response = controller.show("whatever");
 
         assertThat(response.getStatus()).isEqualTo(Response.Status.OK.getStatusCode());
     }
@@ -49,13 +48,13 @@ class ShowPollControllerTest implements WithAssertions {
     @Test
     void with_matching_poll_instance_should_populate_model() {
         var models = new ModelsImpl();
-        var pollInstance = new PollInstance(new Poll("", "whatever"), "whatever");
-        var repository = new InMemoryPollInstanceRepository(Set.of(pollInstance));
+        var poll = new Poll("", "whatever");
+        var repository = new InMemoryPollRepository(Set.of(poll));
         var controller = new ShowPollController(models, repository, urlHelper);
 
-        controller.show("whatever", "whatever");
+        controller.show("whatever");
 
-        assertThat(models.get("pollInstance")).isEqualTo(pollInstance);
+        assertThat(models.get("poll")).isEqualTo(poll);
         assertThat(models.get("voteUrl")).isEqualTo(voteUrl);
     }
 }
