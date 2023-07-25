@@ -41,7 +41,9 @@ public class WeldHttpCommunicationUnwrapper implements HttpCommunicationUnwrappe
             Method getMetadataMethod = weldClientProxyClass.getDeclaredMethod("getMetadata");
             Object weldClientProxyMetadata = getMetadataMethod.invoke(obj);
 
-            // Invoke WeldClientProxy.Metadata#getContextualInstance();
+            //
+            // Invoke WeldClientProxy.Metadata#getContextualInstance()
+            //
             Class<?> weldClientProxyMetadataClass = Class.forName(
                     "org.jboss.weld.proxy.WeldClientProxy$Metadata",
                     false,
