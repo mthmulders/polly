@@ -3,12 +3,11 @@ package it.mulders.polly.web.krazo;
 import jakarta.annotation.Priority;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.eclipse.krazo.core.HttpCommunicationUnwrapper;
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.eclipse.krazo.core.HttpCommunicationUnwrapper;
 
 @Priority(1)
 public class WeldHttpCommunicationUnwrapper implements HttpCommunicationUnwrapper {

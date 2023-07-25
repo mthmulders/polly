@@ -141,7 +141,7 @@
                 <artifactId>spotless-maven-plugin</artifactId>
                 <configuration>
                     <sql>
-                        <dbeaver></dbeaver>
+                        <dbeaver />
                         <includes>
                             <include>src/main/resources/db/**/**sql</include>
                             <include>src/test/resources/db/**/**sql</include>

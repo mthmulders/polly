@@ -38,7 +38,8 @@ public class ShowPollController {
     @Path("/{slug}")
     @Produces("text/html; charset=UTF-8")
     public Response show(@PathParam("slug") String slug) {
-        return pollRepository.findBySlug(slug)
+        return pollRepository
+                .findBySlug(slug)
                 .map(this::populateModelAndPrepareResponse)
                 .orElse(Response.status(Response.Status.NOT_FOUND).build());
     }

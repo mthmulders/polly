@@ -4,13 +4,12 @@ import it.mulders.polly.domain.polls.Poll;
 import it.mulders.polly.web.krazo.ApplicationUrlHelper;
 import it.mulders.polly.web.test.InMemoryPollRepository;
 import jakarta.ws.rs.core.Response;
+import java.util.Set;
 import org.assertj.core.api.WithAssertions;
 import org.eclipse.krazo.core.ModelsImpl;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
-
-import java.util.Set;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class ShowPollControllerTest implements WithAssertions {

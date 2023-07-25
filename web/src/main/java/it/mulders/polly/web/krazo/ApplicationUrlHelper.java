@@ -15,8 +15,7 @@ public class ApplicationUrlHelper {
     @Inject
     private MvcContext mvcContext;
 
-    public ApplicationUrlHelper() {
-    }
+    public ApplicationUrlHelper() {}
 
     ApplicationUrlHelper(ConfigurationService configurationService, MvcContext mvcContext) {
         this.configurationService = configurationService;
@@ -26,14 +25,9 @@ public class ApplicationUrlHelper {
     public String voteUrlForPoll(Poll poll) {
         var applicationUrl = configurationService.applicationUrl();
 
-        var params = Map.of(
-                "slug", (Object) poll.slug()
-        );
+        var params = Map.of("slug", (Object) poll.slug());
         var voteUrl = mvcContext.uri("VoteController#displayVotePage", params);
 
-        return "%s%s".formatted(
-                applicationUrl.toString(),
-                voteUrl
-        );
+        return "%s%s".formatted(applicationUrl.toString(), voteUrl);
     }
 }

@@ -4,5 +4,4 @@ import jakarta.ws.rs.ApplicationPath;
 import jakarta.ws.rs.core.Application;
 
 @ApplicationPath("/")
-public class PollyApplication extends Application {
-}
+public class PollyApplication extends Application {}

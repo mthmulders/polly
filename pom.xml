@@ -27,7 +27,9 @@
         <junit.jupiter.version>5.10.0</junit.jupiter.version>
         <postgresql.jdbc.version>42.6.0</postgresql.jdbc.version>
 
+        <!-- spotless:off -->
         <jacocoArgLine></jacocoArgLine>
+        <!-- spotless:on -->
     </properties>
 
     <dependencyManagement>
@@ -170,7 +172,7 @@
                             <palantirJavaFormat>
                                 <version>2.28.0</version>
                             </palantirJavaFormat>
-                            <toggleOffOn></toggleOffOn>
+                            <toggleOffOn />
                         </java>
                         <markdown>
                             <excludes>
@@ -179,14 +181,18 @@
                             <includes>
                                 <include>**/*.md</include>
                             </includes>
-                            <flexmark></flexmark>
+                            <flexmark />
+                            <toggleOffOn />
                         </markdown>
                         <pom>
                             <sortPom>
+                                <expandEmptyElements>false</expandEmptyElements>
                                 <indentSchemaLocation>true</indentSchemaLocation>
                                 <keepBlankLines>true</keepBlankLines>
                                 <nrOfIndentSpace>4</nrOfIndentSpace>
+                                <spaceBeforeCloseEmptyElement>true</spaceBeforeCloseEmptyElement>
                             </sortPom>
+                            <toggleOffOn />
                         </pom>
                     </configuration>
                     <executions>
@@ -267,7 +273,7 @@
                     ${project.basedir}/target/site/jacoco-it/jacoco.xml
                 </sonar.coverage.jacoco.xmlReportPaths>
                 <!-- spotless:on -->
-                <sonar.coverage.exclusions> **/*Entity*.*</sonar.coverage.exclusions>
+                <sonar.coverage.exclusions>**/*Entity*.*</sonar.coverage.exclusions>
             </properties>
             <build>
                 <plugins>

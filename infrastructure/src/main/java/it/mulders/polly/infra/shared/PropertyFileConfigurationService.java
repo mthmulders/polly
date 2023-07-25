@@ -30,8 +30,8 @@ public class PropertyFileConfigurationService implements ConfigurationService {
 
     void loadProperties(final String configFileLocation) {
         if (configFileLocation == null) {
-            logger.severe(
-                    () -> "Could not read configuration. Specify a path to the configuration file with the %s environment variable"
+            logger.severe(() ->
+                    "Could not read configuration. Specify a path to the configuration file with the %s environment variable"
                             .formatted(CONFIG_PATH_VARIABLE));
             throw new IllegalArgumentException("Could not read configuration, no configuration file given");
         }
@@ -39,7 +39,8 @@ public class PropertyFileConfigurationService implements ConfigurationService {
         logger.info("Loading configuration file %s".formatted(configFileLocation));
         try (var input = Files.newInputStream(Paths.get(configFileLocation))) {
             properties.load(input);
-            logger.info(() -> "%d configuration value(s) loaded from %s".formatted(properties.size(), configFileLocation));
+            logger.info(
+                    () -> "%d configuration value(s) loaded from %s".formatted(properties.size(), configFileLocation));
         } catch (IOException e) {
             logger.log(Level.SEVERE, e, () -> "Could not read configuration from %s".formatted(configFileLocation));
             throw new IllegalArgumentException(
