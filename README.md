@@ -16,7 +16,7 @@ Polly is a personal pet project with one main goal
 In addition, I use this project to:
 
 1. further experiment with interesting technologies.
-[ConfBuddy](https://github.com/mthmulders/confbuddy) remains my main pet project for these technologies.
+   [ConfBuddy](https://github.com/mthmulders/confbuddy) remains my main pet project for these technologies.
 
 ## Technologies
 
@@ -27,6 +27,7 @@ The project uses the following technologies
 - [Playwright](https://playwright.dev/java)
 
 ## Documentation
+
 All documentation is available at the [documentation site](https://mthmulders.github.io/polly/).
 
 ## License
