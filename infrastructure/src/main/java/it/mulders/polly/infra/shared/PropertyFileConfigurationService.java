@@ -31,7 +31,7 @@ public class PropertyFileConfigurationService implements ConfigurationService {
     void loadProperties(final String configFileLocation) {
         if (configFileLocation == null) {
             logger.severe(
-                    "Could not read configuration. Specify a path to the configuration file with the %s environment variable"
+                    () -> "Could not read configuration. Specify a path to the configuration file with the %s environment variable"
                             .formatted(CONFIG_PATH_VARIABLE));
             throw new IllegalArgumentException("Could not read configuration, no configuration file given");
         }
@@ -39,9 +39,9 @@ public class PropertyFileConfigurationService implements ConfigurationService {
         logger.info("Loading configuration file %s".formatted(configFileLocation));
         try (var input = Files.newInputStream(Paths.get(configFileLocation))) {
             properties.load(input);
-            logger.info("%d configuration value(s) loaded from %s".formatted(properties.size(), configFileLocation));
+            logger.info(() -> "%d configuration value(s) loaded from %s".formatted(properties.size(), configFileLocation));
         } catch (IOException e) {
-            logger.log(Level.SEVERE, "Could not read configuration from %s".formatted(configFileLocation), e);
+            logger.log(Level.SEVERE, e, () -> "Could not read configuration from %s".formatted(configFileLocation));
             throw new IllegalArgumentException(
                     "Could not read configuration, " + configFileLocation + " could not be read", e);
         }
@@ -55,7 +55,7 @@ public class PropertyFileConfigurationService implements ConfigurationService {
             return new URL(applicationUrl);
         } catch (MalformedURLException e) {
             var msg = "Value '%s' for configuration setting '%s' is not a valid URL".formatted(applicationUrl, key);
-            logger.log(Level.SEVERE, msg, e);
+            logger.log(Level.SEVERE, e, () -> msg);
             throw new IllegalArgumentException(msg);
         }
     }
