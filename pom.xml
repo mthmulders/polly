@@ -222,10 +222,10 @@
                     <version>1.14.2</version>
                     <configuration>
                         <excludedClasses>
-                            <excludedClass>**/*Entity</excludedClass>
+                            <excludedClass>it.mulders.polly.**.*Entity</excludedClass>
                         </excludedClasses>
                         <excludedTestClasses>
-                            <excludedTestClass>**/*IT</excludedTestClass>
+                            <excludedTestClass>it.mulders.polly.**.*IT</excludedTestClass>
                         </excludedTestClasses>
                         <outputFormats>
                             <format>${pit.format}</format>
