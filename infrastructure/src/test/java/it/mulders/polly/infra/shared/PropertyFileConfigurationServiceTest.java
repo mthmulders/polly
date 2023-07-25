@@ -19,7 +19,7 @@ class PropertyFileConfigurationServiceTest implements WithAssertions {
     void when_config_path_not_existing_should_fail() {
         assertThatThrownBy(() -> service.loadProperties("non-existing.properties"))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("non-existing.properties could not be read");
+                .hasMessageContaining("not read configuration from non-existing.properties");
     }
 
     @Test

@@ -42,9 +42,9 @@ public class PropertyFileConfigurationService implements ConfigurationService {
             logger.info(
                     () -> "%d configuration value(s) loaded from %s".formatted(properties.size(), configFileLocation));
         } catch (IOException e) {
-            logger.log(Level.SEVERE, e, () -> "Could not read configuration from %s".formatted(configFileLocation));
-            throw new IllegalArgumentException(
-                    "Could not read configuration, " + configFileLocation + " could not be read", e);
+            var msg = "Could not read configuration from %s".formatted(configFileLocation);
+            logger.log(Level.SEVERE, msg, e);
+            throw new IllegalArgumentException(msg);
         }
     }
 
