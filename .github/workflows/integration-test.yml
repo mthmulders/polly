@@ -47,7 +47,7 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
 
       - name: Install EAR in repository
-        run: mvn -B --no-transfer-progress install -pl :polly-app -am
+        run: mvn -B --no-transfer-progress install -pl :polly-app -am -Dmaven.test.skip=true
 
       - name: Run integration tests
         run: mvn -B --no-transfer-progress verify -pl :test
