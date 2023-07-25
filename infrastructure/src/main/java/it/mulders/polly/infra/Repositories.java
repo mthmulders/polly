@@ -1,7 +1,7 @@
 package it.mulders.polly.infra;
 
-import it.mulders.polly.domain.polls.PollInstanceRepository;
-import it.mulders.polly.infra.polls.JpaPollInstanceRepository;
+import it.mulders.polly.domain.polls.PollRepository;
+import it.mulders.polly.infra.polls.JpaPollRepository;
 import it.mulders.polly.infra.polls.PollMapper;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Produces;
@@ -15,7 +15,7 @@ public class Repositories {
 
     @ApplicationScoped
     @Produces
-    public PollInstanceRepository pollInstanceRepository(final PollMapper pollMapper) {
-        return new JpaPollInstanceRepository(entityManager, pollMapper);
+    public PollRepository pollInstanceRepository(final PollMapper pollMapper) {
+        return new JpaPollRepository(entityManager, pollMapper);
     }
 }

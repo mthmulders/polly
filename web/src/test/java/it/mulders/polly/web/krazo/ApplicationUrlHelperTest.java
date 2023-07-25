@@ -1,7 +1,6 @@
 package it.mulders.polly.web.krazo;
 
 import it.mulders.polly.domain.polls.Poll;
-import it.mulders.polly.domain.polls.PollInstance;
 import jakarta.mvc.MvcContext;
 import jakarta.servlet.ServletContext;
 import org.assertj.core.api.WithAssertions;
@@ -24,17 +23,11 @@ import java.net.URL;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
-import static org.junit.jupiter.api.Assumptions.assumingThat;
 
 class ApplicationUrlHelperTest implements WithAssertions {
     private final MvcContext mvcContext = new MvcContextImpl();
-//    private final MockHttpServletRequest request = new MockHttpServletRequest();
-//    private final ApplicationUrlHelper helper = new ApplicationUrlHelper(mvcContext, request);
 
-    private final PollInstance instance = new PollInstance(
-            new Poll("That's the question", "my-question"),
-            "my-instance"
-    );
+    private final Poll poll = new Poll("That's the question", "my-question");
 
     @ArgumentsSource(ApplicationUrlTestArgumentsProvider.class)
     @ParameterizedTest(name = "Should generate correct URL {0}")
@@ -51,16 +44,16 @@ class ApplicationUrlHelperTest implements WithAssertions {
         request.setRequestURI(requestUri.getPath());
         assumeTrue(request.getRequestURL().toString().equals(requestUrl));
 
-        var controllerMethod = Class.forName("it.mulders.polly.web.display.VoteController").getDeclaredMethod("displayVotePage", String.class, String.class);
-        setApplicationUris(prepareApplicationUris("/vote/{poll-slug}/{instance-slug}", controllerMethod));
+        var controllerMethod = Class.forName("it.mulders.polly.web.display.VoteController").getDeclaredMethod("displayVotePage", String.class);
+        setApplicationUris(prepareApplicationUris("/vote/{slug}", controllerMethod));
 
-        var result = new ApplicationUrlHelper(mvcContext, request).voteUrlForPollInstance(instance);
+        var result = new ApplicationUrlHelper(mvcContext, request).voteUrlForPoll(poll);
 
         assertThat(result).isEqualTo(expectedResult);
     }
 
     private String determineContextPath(final String requestUrl) throws MalformedURLException {
-        var appRoot = requestUrl.replace("/show/my-question/my-instance", "");
+        var appRoot = requestUrl.replace("/show/my-question", "");
         var url = new URL(appRoot);
         return url.getPath();
     }
@@ -69,17 +62,17 @@ class ApplicationUrlHelperTest implements WithAssertions {
         @Override
         public Stream<? extends Arguments> provideArguments(final ExtensionContext context) {
             return Stream.of(
-                    Arguments.of("on HTTP with standard port", "http://localhost/show/my-question/my-instance", "http://localhost/vote/my-question/my-instance"),
-                    Arguments.of("on HTTP with context and standard port", "http://localhost/polly/show/my-question/my-instance", "http://localhost/polly/vote/my-question/my-instance"),
+                    Arguments.of("on HTTP with standard port", "http://localhost/show/my-question", "http://localhost/vote/my-question"),
+                    Arguments.of("on HTTP with context and standard port", "http://localhost/polly/show/my-question", "http://localhost/polly/vote/my-question"),
 
-                    Arguments.of("on HTTP with non-standard port", "http://localhost:9080/show/my-question/my-instance", "http://localhost:9080/vote/my-question/my-instance"),
-                    Arguments.of("on HTTP with context and non-standard port", "http://localhost:9080/polly/show/my-question/my-instance", "http://localhost:9080/polly/vote/my-question/my-instance"),
+                    Arguments.of("on HTTP with non-standard port", "http://localhost:9080/show/my-question", "http://localhost:9080/vote/my-question"),
+                    Arguments.of("on HTTP with context and non-standard port", "http://localhost:9080/polly/show/my-question", "http://localhost:9080/polly/vote/my-question"),
 
-                    Arguments.of("on HTTPS with standard port", "https://localhost/show/my-question/my-instance", "https://localhost/vote/my-question/my-instance"),
-                    Arguments.of("on HTTPS with non-standard port", "https://localhost:9443/show/my-question/my-instance", "https://localhost:9443/vote/my-question/my-instance"),
+                    Arguments.of("on HTTPS with standard port", "https://localhost/show/my-question", "https://localhost/vote/my-question"),
+                    Arguments.of("on HTTPS with non-standard port", "https://localhost:9443/show/my-question", "https://localhost:9443/vote/my-question"),
 
-                    Arguments.of("on HTTPS with non-standard port", "https://localhost:9443/show/my-question/my-instance", "https://localhost:9443/vote/my-question/my-instance"),
-                    Arguments.of("on HTTPS with context and non-standard port", "https://localhost:9443/polly/show/my-question/my-instance", "https://localhost:9443/polly/vote/my-question/my-instance")
+                    Arguments.of("on HTTPS with non-standard port", "https://localhost:9443/show/my-question", "https://localhost:9443/vote/my-question"),
+                    Arguments.of("on HTTPS with context and non-standard port", "https://localhost:9443/polly/show/my-question", "https://localhost:9443/polly/vote/my-question")
             );
         }
     }

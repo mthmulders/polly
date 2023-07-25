@@ -1,7 +1,7 @@
 package it.mulders.polly.web.display;
 
-import it.mulders.polly.domain.polls.PollInstance;
-import it.mulders.polly.domain.polls.PollInstanceRepository;
+import it.mulders.polly.domain.polls.Poll;
+import it.mulders.polly.domain.polls.PollRepository;
 import it.mulders.polly.web.krazo.ApplicationUrlHelper;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
@@ -21,31 +21,31 @@ public class ShowPollController {
     private Models models;
 
     @Inject
-    private PollInstanceRepository pollInstanceRepository;
+    private PollRepository pollRepository;
 
     @Inject
     private ApplicationUrlHelper urlHelper;
 
     public ShowPollController() {}
 
-    ShowPollController(Models models, PollInstanceRepository pollInstanceRepository, ApplicationUrlHelper urlHelper) {
+    ShowPollController(Models models, PollRepository pollRepository, ApplicationUrlHelper urlHelper) {
         this.models = models;
-        this.pollInstanceRepository = pollInstanceRepository;
+        this.pollRepository = pollRepository;
         this.urlHelper = urlHelper;
     }
 
     @GET
-    @Path("/{poll-slug}/{instance-slug}")
+    @Path("/{slug}")
     @Produces("text/html; charset=UTF-8")
-    public Response show(@PathParam("poll-slug") String pollSlug, @PathParam("instance-slug") String instanceSlug) {
-        return pollInstanceRepository.findByPollSlugAndInstanceSlug(pollSlug, instanceSlug)
+    public Response show(@PathParam("slug") String slug) {
+        return pollRepository.findBySlug(slug)
                 .map(this::populateModelAndPrepareResponse)
                 .orElse(Response.status(Response.Status.NOT_FOUND).build());
     }
 
-    private Response populateModelAndPrepareResponse(final PollInstance pollInstance) {
-        models.put("pollInstance", pollInstance);
-        models.put("voteUrl", urlHelper.voteUrlForPollInstance(pollInstance));
+    private Response populateModelAndPrepareResponse(final Poll poll) {
+        models.put("poll", poll);
+        models.put("voteUrl", urlHelper.voteUrlForPoll(poll));
         return Response.ok("polls/show.jsp").build();
     }
 }

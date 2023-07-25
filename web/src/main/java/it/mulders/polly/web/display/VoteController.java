@@ -1,8 +1,7 @@
 package it.mulders.polly.web.display;
 
-import it.mulders.polly.domain.polls.PollInstance;
-import it.mulders.polly.domain.polls.PollInstanceRepository;
-import it.mulders.polly.web.krazo.ApplicationUrlHelper;
+import it.mulders.polly.domain.polls.Poll;
+import it.mulders.polly.domain.polls.PollRepository;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.mvc.Controller;
@@ -21,26 +20,26 @@ public class VoteController {
     private Models models;
 
     @Inject
-    private PollInstanceRepository pollInstanceRepository;
+    private PollRepository pollRepository;
 
     public VoteController() {}
 
-    VoteController(Models models, PollInstanceRepository pollInstanceRepository) {
+    VoteController(Models models, PollRepository pollRepository) {
         this.models = models;
-        this.pollInstanceRepository = pollInstanceRepository;
+        this.pollRepository = pollRepository;
     }
 
     @GET
-    @Path("/{poll-slug}/{instance-slug}")
+    @Path("/{slug}")
     @Produces("text/html; charset=UTF-8")
-    public Response displayVotePage(@PathParam("poll-slug") String pollSlug, @PathParam("instance-slug") String instanceSlug) {
-        return pollInstanceRepository.findByPollSlugAndInstanceSlug(pollSlug, instanceSlug)
+    public Response displayVotePage(@PathParam("slug") String slug) {
+        return pollRepository.findBySlug(slug)
                 .map(this::populateModelAndPrepareResponse)
                 .orElse(Response.status(Response.Status.NOT_FOUND).build());
     }
 
-    private Response populateModelAndPrepareResponse(final PollInstance pollInstance) {
-        models.put("pollInstance", pollInstance);
+    private Response populateModelAndPrepareResponse(final Poll poll) {
+        models.put("poll", poll);
         return Response.ok("polls/vote.jsp").build();
     }
 }
