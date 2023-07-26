@@ -17,6 +17,13 @@ class PropertyFileConfigurationServiceTest implements WithAssertions {
 
     private final PropertyFileConfigurationService service = new PropertyFileConfigurationService();
 
+    @Test
+    void should_read_default_paths() {
+        service.loadConfigurationProperties();
+
+        assertThat(service.applicationUrl()).isNotNull();
+    }
+
     @DisplayName("Configuration properties")
     @Nested
     class ConfigurationProperties {

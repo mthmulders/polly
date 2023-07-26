@@ -168,6 +168,16 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <environmentVariables>
+                        <!-- Necessary for PropertyFileConfigurationServiceTest -->
+                        <POLLY_CONFIGURATION_FILE>${project.basedir}/src/test/resources/valid_configuration.properties</POLLY_CONFIGURATION_FILE>
+                    </environmentVariables>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <configuration>
                     <argLine>
