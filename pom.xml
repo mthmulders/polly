@@ -226,7 +226,7 @@
                     <groupId>org.pitest</groupId>
                     <artifactId>pitest-maven</artifactId>
                     <version>1.14.2</version>
-                    <configuration>
+                    <configuration combine.children="append">
                         <excludedClasses>
                             <excludedClass>it.mulders.polly.**.*Entity</excludedClass>
                         </excludedClasses>

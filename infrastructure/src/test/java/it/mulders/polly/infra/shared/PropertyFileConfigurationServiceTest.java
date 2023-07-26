@@ -22,6 +22,8 @@ class PropertyFileConfigurationServiceTest implements WithAssertions {
         service.loadConfigurationProperties();
 
         assertThat(service.applicationUrl()).isNotNull();
+        assertThat(service.applicationVersion()).isNotNull();
+        assertThat(service.gitVersion()).isNotNull();
     }
 
     @DisplayName("Configuration properties")
