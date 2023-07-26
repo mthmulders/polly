@@ -1,7 +1,5 @@
 package it.mulders.polly.domain.shared;
 
-import it.mulders.polly.domain.polls.Poll;
-
 import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -85,7 +83,8 @@ public sealed interface Result<T> {
             if (obj == null) return false;
             if (!(obj instanceof Result.Success<?> other)) return false;
 
-            return (this.value == null && other.value == null) || (this.value != null && this.value.equals(other.value));
+            return (this.value == null && other.value == null)
+                    || (this.value != null && this.value.equals(other.value));
         }
 
         @Override

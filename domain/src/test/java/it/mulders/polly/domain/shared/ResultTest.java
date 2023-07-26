@@ -1,8 +1,6 @@
 package it.mulders.polly.domain.shared;
 
-import it.mulders.polly.domain.polls.Poll;
 import nl.jqno.equalsverifier.EqualsVerifier;
-import nl.jqno.equalsverifier.Warning;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -25,8 +23,7 @@ class ResultTest implements WithAssertions {
 
     @Test
     void honours_equals_contract() {
-        EqualsVerifier.forClass(Result.class)
-                .verify();
+        EqualsVerifier.forClass(Result.class).verify();
     }
 
     @Nested
@@ -72,8 +69,7 @@ class ResultTest implements WithAssertions {
 
         @Test
         void honours_equals_contract() {
-            EqualsVerifier.forClass(Result.Success.class)
-                    .verify();
+            EqualsVerifier.forClass(Result.Success.class).verify();
         }
     }
 
