@@ -38,17 +38,7 @@ class ApplicationUrlHelperTest implements WithAssertions {
                 .getDeclaredMethod("displayVotePage", String.class);
         setApplicationUris(prepareApplicationUris("/vote/{slug}", controllerMethod));
 
-        var configurationService = new ConfigurationService() {
-            @Override
-            public URL applicationUrl() {
-                try {
-                    return new URL(applicationUrl);
-                } catch (MalformedURLException e) {
-                    fail("Failed to prepare " + getClass(), e);
-                    return null;
-                }
-            }
-        };
+        var configurationService = new DummyConfigurationService(applicationUrl);
 
         var result = new ApplicationUrlHelper(configurationService, mvcContext).voteUrlForPoll(poll);
 
@@ -140,5 +130,33 @@ class ApplicationUrlHelperTest implements WithAssertions {
             fail("Failed to prepare " + getClass(), e);
         }
         return applicationUris;
+    }
+
+    private class DummyConfigurationService implements ConfigurationService {
+        private final String applicationUrl;
+
+        public DummyConfigurationService(String applicationUrl) {
+            this.applicationUrl = applicationUrl;
+        }
+
+        @Override
+        public URL applicationUrl() {
+            try {
+                return new URL(applicationUrl);
+            } catch (MalformedURLException e) {
+                fail("Failed to prepare " + getClass(), e);
+                return null;
+            }
+        }
+
+        @Override
+        public String applicationVersion() {
+            return null;
+        }
+
+        @Override
+        public String gitVersion() {
+            return null;
+        }
     }
 }
