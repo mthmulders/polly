@@ -14,6 +14,6 @@ public class InMemoryPollRepository implements PollRepository {
 
     @Override
     public Optional<Poll> findBySlug(String slug) {
-        return entities.stream().filter(poll -> slug.equals(poll.slug())).findAny();
+        return entities.stream().filter(poll -> slug.equals(poll.getSlug())).findAny();
     }
 }

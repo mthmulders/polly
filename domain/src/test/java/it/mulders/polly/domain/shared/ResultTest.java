@@ -1,5 +1,6 @@
 package it.mulders.polly.domain.shared;
 
+import nl.jqno.equalsverifier.EqualsVerifier;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -18,6 +19,11 @@ class ResultTest implements WithAssertions {
     @Test
     void resultOfThrowable_should_be_Failure() {
         assertThat(Result.of(new NullPointerException())).isInstanceOf(Result.Failure.class);
+    }
+
+    @Test
+    void honours_equals_contract() {
+        EqualsVerifier.forClass(Result.class).verify();
     }
 
     @Nested
@@ -60,6 +66,11 @@ class ResultTest implements WithAssertions {
         void can_have_no_value() {
             assertThat(new Result.Success<>().getValue()).isNull();
         }
+
+        @Test
+        void honours_equals_contract() {
+            EqualsVerifier.forClass(Result.Success.class).verify();
+        }
     }
 
     @Nested
@@ -101,6 +112,13 @@ class ResultTest implements WithAssertions {
         @Test
         void has_no_value() {
             assertThatThrownBy(() -> failure.getValue()).isInstanceOf(IllegalStateException.class);
+        }
+
+        @Test
+        void honours_equals_contract() {
+            EqualsVerifier.forClass(Result.Failure.class)
+                    .withNonnullFields("cause")
+                    .verify();
         }
     }
 }

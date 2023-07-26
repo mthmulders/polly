@@ -25,7 +25,7 @@ public class ApplicationUrlHelper {
     public String voteUrlForPoll(Poll poll) {
         var applicationUrl = configurationService.applicationUrl();
 
-        var params = Map.of("slug", (Object) poll.slug());
+        var params = Map.of("slug", (Object) poll.getSlug());
         var voteUrl = mvcContext.uri("VoteController#displayVotePage", params);
 
         return "%s%s".formatted(applicationUrl.toString(), voteUrl);

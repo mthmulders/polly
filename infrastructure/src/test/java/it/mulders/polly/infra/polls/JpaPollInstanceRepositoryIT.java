@@ -17,19 +17,20 @@ class JpaPollInstanceRepositoryIT extends AbstractJpaRepositoryTest<PollReposito
 
     @Test
     void lookup_using_slugs_should_succeed() {
-        preparePoll("test-poll");
+        preparePoll("What's up?", "test-poll");
 
         var result = repository.findBySlug("test-poll");
 
         assertThat(result).isPresent().hasValueSatisfying(poll -> {
-            assertThat(poll.slug()).isEqualTo("test-poll");
+            assertThat(poll.getSlug()).isEqualTo("test-poll");
+            assertThat(poll.getQuestion()).isEqualTo("What's up?");
         });
     }
 
-    private PollEntity preparePoll(String slug) {
+    private PollEntity preparePoll(String question, String slug) {
         var poll = new PollEntity();
         poll.setSlug(slug);
-        poll.setQuestion("What's up?");
+        poll.setQuestion(question);
 
         var transaction = entityManager.getTransaction();
         transaction.begin();
