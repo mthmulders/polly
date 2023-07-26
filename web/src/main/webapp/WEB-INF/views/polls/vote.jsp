@@ -4,4 +4,12 @@
 
 <layout:main title="${poll.slug}">
   <p>Question: <strong>${poll.question}</strong></p>
+  <p>
+    Your choices:
+    <ul>
+      <c:forEach items="${poll.options}" var="option">
+        <li>${option.displayValue}</li>
+      </c:forEach>
+    </ul>
+  </p>
 </layout:main>
