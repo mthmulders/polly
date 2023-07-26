@@ -3,8 +3,10 @@ package it.mulders.polly.infra.shared;
 import java.net.MalformedURLException;
 import java.net.URL;
 import org.assertj.core.api.WithAssertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -16,32 +18,72 @@ class PropertyFileConfigurationServiceTest implements WithAssertions {
     private final PropertyFileConfigurationService service = new PropertyFileConfigurationService();
 
     @Test
-    void when_config_path_not_existing_should_fail() {
-        assertThatThrownBy(() -> service.loadProperties("non-existing.properties"))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("not read configuration from non-existing.properties");
+    void should_read_default_paths() {
+        service.loadConfigurationProperties();
+
+        assertThat(service.applicationUrl()).isNotNull();
+        assertThat(service.applicationVersion()).isNotNull();
+        assertThat(service.gitVersion()).isNotNull();
     }
 
-    @Test
-    void when_config_path_not_specified_should_fail() {
-        assertThatThrownBy(() -> service.loadProperties(null))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("no configuration file given");
+    @DisplayName("Configuration properties")
+    @Nested
+    class ConfigurationProperties {
+
+        @Test
+        void when_config_path_not_existing_should_fail() {
+            assertThatThrownBy(() -> service.loadConfigurationProperties("non-existing.properties"))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessageContaining("not read configuration from non-existing.properties");
+        }
+
+        @Test
+        void when_config_path_not_specified_should_fail() {
+            assertThatThrownBy(() -> service.loadConfigurationProperties(null))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessageContaining("no configuration file given");
+        }
+
+        @Test
+        void should_read_url_from_valid_config() throws MalformedURLException {
+            service.loadConfigurationProperties(testClasspath + "/valid_configuration.properties");
+
+            assertThat(service.applicationUrl()).isEqualTo(new URL("http://localhost:9080/"));
+        }
+
+        @Test
+        void should_fail_on_invalid_config() throws MalformedURLException {
+            service.loadConfigurationProperties(testClasspath + "/invalid_configuration.properties");
+
+            assertThatThrownBy(() -> service.applicationUrl())
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessageContaining("foo");
+        }
     }
 
-    @Test
-    void should_read_url_from_valid_config() throws MalformedURLException {
-        service.loadProperties(testClasspath + "/valid_configuration.properties");
+    @DisplayName("Metadata properties")
+    @Nested
+    class MetadataProperties {
+        @Test
+        void when_metadata_path_not_existing_should_fail() {
+            assertThatThrownBy(() -> service.loadMetadataProperties("/non-existing.properties"))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessageContaining("non-existing.properties does not exist");
+        }
 
-        assertThat(service.applicationUrl()).isEqualTo(new URL("http://localhost:9080/"));
-    }
+        @Test
+        void when_metadata_path_not_specified_should_fail() {
+            assertThatThrownBy(() -> service.loadMetadataProperties(null))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessageContaining("No metadata resource supplied");
+        }
 
-    @Test
-    void should_fail_on_invalid_config() throws MalformedURLException {
-        service.loadProperties(testClasspath + "/invalid_configuration.properties");
+        @Test
+        void should_read_application_version_from_valid_metadata() throws MalformedURLException {
+            service.loadMetadataProperties("/valid_metadata.properties");
 
-        assertThatThrownBy(() -> service.applicationUrl())
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("foo");
+            assertThat(service.applicationVersion()).isEqualTo("42");
+            assertThat(service.gitVersion()).isEqualTo("0123456");
+        }
     }
 }
