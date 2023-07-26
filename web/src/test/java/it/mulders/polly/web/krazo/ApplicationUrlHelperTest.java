@@ -9,6 +9,7 @@ import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.Collections;
 import java.util.stream.Stream;
 import org.assertj.core.api.WithAssertions;
 import org.eclipse.krazo.MvcContextImpl;
@@ -24,7 +25,7 @@ import org.springframework.mock.web.MockServletContext;
 class ApplicationUrlHelperTest implements WithAssertions {
     private final MvcContext mvcContext = new MvcContextImpl();
 
-    private final Poll poll = new Poll("That's the question", "my-question");
+    private final Poll poll = new Poll("That's the question", "my-question", Collections.emptySet());
 
     @ArgumentsSource(ApplicationUrlTestArgumentsProvider.class)
     @ParameterizedTest(name = "Should generate correct URL {0}")
