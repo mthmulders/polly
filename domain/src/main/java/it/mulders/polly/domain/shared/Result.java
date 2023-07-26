@@ -1,5 +1,8 @@
 package it.mulders.polly.domain.shared;
 
+import it.mulders.polly.domain.polls.Poll;
+
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -76,6 +79,19 @@ public sealed interface Result<T> {
         public T getOrElseConvertCause(Function<Throwable, T> converter) {
             return this.value;
         }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (obj == null) return false;
+            if (!(obj instanceof Result.Success<?> other)) return false;
+
+            return (this.value == null && other.value == null) || (this.value != null && this.value.equals(other.value));
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
     }
 
     @SuppressWarnings("java:S6206") // Do not suggest to turn this into a Record
@@ -83,7 +99,7 @@ public sealed interface Result<T> {
         private final Throwable cause;
 
         public Failure(final Throwable cause) {
-            this.cause = cause;
+            this.cause = Objects.requireNonNull(cause, "Cause must not be null");
         }
 
         @Override
@@ -114,6 +130,19 @@ public sealed interface Result<T> {
         @Override
         public T getOrElseConvertCause(Function<Throwable, T> converter) {
             return converter.apply(cause);
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (obj == null) return false;
+            if (!(obj instanceof Result.Failure<?> other)) return false;
+
+            return this.cause.equals(other.cause);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(this.cause);
         }
     }
 }
