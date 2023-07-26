@@ -9,7 +9,7 @@ import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-class JpaPollInstanceRepositoryIT extends AbstractJpaRepositoryTest<PollRepository, JpaPollRepository> {
+class JpaPollRepositoryIT extends AbstractJpaRepositoryTest<PollRepository, JpaPollRepository> {
     @BeforeEach
     void prepare() {
         prepare(em -> new JpaPollRepository(em, MapStructHelper.getMapper(PollMapper.class)));
@@ -17,13 +17,13 @@ class JpaPollInstanceRepositoryIT extends AbstractJpaRepositoryTest<PollReposito
 
     @Test
     void lookup_using_slugs_should_succeed() {
-        preparePoll("What's up?", "test-poll");
+        var original = preparePoll("What's up?", "test-poll");
 
         var result = repository.findBySlug("test-poll");
 
         assertThat(result).isPresent().hasValueSatisfying(poll -> {
-            assertThat(poll.getSlug()).isEqualTo("test-poll");
-            assertThat(poll.getQuestion()).isEqualTo("What's up?");
+            assertThat(poll.getSlug()).isEqualTo(original.getSlug());
+            assertThat(poll.getQuestion()).isEqualTo(original.getQuestion());
         });
     }
 
