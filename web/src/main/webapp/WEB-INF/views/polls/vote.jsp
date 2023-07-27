@@ -8,7 +8,7 @@
     Your choices:
     <ul>
       <c:forEach items="${poll.options}" var="option">
-        <li>${option.displayValue}</li>
+        <li>${option.displayValue()}</li>
       </c:forEach>
     </ul>
   </p>
