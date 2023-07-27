@@ -27,9 +27,8 @@
 
             <hr />
 
-            Polly ${systemInfo.applicationVersion} is made with ❤️, ☕, <a href="https://dev.java/" target="_blank">Java ${systemInfo.javaVersion}</a> &amp; <a href="https://jakarta.ee/" target="_blank">Jakarta EE 10</a>.
-            Proudly powered by ${systemInfo.javaRuntime}.
-            Built from reversion ${systemInfo.gitVersion}.
+            Polly ${systemInfo.applicationVersion} (rev ${systemInfo.gitVersion}) is made with ❤️ + ☕ + <a href="https://dev.java/" target="_blank">Java ${systemInfo.javaVersion}</a> + <a href="https://jakarta.ee/" target="_blank">Jakarta EE 10</a>.
+            Proudly running on ${systemInfo.javaRuntime}.
         </main>
     </div>
 </body>
