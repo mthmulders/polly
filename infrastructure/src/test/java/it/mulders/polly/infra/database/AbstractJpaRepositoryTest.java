@@ -2,6 +2,7 @@ package it.mulders.polly.infra.database;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Persistence;
+import jakarta.persistence.RollbackException;
 import java.util.Map;
 import java.util.function.Function;
 import org.assertj.core.api.WithAssertions;
@@ -52,6 +53,25 @@ public abstract class AbstractJpaRepositoryTest<Int, Impl extends Int> implement
         this.repository = entityManagerCreator.apply(this.entityManager);
 
         prepareHelperEntities(entityManager);
+    }
+
+    protected <T> T persist(T entity) {
+        var transaction = entityManager.getTransaction();
+        transaction.begin();
+
+        try {
+            entityManager.persist(entity);
+            transaction.commit();
+            return entity;
+        } catch (RollbackException re) {
+            var cause = re.getCause();
+            fail("Could not prepare database entities", cause);
+            return (T) null;
+        } catch (Throwable t) {
+            transaction.rollback();
+            fail("Could not prepare database entities", t);
+            return (T) null;
+        }
     }
 
     /**
