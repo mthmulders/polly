@@ -4,6 +4,7 @@ import it.mulders.polly.domain.polls.Poll;
 import it.mulders.polly.web.krazo.ApplicationUrlHelper;
 import it.mulders.polly.web.test.InMemoryPollRepository;
 import jakarta.ws.rs.core.Response;
+import java.util.Collections;
 import java.util.Set;
 import org.assertj.core.api.WithAssertions;
 import org.eclipse.krazo.core.ModelsImpl;
@@ -35,7 +36,7 @@ class ShowPollControllerTest implements WithAssertions {
     @Test
     void with_matching_poll_instance_should_return_OK() {
         var models = new ModelsImpl();
-        var poll = new Poll("", "whatever");
+        var poll = new Poll("", "whatever", Collections.emptySet());
         var repository = new InMemoryPollRepository(Set.of(poll));
         var controller = new ShowPollController(models, repository, urlHelper);
 
@@ -47,7 +48,7 @@ class ShowPollControllerTest implements WithAssertions {
     @Test
     void with_matching_poll_instance_should_populate_model() {
         var models = new ModelsImpl();
-        var poll = new Poll("", "whatever");
+        var poll = new Poll("", "whatever", Collections.emptySet());
         var repository = new InMemoryPollRepository(Set.of(poll));
         var controller = new ShowPollController(models, repository, urlHelper);
 
