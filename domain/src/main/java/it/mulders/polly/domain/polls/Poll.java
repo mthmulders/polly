@@ -34,9 +34,10 @@ public class Poll {
     @Override
     public final boolean equals(Object obj) {
         if (obj == null) return false;
+        if (obj == this) return true;
         if (!(obj instanceof Poll other)) return false;
 
-        return this.question.equals(other.question) && this.slug.equals(other.slug) && this.options.equals(other.options);
+        return Objects.equals(this.question, other.question) && Objects.equals(this.slug, other.slug) && Objects.equals(this.options, other.options);
     }
 
     @Override
