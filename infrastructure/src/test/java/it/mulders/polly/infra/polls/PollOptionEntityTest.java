@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 class PollOptionEntityTest extends AbstractEntityTest implements WithAssertions {
     @Test
     void honours_equals_contract() {
-        equalsVerifier.forClass(PollOptionEntity.class)
-                .verify();
+        equalsVerifier.forClass(PollOptionEntity.class).verify();
     }
 }
