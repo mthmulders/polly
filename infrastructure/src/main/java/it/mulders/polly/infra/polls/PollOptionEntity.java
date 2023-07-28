@@ -61,4 +61,9 @@ public class PollOptionEntity {
     public int hashCode() {
         return getClass().hashCode();
     }
+
+    @Override
+    public String toString() {
+        return "PollOptionEntity{id=%s}".formatted(this.id);
+    }
 }
