@@ -1,5 +1,7 @@
 package it.mulders.polly.domain.polls;
 
+import it.mulders.polly.domain.impl.RandomStringUtils;
+import it.mulders.polly.domain.votes.Ballot;
 import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
@@ -29,6 +31,10 @@ public class Poll {
 
     public Set<Option> getOptions() {
         return Collections.unmodifiableSet(options);
+    }
+
+    public Ballot createBallot() {
+        return new Ballot(this, RandomStringUtils.generateRandomIdentifier(8));
     }
 
     @Override
