@@ -31,8 +31,7 @@
     <webApplication location="polly.war" name="polly" contextRoot="/" />
 
     <!-- Enable detailed logging for JPA.
-    <logging traceSpecification="eclipselink=all" />
-    <logging traceSpecification="eclipselink.sql=all" />
+    <logging traceSpecification="eclipselink=all:eclipselink.sql=all" />
      -->
 
     <applicationMonitor dropinsEnabled="false" />
