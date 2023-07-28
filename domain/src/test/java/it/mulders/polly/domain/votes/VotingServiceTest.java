@@ -25,7 +25,7 @@ class VotingServiceTest implements WithAssertions {
 
     @Test
     void should_store_ballot() {
-        var poll = new Poll("How are you?", "how-are-you", Collections.emptySet());
+        var poll = new Poll("How are you?", "should-store-ballot", Collections.emptySet());
 
         var result = votingService.createBallotFor(poll);
 

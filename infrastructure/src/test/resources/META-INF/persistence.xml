@@ -7,6 +7,7 @@
         <!-- According to the JPA spec, in a Java SE environment you *must* list all classes -->
         <class>it.mulders.polly.infra.polls.PollEntity</class>
         <class>it.mulders.polly.infra.polls.PollOptionEntity</class>
+        <class>it.mulders.polly.infra.votes.BallotEntity</class>
 
         <!--
         <properties>
