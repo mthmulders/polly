@@ -47,4 +47,18 @@ public class PollOptionEntity {
     public void setDisplayValue(String displayValue) {
         this.displayValue = displayValue;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) return false;
+        if (obj == this) return true;
+        if (!(obj instanceof PollOptionEntity other)) return false;
+
+        return id != null && id.equals(other.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

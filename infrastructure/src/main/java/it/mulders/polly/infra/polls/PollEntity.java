@@ -67,4 +67,18 @@ public class PollEntity {
     public void setOptions(Set<PollOptionEntity> options) {
         this.options = options;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) return false;
+        if (obj == this) return true;
+        if (!(obj instanceof PollEntity other)) return false;
+
+        return id != null && id.equals(other.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }
