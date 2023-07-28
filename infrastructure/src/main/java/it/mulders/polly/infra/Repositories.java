@@ -15,7 +15,7 @@ public class Repositories {
 
     @ApplicationScoped
     @Produces
-    public PollRepository pollInstanceRepository(final PollMapper pollMapper) {
+    public PollRepository pollRepository(final PollMapper pollMapper) {
         return new JpaPollRepository(entityManager, pollMapper);
     }
 }
