@@ -3,5 +3,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <layout:main title="Home">
-    This is <a href="https://github.com/mthmulders/polly" target="_blank">Polly</a> &mdash; happy to meet you!
+    This is <a href="https://github.com/mthmulders/polly" target="_blank" rel="noopener">Polly</a> &mdash; happy to meet you!
 </layout:main>
