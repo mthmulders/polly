@@ -3,6 +3,7 @@ package it.mulders.polly.infra.polls;
 import it.mulders.polly.domain.polls.Poll;
 import it.mulders.polly.domain.polls.PollRepository;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import java.util.Optional;
 
 public class JpaPollRepository implements PollRepository {
@@ -16,10 +17,13 @@ public class JpaPollRepository implements PollRepository {
 
     @Override
     public Optional<Poll> findBySlug(String slug) {
-        return em.createNamedQuery("Poll.findBySlug", PollEntity.class)
-                .setParameter("slug", slug)
-                .getResultStream()
-                .findAny()
-                .map(pollMapper::pollEntityToPoll);
+        try {
+            var entity = em.createNamedQuery("Poll.findBySlug", PollEntity.class)
+                    .setParameter("slug", slug)
+                    .getSingleResult();
+            return Optional.of(pollMapper.pollEntityToPoll(entity));
+        } catch (NoResultException nre) {
+            return Optional.empty();
+        }
     }
 }
