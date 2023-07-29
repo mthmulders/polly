@@ -16,9 +16,7 @@ import java.util.Set;
 import java.util.UUID;
 
 @Entity
-@NamedQuery(
-        name = "Poll.findBySlug",
-        query = "select p from PollEntity p left join fetch p.options as po where p.slug = :slug")
+@NamedQuery(name = "Poll.findBySlug", query = "select p from PollEntity p where p.slug = :slug")
 @Table(name = "poll")
 public class PollEntity {
     @Id
