@@ -17,8 +17,9 @@
         </fileset>
     </library>
 
-    <dataSource id="polly-datasource" jndiName="jdbc/polly-ds">
+    <dataSource id="polly-datasource" jndiName="jdbc/polly-ds" transactional="true">
         <jdbcDriver libraryRef="hsql-jdbc"
+                    javax.sql.XADataSource="org.hsqldb.jdbc.pool.JDBCXADataSource"
                     javax.sql.ConnectionPoolDataSource="org.hsqldb.jdbc.pool.JDBCPooledDataSource" />
         <properties URL="jdbc:hsqldb:mem:polly;sql.syntax_pgs=true;sql.enforce_size=false"
                     user="sa" />
