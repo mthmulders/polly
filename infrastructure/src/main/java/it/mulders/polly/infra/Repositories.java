@@ -18,13 +18,13 @@ public class Repositories {
 
     @ApplicationScoped
     @Produces
-    public PollRepository pollRepository(final PollMapper pollMapper) {
+    public PollRepository pollRepository(PollMapper pollMapper) {
         return new JpaPollRepository(entityManager, pollMapper);
     }
 
     @ApplicationScoped
     @Produces
-    public BallotRepository ballotRepository(final BallotMapper ballotMapper) {
+    public BallotRepository ballotRepository(BallotMapper ballotMapper) {
         return new JpaBallotRepository(entityManager, ballotMapper);
     }
 }
