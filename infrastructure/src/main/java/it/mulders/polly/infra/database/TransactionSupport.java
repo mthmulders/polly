@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 
 @RequestScoped
 public class TransactionSupport {
+    // TODO Do we actually need this class?
     private final Logger logger = Logger.getLogger(getClass().getName());
 
     @Resource
@@ -76,6 +77,7 @@ public class TransactionSupport {
             logger.log(Level.SEVERE, "The transaction manager encountered an unexpected error condition.", se);
             return Result.of(new TechnicalTransactionException());
         } catch (RollbackException re) {
+            // TODO Special case for when the cause of the Rollback is an JPA exception?
             logger.log(Level.SEVERE, "The transaction has been rolled back rather than committed.", re);
             return Result.of(new TransactionRolledBackException());
         } catch (HeuristicMixedException hme) {
