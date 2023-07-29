@@ -37,8 +37,6 @@ public class TransactionSupport {
         try {
             return Result.of(action.get());
         } catch (final Exception e) {
-            logger.log(Level.SEVERE, "Error running transaction", e);
-            userTransaction.rollback();
             return Result.of(e);
         }
     }
@@ -61,9 +59,18 @@ public class TransactionSupport {
         try {
             logger.fine("Running transaction.");
             final Result<T> result = tryRunAction(action);
-            logger.fine("Committing transaction.");
-            userTransaction.commit();
-            logger.fine("Transaction committed successfully.");
+
+            // Pattern matching for switch would've been great, but in Java 17, that's still in preview.
+            if (result instanceof Result.Success<T>) {
+                logger.fine("Committing transaction.");
+                userTransaction.commit();
+                logger.fine("Transaction committed successfully.");
+            } else {
+                logger.fine("Rolling back transaction");
+                userTransaction.rollback();
+                logger.fine("Transaction rolled back successfully.");
+            }
+
             return result;
         } catch (SystemException se) {
             logger.log(Level.SEVERE, "The transaction manager encountered an unexpected error condition.", se);
