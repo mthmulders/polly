@@ -4,12 +4,15 @@
 
 <layout:main title="Cast your vote on #${poll.slug}">
   <p>Question: <strong>${poll.question}</strong></p>
-  <p>
+
+  <form>
+    <input type="hidden" name="${mvc.csrf.name}" value="${mvc.csrf.token}"/>
+    <input type="hidden" name="ballot.ticketId" value="${ballot.ticketId()} /">
     Your choices:
     <ul>
       <c:forEach items="${poll.options}" var="option">
         <li>${option.displayValue()}</li>
       </c:forEach>
     </ul>
-  </p>
+  </form>
 </layout:main>

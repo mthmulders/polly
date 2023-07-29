@@ -5,6 +5,7 @@ module confbuddy.web {
     requires jakarta.cdi;
     requires jakarta.inject;
     requires jakarta.mvc;
+    requires jakarta.transaction;
     requires jakarta.validation;
     requires jakarta.ws.rs;
     requires mvc.toolbox.core;
