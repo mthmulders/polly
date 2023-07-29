@@ -176,6 +176,7 @@
                 <configuration>
                     <argLine>
                         <!-- spotless:off -->
+                        @{jacocoArgLine}
                         --add-opens polly.infrastructure/it.mulders.polly.infra.votes=ALL-UNNAMED
                         <!-- spotless:on -->
                     </argLine>
