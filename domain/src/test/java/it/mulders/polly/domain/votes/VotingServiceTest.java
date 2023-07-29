@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class VotingServiceTest implements WithAssertions {
     private final InMemoryBallotRepository ballotRepository = new InMemoryBallotRepository();
-    private final VotingService votingService = new VotingService(ballotRepository);
+    private final VotingService votingService = new VotingServiceImpl(ballotRepository);
 
     @Test
     void should_create_ballot_for_poll() {
