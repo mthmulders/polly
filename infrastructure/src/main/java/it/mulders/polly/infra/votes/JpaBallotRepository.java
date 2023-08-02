@@ -57,6 +57,11 @@ public class JpaBallotRepository implements BallotRepository {
             return Optional.of(ballotMapper.ballotEntityToBallot(entity));
         } catch (NoResultException nre) {
             return Optional.empty();
+        } catch (NonUniqueResultException nre) {
+            var msg = "There is more than one ballot for ticket [%s]".formatted(ticketId);
+            logger.log(Level.SEVERE, nre, () -> msg);
+            throw new IllegalStateException(msg);
+        }
     }
 
     @Override
@@ -71,6 +76,11 @@ public class JpaBallotRepository implements BallotRepository {
             return Optional.of(ballotMapper.ballotEntityToBallot(entity));
         } catch (NoResultException nre) {
             return Optional.empty();
+        } catch (NonUniqueResultException nre) {
+            var msg =
+                    "There is more than one ballot for poll [%s] and client [%s]".formatted(pollSlug, clientIdentifier);
+            logger.log(Level.SEVERE, nre, () -> msg);
+            throw new IllegalStateException(msg);
         }
     }
 }
