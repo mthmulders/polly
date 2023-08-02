@@ -24,9 +24,6 @@ class OptionTest implements WithAssertions {
 
     @Test
     void honours_equals_contract() {
-        EqualsVerifier.forClass(Option.class)
-                .withNonnullFields("displayValue")
-                .verify();
+        EqualsVerifier.forClass(Option.class).withNonnullFields("displayValue").verify();
     }
-
 }

@@ -2,18 +2,17 @@ package it.mulders.polly.domain.votes;
 
 import it.mulders.polly.domain.impl.RandomStringUtils;
 import it.mulders.polly.domain.polls.Poll;
-import it.mulders.polly.domain.votes.Ballot;
+import java.util.Collections;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
-import java.util.Collections;
-
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class BallotTest implements WithAssertions {
-    private final Poll poll = new Poll("How are you?", "how-are-you",Collections.emptySet());
+    private final Poll poll = new Poll("How are you?", "how-are-you", Collections.emptySet());
+
     @Test
     void construct_valid_instance() {
         var ticketId = RandomStringUtils.generateRandomIdentifier(8);

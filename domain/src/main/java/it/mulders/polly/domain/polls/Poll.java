@@ -43,7 +43,9 @@ public class Poll {
         if (obj == this) return true;
         if (!(obj instanceof Poll other)) return false;
 
-        return Objects.equals(this.question, other.question) && Objects.equals(this.slug, other.slug) && Objects.equals(this.options, other.options);
+        return Objects.equals(this.question, other.question)
+                && Objects.equals(this.slug, other.slug)
+                && Objects.equals(this.options, other.options);
     }
 
     @Override
