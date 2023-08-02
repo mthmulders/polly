@@ -51,17 +51,11 @@ class JpaPollRepositoryIT extends AbstractJpaRepositoryTest<PollRepository, JpaP
         poll.setQuestion(question);
 
         var pollOptions = Arrays.stream(options)
-                .map(option -> preparePollOptionEntity(poll, option))
+                .map(pollMapper::optionToPollOptionEntity)
+                .peek(option -> option.setPoll(poll)) // Link the option back to the poll
                 .collect(Collectors.toSet());
         poll.setOptions(pollOptions);
 
         return persist(poll);
-    }
-
-    private PollOptionEntity preparePollOptionEntity(PollEntity poll, Option option) {
-        var pollOption = new PollOptionEntity();
-        pollOption.setDisplayValue(option.displayValue());
-        pollOption.setPoll(poll);
-        return pollOption;
     }
 }
