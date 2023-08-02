@@ -27,7 +27,7 @@ public class JpaBallotRepositoryIT extends AbstractJpaRepositoryTest<BallotRepos
     }
 
     private Poll prepareHelperEntities(String slug) {
-        var poll = new Poll("How are you", slug, Set.of(new Option("I'm good"), new Option("So-so")));
+        var poll = new Poll("How are you", slug, Set.of(new Option(1, "I'm good"), new Option(2, "So-so")));
         var pollEntity = pollMapper.pollToPollEntity(poll);
         pollEntity.getOptions().forEach(pollOptionEntity -> pollOptionEntity.setPoll(pollEntity));
         persist(pollEntity);

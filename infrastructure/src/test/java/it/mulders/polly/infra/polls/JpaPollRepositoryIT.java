@@ -34,8 +34,8 @@ class JpaPollRepositoryIT extends AbstractJpaRepositoryTest<PollRepository, JpaP
 
     @Test
     void retrieving_a_poll_should_include_its_options() {
-        var options = new Option[] {new Option("I'm good"), new Option("So-so")};
-        var original = preparePoll("What's up?", "test-poll-2", options);
+        var options = new Option[] {new Option(1, "I'm good"), new Option(2, "So-so")};
+        preparePoll("What's up?", "test-poll-2", options);
 
         var result = repository.findBySlug("test-poll-2");
 

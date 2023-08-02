@@ -27,7 +27,8 @@ class VotingServiceTest implements WithAssertions {
     @Test
     void should_return_existing_bullet_for_same_clientIdentifier() {
         var clientIdentifier = UUID.randomUUID().toString();
-        var poll = new Poll("How are you?", "should-return-existing-bullet-for-same-clientIdentifier", Collections.emptySet());
+        var poll = new Poll(
+                "How are you?", "should-return-existing-bullet-for-same-clientIdentifier", Collections.emptySet());
 
         var ballot1 = votingService.requestBallotFor(poll, clientIdentifier);
         var ballot2 = votingService.requestBallotFor(poll, clientIdentifier);

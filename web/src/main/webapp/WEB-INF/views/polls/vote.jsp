@@ -9,10 +9,9 @@
     <input type="hidden" name="${mvc.csrf.name}" value="${mvc.csrf.token}"/>
     <input type="hidden" name="ballot.ticketId" value="${ballot.ticketId()} /">
     Your choices:
-    <ul>
-      <c:forEach items="${poll.options}" var="option">
-        <li>${option.displayValue()}</li>
-      </c:forEach>
-    </ul>
+    <c:forEach items="${poll.options}" var="option">
+      <input type="radio" name="vote.selectedOption" id="option-${option.optionValue()}" value="${option.optionValue()}">
+      <label for="option-${option.optionValue()}">${option.displayValue()}</label>
+    </c:forEach>
   </form>
 </layout:main>
