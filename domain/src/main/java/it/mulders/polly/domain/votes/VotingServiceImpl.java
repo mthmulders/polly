@@ -10,8 +10,8 @@ public class VotingServiceImpl implements VotingService {
     }
 
     @Override
-    public Ballot createBallotFor(final Poll poll) {
-        var ballot = poll.createBallot();
+    public Ballot requestBallotFor(final Poll poll, final String clientIdentifier) {
+        var ballot = poll.requestBallot(clientIdentifier);
         ballotRepository.store(ballot);
         return ballot;
     }

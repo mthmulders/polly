@@ -11,6 +11,7 @@ import it.mulders.polly.infra.votes.BallotMapper;
 import it.mulders.polly.infra.votes.JpaBallotRepository;
 import jakarta.persistence.EntityManager;
 import java.util.Set;
+import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -36,9 +37,10 @@ public class JpaBallotRepositoryIT extends AbstractJpaRepositoryTest<BallotRepos
 
     @Test
     void should_store_ballot_for_poll() {
-        var ticketId = "01234567";
+        var clientIdentifier = UUID.randomUUID().toString();
         var poll = prepareHelperEntities("should-store-ballot-for-poll");
-        var ballot = new Ballot(poll, ticketId);
+        var ticketId = "01234567";
+        var ballot = new Ballot(poll, clientIdentifier, ticketId);
         runTransactional(() -> repository.store(ballot));
 
         assertThat(repository.findByTicketId(ticketId)).hasValue(ballot);

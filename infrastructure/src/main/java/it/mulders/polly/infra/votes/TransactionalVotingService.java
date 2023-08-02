@@ -17,7 +17,7 @@ public class TransactionalVotingService extends VotingServiceImpl {
 
     @Override
     @Transactional(Transactional.TxType.REQUIRED)
-    public Ballot createBallotFor(Poll poll) {
-        return super.createBallotFor(poll);
+    public Ballot requestBallotFor(Poll poll, String clientIdentifier) {
+        return super.requestBallotFor(poll, clientIdentifier);
     }
 }

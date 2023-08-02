@@ -47,10 +47,10 @@ public class VoteController {
                 .map(this::populateModelAndPrepareResponse)
                 .orElse(Response.status(Response.Status.NOT_FOUND).build());
     }
-    // TODO Might want to add some client identification (like the JSESSIONID)
 
     private Ballot prepareBallot(final Poll poll) {
-        return votingService.createBallotFor(poll);
+        // TODO Must add some client identification (like the JSESSIONID)
+        return votingService.requestBallotFor(poll, "");
     }
 
     private Response populateModelAndPrepareResponse(final Ballot ballot) {

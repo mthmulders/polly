@@ -33,8 +33,8 @@ public class Poll {
         return Collections.unmodifiableSet(options);
     }
 
-    public Ballot createBallot() {
-        return new Ballot(this, RandomStringUtils.generateRandomIdentifier(8));
+    public Ballot requestBallot(String clientIdentifier) {
+        return new Ballot(this, clientIdentifier, RandomStringUtils.generateRandomIdentifier(8));
     }
 
     @Override
