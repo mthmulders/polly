@@ -1,4 +1,4 @@
-package votes;
+package it.mulders.polly.infra.votes;
 
 import it.mulders.polly.domain.polls.Option;
 import it.mulders.polly.domain.polls.Poll;
@@ -7,8 +7,6 @@ import it.mulders.polly.domain.votes.BallotRepository;
 import it.mulders.polly.infra.MapStructHelper;
 import it.mulders.polly.infra.database.AbstractJpaRepositoryTest;
 import it.mulders.polly.infra.polls.PollMapper;
-import it.mulders.polly.infra.votes.BallotMapper;
-import it.mulders.polly.infra.votes.JpaBallotRepository;
 import java.util.Set;
 import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
