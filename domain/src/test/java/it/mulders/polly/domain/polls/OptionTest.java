@@ -16,8 +16,7 @@ class OptionTest implements WithAssertions {
     }
 
     @Test
-    void slug_can_not_be_null() {
-        assertThatThrownBy(() -> new Option(null))
+    void displayValue_can_not_be_null() {
         assertThatThrownBy(() -> new Option(1, null))
                 .isInstanceOf(NullPointerException.class)
                 .hasMessageContaining("Display value");
