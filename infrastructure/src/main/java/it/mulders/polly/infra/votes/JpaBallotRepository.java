@@ -1,10 +1,12 @@
 package it.mulders.polly.infra.votes;
 
+import it.mulders.polly.domain.polls.Poll;
 import it.mulders.polly.domain.votes.Ballot;
 import it.mulders.polly.domain.votes.BallotRepository;
 import it.mulders.polly.infra.polls.PollEntity;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
+import jakarta.persistence.NonUniqueResultException;
 import jakarta.persistence.RollbackException;
 import jakarta.transaction.Transactional;
 import java.util.Optional;
@@ -21,15 +23,20 @@ public class JpaBallotRepository implements BallotRepository {
         this.ballotMapper = ballotMapper;
     }
 
+    private PollEntity findExistingPoll(String slug) {
+        return em.createNamedQuery("Poll.findBySlug", PollEntity.class)
+                .setParameter("slug", slug)
+                .getSingleResult();
+    }
+
     @Transactional(Transactional.TxType.MANDATORY)
     @Override
     public void store(Ballot ballot) {
         var entity = ballotMapper.ballotToBallotEntity(ballot);
 
         // Lookup the poll entity and link this ballot to it.
-        entity.setPoll(em.createNamedQuery("Poll.findBySlug", PollEntity.class)
-                .setParameter("slug", ballot.poll().getSlug())
-                .getSingleResult());
+        var poll = findExistingPoll(ballot.poll().getSlug());
+        entity.setPoll(poll);
 
         try {
             em.persist(entity);
@@ -46,6 +53,20 @@ public class JpaBallotRepository implements BallotRepository {
         try {
             var entity = em.createNamedQuery("Ballot.findByTicketId", BallotEntity.class)
                     .setParameter("ticketId", ticketId)
+                    .getSingleResult();
+            return Optional.of(ballotMapper.ballotEntityToBallot(entity));
+        } catch (NoResultException nre) {
+            return Optional.empty();
+    }
+
+    @Override
+    public Optional<Ballot> findByPollAndClientIdentifier(Poll poll, String clientIdentifier) {
+        var pollSlug = poll.getSlug();
+        try {
+            var pollEntity = findExistingPoll(pollSlug);
+            var entity = em.createNamedQuery("Ballot.findByPollAndClientIdentifier", BallotEntity.class)
+                    .setParameter("poll", pollEntity)
+                    .setParameter("clientIdentifier", clientIdentifier)
                     .getSingleResult();
             return Optional.of(ballotMapper.ballotEntityToBallot(entity));
         } catch (NoResultException nre) {

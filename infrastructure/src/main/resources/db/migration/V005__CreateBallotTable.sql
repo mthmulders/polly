@@ -3,6 +3,7 @@ CREATE
         ballot(
             id uuid PRIMARY KEY,
             poll_id uuid NOT NULL,
+            client_identifier VARCHAR NOT NULL,
             ticket_id VARCHAR NOT NULL
         );
 

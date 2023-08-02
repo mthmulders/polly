@@ -9,7 +9,6 @@ import it.mulders.polly.infra.database.AbstractJpaRepositoryTest;
 import it.mulders.polly.infra.polls.PollMapper;
 import it.mulders.polly.infra.votes.BallotMapper;
 import it.mulders.polly.infra.votes.JpaBallotRepository;
-import jakarta.persistence.EntityManager;
 import java.util.Set;
 import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
@@ -44,5 +43,21 @@ public class JpaBallotRepositoryIT extends AbstractJpaRepositoryTest<BallotRepos
         runTransactional(() -> repository.store(ballot));
 
         assertThat(repository.findByTicketId(ticketId)).hasValue(ballot);
+    }
+
+    @Test
+    void should_find_by_poll_and_clientIdentifier() {
+        var clientIdentifier = UUID.randomUUID().toString();
+        var ticketId = ticketId();
+        var poll = prepareHelperEntities("should-find-by-poll-and-clientIdentifier");
+        var ballot = new Ballot(poll, clientIdentifier, ticketId);
+        runTransactional(() -> repository.store(ballot));
+
+        assertThat(repository.findByPollAndClientIdentifier(poll, clientIdentifier))
+                .hasValue(ballot);
+    }
+
+    private String ticketId() {
+        return new Object().toString().replace("java.lang.Object@", "");
     }
 }

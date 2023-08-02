@@ -14,12 +14,18 @@ import java.util.UUID;
 
 @Entity
 @NamedQuery(name = "Ballot.findByTicketId", query = "select b from BallotEntity b where b.ticketId = :ticketId")
+@NamedQuery(
+        name = "Ballot.findByPollAndClientIdentifier",
+        query = "select b from BallotEntity b where b.poll = :poll and b.clientIdentifier = :clientIdentifier")
 @Table(name = "ballot")
 public class BallotEntity {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+
+    @Column(name = "client_identifier")
+    private String clientIdentifier;
 
     @Column(name = "ticket_id")
     private String ticketId;
@@ -33,6 +39,14 @@ public class BallotEntity {
 
     public void setId(UUID id) {
         this.id = id;
+    }
+
+    public String getClientIdentifier() {
+        return clientIdentifier;
+    }
+
+    public void setClientIdentifier(String clientIdentifier) {
+        this.clientIdentifier = clientIdentifier;
     }
 
     public String getTicketId() {
