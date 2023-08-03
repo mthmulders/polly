@@ -16,11 +16,13 @@ INSERT
         poll_option(
             id,
             poll_id,
-            display_value
+            display_value,
+            option_value
         ) SELECT
             gen_random_uuid(),
             id,
-            'Yes!'
+            'Yes!',
+            1
         FROM
             poll
         WHERE
@@ -31,11 +33,13 @@ INSERT
         poll_option(
             id,
             poll_id,
-            display_value
+            display_value,
+            option_value
         ) SELECT
             gen_random_uuid(),
             id,
-            'Of course!'
+            'Of course!',
+            2
         FROM
             poll
         WHERE
