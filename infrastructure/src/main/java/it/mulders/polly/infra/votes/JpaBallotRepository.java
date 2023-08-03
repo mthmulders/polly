@@ -38,14 +38,7 @@ public class JpaBallotRepository implements BallotRepository {
         var poll = findExistingPoll(ballot.poll().getSlug());
         entity.setPoll(poll);
 
-        try {
-            em.persist(entity);
-        } catch (RollbackException re) {
-            var cause = re.getCause();
-            logger.log(Level.SEVERE, cause, () -> "Failed to store ballot [%s] for poll [%s]"
-                    .formatted(ballot.ticketId(), ballot.poll().getSlug()));
-            throw re;
-        }
+        em.persist(entity);
     }
 
     @Override
