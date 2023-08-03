@@ -15,7 +15,7 @@ import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-public class JpaBallotRepositoryIT extends AbstractJpaRepositoryTest<BallotRepository, JpaBallotRepository> {
+class JpaBallotRepositoryIT extends AbstractJpaRepositoryTest<BallotRepository, JpaBallotRepository> {
     private final BallotMapper ballotMapper = MapStructHelper.getMapper(BallotMapper.class);
     private final PollMapper pollMapper = MapStructHelper.getMapper(PollMapper.class);
 
