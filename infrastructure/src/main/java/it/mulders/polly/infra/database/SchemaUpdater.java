@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 import javax.sql.DataSource;
 import org.flywaydb.core.Flyway;
 import org.flywaydb.core.api.FlywayException;
+import org.flywaydb.core.api.configuration.FluentConfiguration;
 
 @ApplicationScoped
 public class SchemaUpdater {
@@ -23,7 +24,7 @@ public class SchemaUpdater {
         var locations = determineFlywayLocations(System.getenv());
         logger.log(Level.INFO, "Reading database migrations from {0}", locations);
         final Flyway flyway =
-                Flyway.configure().locations(locations).dataSource(dataSource).load();
+                initFlyway().locations(locations).dataSource(dataSource).load();
         try {
             logger.log(Level.INFO, "Migrating database schema...");
             flyway.migrate();
@@ -31,6 +32,10 @@ public class SchemaUpdater {
         } catch (final FlywayException fe) {
             logger.log(Level.SEVERE, "Failed to migrate database schema", fe);
         }
+    }
+
+    protected FluentConfiguration initFlyway() {
+        return Flyway.configure();
     }
 
     protected String[] determineFlywayLocations(Map<String, String> environmentVariables) {
