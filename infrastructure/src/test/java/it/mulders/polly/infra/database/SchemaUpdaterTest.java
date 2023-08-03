@@ -40,7 +40,12 @@ class SchemaUpdaterTest implements WithAssertions {
     }
 
     @Test
-    void should_invoke_flyway_migration() {
+    void should_produce_Flyway_configuration() {
+        assertThat(new SchemaUpdater().initFlyway()).isNotNull();
+    }
+
+    @Test
+    void should_invoke_Flyway_migration() {
         updater.init(null);
 
         assertThat(flyway.invoked).isTrue();
