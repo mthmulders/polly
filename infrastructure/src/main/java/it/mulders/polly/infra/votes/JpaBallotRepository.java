@@ -7,7 +7,6 @@ import it.mulders.polly.infra.polls.PollEntity;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.NonUniqueResultException;
-import jakarta.persistence.RollbackException;
 import jakarta.transaction.Transactional;
 import java.util.Optional;
 import java.util.logging.Level;

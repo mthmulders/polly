@@ -194,6 +194,8 @@
                         <!-- spotless:off -->
                         @{jacocoArgLine}
                         --add-opens polly.infrastructure/it.mulders.polly.infra.database=ALL-UNNAMED
+                        --add-opens polly.infrastructure/it.mulders.polly.infra.polls=ALL-UNNAMED
+                        --add-opens polly.infrastructure/it.mulders.polly.infra.votes=ALL-UNNAMED
                         --add-opens polly.infrastructure/it.mulders.polly.infra.polls=org.eclipse.persistence.core
                         --add-opens polly.infrastructure/it.mulders.polly.infra.votes=org.eclipse.persistence.core
                         <!-- spotless:on -->
