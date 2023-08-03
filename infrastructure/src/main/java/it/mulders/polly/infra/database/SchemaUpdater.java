@@ -4,6 +4,7 @@ import jakarta.annotation.Resource;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.Initialized;
 import jakarta.enterprise.event.Observes;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.sql.DataSource;
@@ -19,7 +20,7 @@ public class SchemaUpdater {
 
     @SuppressWarnings("java:S1172") // "Unused method parameters should be removed"
     public void init(@Observes @Initialized(ApplicationScoped.class) Object init) {
-        var locations = determineFlywayLocations();
+        var locations = determineFlywayLocations(System.getenv());
         logger.log(Level.INFO, "Reading database migrations from {0}", locations);
         final Flyway flyway =
                 Flyway.configure().locations(locations).dataSource(dataSource).load();
@@ -32,8 +33,8 @@ public class SchemaUpdater {
         }
     }
 
-    private String[] determineFlywayLocations() {
-        var flywayLocations = System.getenv("FLYWAY_LOCATIONS");
+    protected String[] determineFlywayLocations(Map<String, String> environmentVariables) {
+        var flywayLocations = environmentVariables.get("FLYWAY_LOCATIONS");
         if (flywayLocations == null) {
             logger.log(Level.INFO, "Environment variable FLYWAY_LOCATIONS not found, using default");
             flywayLocations = "classpath:db/migration,classpath:db/migration-postgresql";
