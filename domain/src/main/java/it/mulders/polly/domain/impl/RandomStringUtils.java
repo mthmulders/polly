@@ -11,6 +11,8 @@ public class RandomStringUtils {
         'W', 'X', 'Y', 'Z', '1', '2', '3', '4', '5', '6', '7', '8', '9'
     };
 
+    private RandomStringUtils() {}
+
     /**
      * Generate a human-readable random string that contains only certain characters. This method skips a few
      * letters from the alphanumeric input space:
