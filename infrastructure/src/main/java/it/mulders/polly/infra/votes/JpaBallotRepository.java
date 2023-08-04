@@ -60,9 +60,8 @@ public class JpaBallotRepository implements BallotRepository {
     public Optional<Ballot> findByPollAndClientIdentifier(Poll poll, String clientIdentifier) {
         var pollSlug = poll.getSlug();
         try {
-            var pollEntity = findExistingPoll(pollSlug);
             var entity = em.createNamedQuery("Ballot.findByPollAndClientIdentifier", BallotEntity.class)
-                    .setParameter("poll", pollEntity)
+                    .setParameter("poll_slug", pollSlug)
                     .setParameter("clientIdentifier", clientIdentifier)
                     .getSingleResult();
             return Optional.of(ballotMapper.ballotEntityToBallot(entity));

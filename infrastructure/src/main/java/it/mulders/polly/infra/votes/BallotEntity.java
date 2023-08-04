@@ -16,7 +16,8 @@ import java.util.UUID;
 @NamedQuery(name = "Ballot.findByTicketId", query = "select b from BallotEntity b where b.ticketId = :ticketId")
 @NamedQuery(
         name = "Ballot.findByPollAndClientIdentifier",
-        query = "select b from BallotEntity b where b.poll = :poll and b.clientIdentifier = :clientIdentifier")
+        query =
+                "select b from BallotEntity b where b.poll.slug = :poll_slug and b.clientIdentifier = :clientIdentifier")
 @Table(name = "ballot")
 public class BallotEntity {
     @Id
