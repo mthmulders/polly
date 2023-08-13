@@ -2,6 +2,7 @@ package it.mulders.polly.infra.polls;
 
 import static org.mapstruct.NullValueMappingStrategy.RETURN_DEFAULT;
 
+import it.mulders.polly.domain.polls.Option;
 import it.mulders.polly.domain.polls.Poll;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
@@ -10,4 +11,8 @@ import org.mapstruct.MappingConstants;
 public interface PollMapper {
 
     Poll pollEntityToPoll(PollEntity entity);
+
+    PollEntity pollToPollEntity(Poll poll);
+
+    PollOptionEntity optionToPollOptionEntity(Option option);
 }

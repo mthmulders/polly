@@ -5,6 +5,7 @@ import jakarta.persistence.Persistence;
 import jakarta.persistence.RollbackException;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.function.Supplier;
 import org.assertj.core.api.WithAssertions;
 import org.flywaydb.core.Flyway;
 import org.flywaydb.core.api.FlywayException;
@@ -39,7 +40,9 @@ public abstract class AbstractJpaRepositoryTest<Int, Impl extends Int> implement
                 "jakarta.persistence.jdbc.password", password);
 
         var flyway = Flyway.configure()
-                .locations(new Location("filesystem:src/main/resources/db/migration"))
+                .locations(
+                        new Location("filesystem:src/main/resources/db/migration"),
+                        new Location("filesystem:src/main/resources/db/migration-postgresql"))
                 .dataSource(url, username, password)
                 .load();
         try {
@@ -56,20 +59,34 @@ public abstract class AbstractJpaRepositoryTest<Int, Impl extends Int> implement
     }
 
     protected <T> T persist(T entity) {
+        return runTransactional(() -> {
+            entityManager.persist(entity);
+            return entity;
+        });
+    }
+
+    protected void runTransactional(Runnable action) {
+        runTransactional(() -> {
+            action.run();
+            return null;
+        });
+    }
+
+    protected <T> T runTransactional(Supplier<T> supplier) {
         var transaction = entityManager.getTransaction();
         transaction.begin();
 
         try {
-            entityManager.persist(entity);
+            var result = supplier.get();
             transaction.commit();
-            return entity;
+            return result;
         } catch (RollbackException re) {
             var cause = re.getCause();
-            fail("Could not prepare database entities", cause);
+            fail("Could not run transactional action", cause);
             return (T) null;
         } catch (Throwable t) {
             transaction.rollback();
-            fail("Could not prepare database entities", t);
+            fail("Could not run transactional action", t);
             return (T) null;
         }
     }

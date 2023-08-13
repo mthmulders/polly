@@ -34,8 +34,8 @@ class JpaPollRepositoryIT extends AbstractJpaRepositoryTest<PollRepository, JpaP
 
     @Test
     void retrieving_a_poll_should_include_its_options() {
-        var options = new Option[] {new Option("I'm good"), new Option("So-so")};
-        var original = preparePoll("What's up?", "test-poll-2", options);
+        var options = new Option[] {new Option(1, "I'm good"), new Option(2, "So-so")};
+        preparePoll("What's up?", "test-poll-2", options);
 
         var result = repository.findBySlug("test-poll-2");
 
@@ -51,17 +51,11 @@ class JpaPollRepositoryIT extends AbstractJpaRepositoryTest<PollRepository, JpaP
         poll.setQuestion(question);
 
         var pollOptions = Arrays.stream(options)
-                .map(option -> preparePollOptionEntity(poll, option))
+                .map(pollMapper::optionToPollOptionEntity)
+                .peek(option -> option.setPoll(poll)) // Link the option back to the poll
                 .collect(Collectors.toSet());
         poll.setOptions(pollOptions);
 
         return persist(poll);
-    }
-
-    private PollOptionEntity preparePollOptionEntity(PollEntity poll, Option option) {
-        var pollOption = new PollOptionEntity();
-        pollOption.setDisplayValue(option.displayValue());
-        pollOption.setPoll(poll);
-        return pollOption;
     }
 }

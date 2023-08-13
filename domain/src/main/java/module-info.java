@@ -3,4 +3,5 @@ module polly.domain {
 
     exports it.mulders.polly.domain.shared;
     exports it.mulders.polly.domain.polls;
+    exports it.mulders.polly.domain.votes;
 }

@@ -3,6 +3,7 @@ package it.mulders.polly.web.display;
 import it.mulders.polly.domain.polls.Poll;
 import it.mulders.polly.web.krazo.ApplicationUrlHelper;
 import it.mulders.polly.web.test.InMemoryPollRepository;
+import jakarta.mvc.Models;
 import jakarta.ws.rs.core.Response;
 import java.util.Collections;
 import java.util.Set;
@@ -15,6 +16,8 @@ import org.junit.jupiter.api.Test;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class ShowPollControllerTest implements WithAssertions {
     private final String voteUrl = "http://localhost:9080/vote/my-poll/my-instance";
+    private final Models models = new ModelsImpl();
+    private final InMemoryPollRepository pollRepository = new InMemoryPollRepository(Set.of());
     private final ApplicationUrlHelper urlHelper = new ApplicationUrlHelper() {
         @Override
         public String voteUrlForPoll(Poll poll) {
@@ -24,9 +27,7 @@ class ShowPollControllerTest implements WithAssertions {
 
     @Test
     void without_matching_poll_instance_should_return_NotFound() {
-        var models = new ModelsImpl();
-        var repository = new InMemoryPollRepository(Set.of());
-        var controller = new ShowPollController(models, repository, urlHelper);
+        var controller = new ShowPollController(models, pollRepository, urlHelper);
 
         var response = controller.show("whatever");
 
@@ -35,10 +36,8 @@ class ShowPollControllerTest implements WithAssertions {
 
     @Test
     void with_matching_poll_instance_should_return_OK() {
-        var models = new ModelsImpl();
-        var poll = new Poll("", "whatever", Collections.emptySet());
-        var repository = new InMemoryPollRepository(Set.of(poll));
-        var controller = new ShowPollController(models, repository, urlHelper);
+        pollRepository.add(new Poll("", "whatever", Collections.emptySet()));
+        var controller = new ShowPollController(models, pollRepository, urlHelper);
 
         var response = controller.show("whatever");
 
@@ -47,10 +46,9 @@ class ShowPollControllerTest implements WithAssertions {
 
     @Test
     void with_matching_poll_instance_should_populate_model() {
-        var models = new ModelsImpl();
         var poll = new Poll("", "whatever", Collections.emptySet());
-        var repository = new InMemoryPollRepository(Set.of(poll));
-        var controller = new ShowPollController(models, repository, urlHelper);
+        pollRepository.add(poll);
+        var controller = new ShowPollController(models, pollRepository, urlHelper);
 
         controller.show("whatever");
 

@@ -24,6 +24,9 @@ public class PollOptionEntity {
     @Column(name = "display_value")
     private String displayValue;
 
+    @Column(name = "option_value")
+    private Integer optionValue;
+
     public UUID getId() {
         return id;
     }
@@ -46,6 +49,14 @@ public class PollOptionEntity {
 
     public void setDisplayValue(String displayValue) {
         this.displayValue = displayValue;
+    }
+
+    public Integer getOptionValue() {
+        return optionValue;
+    }
+
+    public void setOptionValue(Integer optionValue) {
+        this.optionValue = optionValue;
     }
 
     @Override

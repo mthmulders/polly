@@ -10,23 +10,29 @@ import org.junit.jupiter.api.Test;
 class OptionTest implements WithAssertions {
     @Test
     void construct_valid_instance() {
-        var option = new Option("Could be an option...");
+        var option = new Option(1, "Could be an option...");
 
         assertThat(option.displayValue()).isEqualTo("Could be an option...");
     }
 
     @Test
-    void slug_can_not_be_null() {
-        assertThatThrownBy(() -> new Option(null))
+    void displayValue_can_not_be_null() {
+        assertThatThrownBy(() -> new Option(1, null))
                 .isInstanceOf(NullPointerException.class)
                 .hasMessageContaining("Display value");
     }
 
     @Test
-    void honours_equals_contract() {
-        EqualsVerifier.forClass(Option.class)
-                .withNonnullFields("displayValue")
-                .verify();
+    void optionValue_can_not_be_null() {
+        assertThatThrownBy(() -> new Option(null, "Could be an option"))
+                .isInstanceOf(NullPointerException.class)
+                .hasMessageContaining("Option value");
     }
 
+    @Test
+    void honours_equals_contract() {
+        EqualsVerifier.forClass(Option.class)
+                .withNonnullFields("optionValue", "displayValue")
+                .verify();
+    }
 }

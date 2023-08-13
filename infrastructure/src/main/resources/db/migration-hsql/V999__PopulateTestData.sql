@@ -6,7 +6,7 @@ INSERT
             slug
         )
     VALUES(
-        gen_random_uuid(),
+        uuid(),
         'Do you like Jakarta MVC?',
         'jakarta-mvc'
     );
@@ -19,7 +19,7 @@ INSERT
             display_value,
             option_value
         ) SELECT
-            gen_random_uuid(),
+            uuid(),
             id,
             'Yes!',
             1
@@ -36,7 +36,7 @@ INSERT
             display_value,
             option_value
         ) SELECT
-            gen_random_uuid(),
+            uuid(),
             id,
             'Of course!',
             2
