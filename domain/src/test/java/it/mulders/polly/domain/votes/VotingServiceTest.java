@@ -6,8 +6,10 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.UUID;
 import org.assertj.core.api.WithAssertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -15,35 +17,40 @@ class VotingServiceTest implements WithAssertions {
     private final InMemoryBallotRepository ballotRepository = new InMemoryBallotRepository();
     private final VotingService votingService = new VotingServiceImpl(ballotRepository);
 
-    @Test
-    void should_create_ballot_for_poll() {
-        var poll = new Poll("How are you?", "should-create-ballot-for-poll", Collections.emptySet());
+    @DisplayName("Creating ballots")
+    @Nested
+    class CreatingBallots {
 
-        var result = votingService.requestBallotFor(poll, UUID.randomUUID().toString());
+        @Test
+        void should_create_ballot_for_poll() {
+            var poll = new Poll("How are you?", "should-create-ballot-for-poll", Collections.emptySet());
 
-        assertThat(result).isInstanceOf(Ballot.class);
-    }
+            var result = votingService.requestBallotFor(poll, UUID.randomUUID().toString());
 
-    @Test
-    void should_return_existing_bullet_for_same_clientIdentifier() {
-        var clientIdentifier = UUID.randomUUID().toString();
-        var poll = new Poll(
-                "How are you?", "should-return-existing-bullet-for-same-clientIdentifier", Collections.emptySet());
+            assertThat(result).isInstanceOf(Ballot.class);
+        }
 
-        var ballot1 = votingService.requestBallotFor(poll, clientIdentifier);
-        var ballot2 = votingService.requestBallotFor(poll, clientIdentifier);
+        @Test
+        void should_return_existing_bullet_for_same_clientIdentifier() {
+            var clientIdentifier = UUID.randomUUID().toString();
+            var poll = new Poll(
+                    "How are you?", "should-return-existing-bullet-for-same-clientIdentifier", Collections.emptySet());
 
-        assertThat(ballot2).isEqualTo(ballot1);
-    }
+            var ballot1 = votingService.requestBallotFor(poll, clientIdentifier);
+            var ballot2 = votingService.requestBallotFor(poll, clientIdentifier);
 
-    @Test
-    void should_store_ballot() {
-        var clientIdentifier = UUID.randomUUID().toString();
-        var poll = new Poll("How are you?", "should-store-ballot", Collections.emptySet());
+            assertThat(ballot2).isEqualTo(ballot1);
+        }
 
-        var result = votingService.requestBallotFor(poll, clientIdentifier);
+        @Test
+        void should_store_ballot() {
+            var clientIdentifier = UUID.randomUUID().toString();
+            var poll = new Poll("How are you?", "should-store-ballot", Collections.emptySet());
 
-        assertThat(ballotRepository).contains(result);
+            var result = votingService.requestBallotFor(poll, clientIdentifier);
+
+            assertThat(ballotRepository).contains(result);
+        }
     }
 
     private static class InMemoryBallotRepository extends HashSet<Ballot> implements BallotRepository {
