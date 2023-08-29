@@ -61,7 +61,7 @@ public class VoteController {
 
     private Response populateModelAndPrepareResponse(final Ballot ballot) {
         models.put("ballot", ballot);
-        models.put("poll", ballot.poll());
+        models.put("poll", ballot.getPoll());
         return Response.ok("polls/vote.jsp").build();
     }
 }

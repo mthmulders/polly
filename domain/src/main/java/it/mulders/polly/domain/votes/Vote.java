@@ -13,7 +13,7 @@ public record Vote(Poll poll, Ballot ballot, Option option) {
         Objects.requireNonNull(ballot, "Ballot must not be null");
         Objects.requireNonNull(option, "Option must not be null");
 
-        if (!ballot.poll().equals(poll)) {
+        if (!ballot.getPoll().equals(poll)) {
             throw new IllegalArgumentException("Ballot belongs to a different poll");
         }
         if (!poll.getOptions().contains(option)) {

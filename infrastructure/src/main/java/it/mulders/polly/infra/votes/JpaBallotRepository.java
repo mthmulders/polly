@@ -34,7 +34,7 @@ public class JpaBallotRepository implements BallotRepository {
         var entity = ballotMapper.ballotToBallotEntity(ballot);
 
         // Lookup the poll entity and link this ballot to it.
-        var poll = findExistingPoll(ballot.poll().getSlug());
+        var poll = findExistingPoll(ballot.getPoll().getSlug());
         entity.setPoll(poll);
 
         em.persist(entity);

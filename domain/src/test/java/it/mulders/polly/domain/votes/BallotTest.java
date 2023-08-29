@@ -20,9 +20,9 @@ class BallotTest implements WithAssertions {
         var ticketId = RandomStringUtils.generateRandomIdentifier(8);
         var ballot = new Ballot(poll, clientIdentifier, ticketId);
 
-        assertThat(ballot.poll()).isEqualTo(poll);
-        assertThat(ballot.clientIdentifier()).isEqualTo(clientIdentifier);
-        assertThat(ballot.ticketId()).isEqualTo(ticketId);
+        assertThat(ballot.getPoll()).isEqualTo(poll);
+        assertThat(ballot.getClientIdentifier()).isEqualTo(clientIdentifier);
+        assertThat(ballot.getTicketId()).isEqualTo(ticketId);
     }
 
     @Test
