@@ -10,7 +10,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.UUID;
 import org.assertj.core.api.WithAssertions;
 import org.eclipse.krazo.core.ModelsImpl;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -74,8 +73,7 @@ class VoteControllerTest implements WithAssertions {
 
         @Override
         public Ballot requestBallotFor(Poll poll, String clientIdentifier) {
-            var ticketId = UUID.randomUUID().toString();
-            var ballot = new Ballot(poll, clientIdentifier, ticketId);
+            var ballot = poll.requestBallot(clientIdentifier);
             createdBallots.put(poll, ballot);
             return ballot;
         }

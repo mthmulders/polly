@@ -7,17 +7,20 @@ import java.util.Objects;
 /**
  * The <strong>Vote</strong> data object represents a vote cast in a {@link Poll}.
  */
-public record Vote(Poll poll, Ballot ballot, Option option) {
-    public Vote {
-        Objects.requireNonNull(poll, "Poll must not be null");
-        Objects.requireNonNull(ballot, "Ballot must not be null");
-        Objects.requireNonNull(option, "Option must not be null");
+public class Vote {
+    private final Ballot ballot;
+    private final Option option;
 
-        if (!ballot.getPoll().equals(poll)) {
-            throw new IllegalArgumentException("Ballot belongs to a different poll");
-        }
-        if (!poll.getOptions().contains(option)) {
-            throw new IllegalArgumentException("Option belongs to a different poll");
-        }
+    public Vote(Ballot ballot, Option option) {
+        this.ballot = Objects.requireNonNull(ballot, "Ballot must not be null");
+        this.option = Objects.requireNonNull(option, "Option must not be null");
+    }
+
+    public Ballot getBallot() {
+        return ballot;
+    }
+
+    public Option getOption() {
+        return option;
     }
 }

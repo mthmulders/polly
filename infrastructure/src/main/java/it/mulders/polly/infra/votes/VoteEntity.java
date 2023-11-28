@@ -1,5 +1,7 @@
-package it.mulders.polly.infra.polls;
+package it.mulders.polly.infra.votes;
 
+import it.mulders.polly.infra.polls.PollEntity;
+import it.mulders.polly.infra.polls.PollOptionEntity;
 import it.mulders.polly.infra.PollRelatableEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -8,12 +10,13 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.util.UUID;
 
 @Entity
-@Table(name = "poll_option")
-public class PollOptionEntity implements PollRelatableEntity {
+@Table(name = "vote")
+public class VoteEntity implements PollRelatableEntity {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -22,11 +25,14 @@ public class PollOptionEntity implements PollRelatableEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     private PollEntity poll;
 
-    @Column(name = "display_value")
-    private String displayValue;
+    @ManyToOne(fetch = FetchType.EAGER)
+    private PollOptionEntity option;
 
-    @Column(name = "option_value")
-    private Integer optionValue;
+    @OneToOne
+    private BallotEntity ballot;
+
+    public VoteEntity() {
+    }
 
     public UUID getId() {
         return id;
@@ -44,27 +50,27 @@ public class PollOptionEntity implements PollRelatableEntity {
         this.poll = poll;
     }
 
-    public String getDisplayValue() {
-        return displayValue;
+    public PollOptionEntity getOption() {
+        return option;
     }
 
-    public void setDisplayValue(String displayValue) {
-        this.displayValue = displayValue;
+    public void setOption(PollOptionEntity option) {
+        this.option = option;
     }
 
-    public Integer getOptionValue() {
-        return optionValue;
+    public BallotEntity getBallot() {
+        return ballot;
     }
 
-    public void setOptionValue(Integer optionValue) {
-        this.optionValue = optionValue;
+    public void setBallot(BallotEntity ballot) {
+        this.ballot = ballot;
     }
 
     @Override
     public boolean equals(Object obj) {
         if (obj == null) return false;
         if (obj == this) return true;
-        if (!(obj instanceof PollOptionEntity other)) return false;
+        if (!(obj instanceof VoteEntity other)) return false;
 
         return id != null && id.equals(other.getId());
     }
@@ -76,6 +82,6 @@ public class PollOptionEntity implements PollRelatableEntity {
 
     @Override
     public String toString() {
-        return "PollOptionEntity{id=%s}".formatted(this.id);
+        return "VoteEntity{id=%s}".formatted(this.id);
     }
 }

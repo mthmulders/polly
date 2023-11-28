@@ -12,7 +12,7 @@ class OptionTest implements WithAssertions {
     void construct_valid_instance() {
         var option = new Option(1, "Could be an option...");
 
-        assertThat(option.displayValue()).isEqualTo("Could be an option...");
+        assertThat(option.getDisplayValue()).isEqualTo("Could be an option...");
     }
 
     @Test

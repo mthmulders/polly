@@ -11,8 +11,10 @@ import jakarta.mvc.Models;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.GET;
+import jakarta.ws.rs.FormParam;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.Response;
@@ -59,9 +61,9 @@ public class VoteController {
         return votingService.requestBallotFor(poll, sessionId);
     }
 
-    private Response populateModelAndPrepareResponse(final Ballot ballot) {
+    private Response populateModelAndPrepareResponse(final Ballot ballot, final Poll poll) {
         models.put("ballot", ballot);
-        models.put("poll", ballot.getPoll());
+        models.put("poll", poll);
         return Response.ok("polls/vote.jsp").build();
     }
 }

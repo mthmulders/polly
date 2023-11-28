@@ -1,10 +1,15 @@
 package it.mulders.polly.domain.votes;
 
+import it.mulders.polly.domain.polls.Option;
 import it.mulders.polly.domain.polls.Poll;
+import java.time.temporal.ChronoUnit;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
+import it.mulders.polly.domain.polls.PollRepository;
+import it.mulders.polly.domain.shared.Result;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -14,8 +19,8 @@ import org.junit.jupiter.api.Test;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class VotingServiceTest implements WithAssertions {
-    private final InMemoryBallotRepository ballotRepository = new InMemoryBallotRepository();
-    private final VotingService votingService = new VotingServiceImpl(ballotRepository);
+    private final InMemoryPollRepository pollRepository = new InMemoryPollRepository();
+    private final VotingService votingService = new VotingServiceImpl(pollRepository);
 
     @DisplayName("Creating ballots")
     @Nested
@@ -49,28 +54,102 @@ class VotingServiceTest implements WithAssertions {
 
             var result = votingService.requestBallotFor(poll, clientIdentifier);
 
-            assertThat(ballotRepository).contains(result);
+            assertThat(pollRepository.findBySlug(poll.getSlug()))
+                    .isPresent()
+                    .hasValueSatisfying(updatedPoll -> {
+                        assertThat(updatedPoll.getBallots()).contains(result);
+                    });
         }
     }
 
-    private static class InMemoryBallotRepository extends HashSet<Ballot> implements BallotRepository {
+    @DisplayName("Casting a vote")
+    @Nested
+    class CastingVotes {
+        private final Option option1 = new Option(0, "OK");
+        private final Option option2 = new Option(1, "So-so");
+        private final Poll poll = new Poll("How are you?", "how-are-you", Set.of(option1, option2));
+        private final String clientIdentifier = UUID.randomUUID().toString();
+        private final Ballot ballot = poll.requestBallot(clientIdentifier);
 
-        @Override
-        public void store(Ballot ballot) {
-            add(ballot);
+        @Test
+        void should_mark_ballot_as_used() {
+            votingService.castVote(poll, clientIdentifier, option1.getOptionValue());
+
+            assertThat(ballot.getUsedAt()).isCloseToUtcNow(within(1, ChronoUnit.SECONDS));
         }
 
-        @Override
-        public Optional<Ballot> findByTicketId(String ticketId) {
-            return stream().filter(ballot -> ticketId.equals(ballot.ticketId())).findAny();
+        @Test
+        void should_store_vote() {
+            var voteCountBefore = poll.getVotes().size();
+            var result = votingService.castVote(poll, clientIdentifier, option1.getOptionValue());
+            var voteCountAfter = poll.getVotes().size();
+
+            assertThat(voteCountAfter).isGreaterThan(voteCountBefore);
+            assertThat(result).isInstanceOf(Result.Success.class)
+                    .extracting(Result::getValue)
+                    .satisfies(vote -> {
+                        assertThat(poll.getVotes()).contains(vote);
+                        assertThat(vote.getOption()).isEqualTo(option1);
+                    });
         }
 
+        @Test
+        void should_prevent_duplicate_ballot() {
+            var result1 = votingService.castVote(poll, clientIdentifier, option1.getOptionValue());
+            assertThat(result1).isInstanceOf(Result.Success.class);
+
+            var result2 = votingService.castVote(poll, clientIdentifier, option1.getOptionValue());
+            assertThat(result2).isInstanceOf(Result.Failure.class)
+                    .extracting(Result::getCause)
+                    .extracting(Throwable::getMessage)
+                    .satisfies(message -> assertThat(message).contains("ballot has already been used"));
+        }
+
+        @Test
+        void should_fail_on_non_existing_ballot() {
+            var result = votingService.castVote(poll, UUID.randomUUID().toString(), option1.getOptionValue());
+
+            assertThat(result).isInstanceOf(Result.Failure.class)
+                    .extracting(Result::getCause)
+                    .satisfies(cause -> assertThat(cause).hasMessageContaining("Unknown ballot"));
+        }
+
+        @Test
+        void should_fail_on_non_existing_option() {
+            var result = votingService.castVote(poll, UUID.randomUUID().toString(), 3);
+
+            assertThat(result).isInstanceOf(Result.Failure.class)
+                    .extracting(Result::getCause)
+                    .satisfies(cause -> assertThat(cause).hasMessageContaining("Unknown option"));
+        }
+
+        @Test
+        void ballot_cannot_belong_to_different_poll() {
+            var differentPoll = new Poll("How are you?", "how-are-you", Set.of());
+
+            differentPoll.requestBallot(clientIdentifier);
+            pollRepository.store(poll);
+
+            var result = votingService.castVote(poll, UUID.randomUUID().toString(), 1);
+            assertThat(result).isInstanceOf(Result.Failure.class)
+                    .extracting(Result::getCause)
+                    .extracting(Throwable::getMessage)
+                    .satisfies(message -> assertThat(message).contains("Unknown ballot"));
+        }
+    }
+
+    private static class InMemoryPollRepository extends HashSet<Poll> implements PollRepository {
+
         @Override
-        public Optional<Ballot> findByPollAndClientIdentifier(Poll poll, String clientIdentifier) {
+        public Optional<Poll> findBySlug(String slug) {
             return stream()
-                    .filter(ballot -> ballot.poll().equals(poll))
-                    .filter(ballot -> ballot.clientIdentifier().equals(clientIdentifier))
+                    .filter(poll -> slug.equals(poll.getSlug()))
                     .findAny();
+        }
+
+        @Override
+        public void store(Poll poll) {
+            add(poll);
         }
     }
 }

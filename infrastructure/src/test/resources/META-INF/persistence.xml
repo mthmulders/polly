@@ -8,6 +8,7 @@
         <class>it.mulders.polly.infra.polls.PollEntity</class>
         <class>it.mulders.polly.infra.polls.PollOptionEntity</class>
         <class>it.mulders.polly.infra.votes.BallotEntity</class>
+        <class>it.mulders.polly.infra.votes.VoteEntity</class>
 
         <!--
         <properties>

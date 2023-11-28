@@ -1,6 +1,7 @@
 package it.mulders.polly.infra.votes;
 
 import it.mulders.polly.infra.polls.PollEntity;
+import it.mulders.polly.infra.PollRelatableEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -19,7 +20,7 @@ import java.util.UUID;
         query =
                 "select b from BallotEntity b where b.poll.slug = :poll_slug and b.clientIdentifier = :clientIdentifier")
 @Table(name = "ballot")
-public class BallotEntity {
+public class BallotEntity implements PollRelatableEntity {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.UUID)
