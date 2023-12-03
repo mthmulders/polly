@@ -12,5 +12,5 @@ import it.mulders.polly.domain.shared.Result;
 public interface VotingService {
     Ballot requestBallotFor(Poll poll, String clientIdentifier);
 
-    Result<Vote> castVote(Poll poll, String clientIdentifier, Integer selectedOption);
+    Result<Vote> castVote(Poll poll, String ticketId, Integer selectedOption);
 }

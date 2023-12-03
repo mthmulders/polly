@@ -3,6 +3,7 @@ package it.mulders.polly.web.display;
 import it.mulders.polly.domain.polls.Poll;
 import it.mulders.polly.domain.polls.PollRepository;
 import it.mulders.polly.domain.votes.Ballot;
+import it.mulders.polly.domain.votes.Vote;
 import it.mulders.polly.domain.votes.VotingService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
@@ -51,8 +52,21 @@ public class VoteController {
     @Transactional
     public Response displayVotePage(@PathParam("slug") String slug) {
         return pollRepository.findBySlug(slug)
-                .map(this::prepareBallot)
-                .map(this::populateModelAndPrepareResponse)
+                .map(poll -> prepareResponseAfterRequestingBallot(prepareBallot(poll), poll))
+                .orElse(Response.status(Response.Status.NOT_FOUND).build());
+    }
+
+    @POST
+    @Path("/{slug}")
+    @Produces("text/html; charset=UTF-8")
+    @Transactional
+    public Response processVote(@PathParam("slug") String slug,
+                                @FormParam("ballot.ticketId") String ticketId,
+                                @FormParam("vote.selectedOption") Integer selectedOption) {
+        return pollRepository.findBySlug(slug)
+                .map(poll -> votingService.castVote(poll, ticketId, selectedOption)
+                        .map(vote -> prepareResponseAfterSuccessfulVote(poll, vote))
+                        .getOrElseConvertCause(error -> prepareResponseAfterUnsuccessfulVote(poll, error)))
                 .orElse(Response.status(Response.Status.NOT_FOUND).build());
     }
 
@@ -61,8 +75,20 @@ public class VoteController {
         return votingService.requestBallotFor(poll, sessionId);
     }
 
-    private Response populateModelAndPrepareResponse(final Ballot ballot, final Poll poll) {
+    private Response prepareResponseAfterRequestingBallot(final Ballot ballot, final Poll poll) {
         models.put("ballot", ballot);
+        models.put("poll", poll);
+        return Response.ok("polls/vote.jsp").build();
+    }
+
+    private Response prepareResponseAfterSuccessfulVote(final Poll poll, final Vote vote) {
+        models.put("poll", poll);
+        models.put("vote", vote);
+        return Response.ok("polls/thanks.jsp").build();
+    }
+
+    private Response prepareResponseAfterUnsuccessfulVote(final Poll poll, final Throwable error) {
+        models.put("error", error);
         models.put("poll", poll);
         return Response.ok("polls/vote.jsp").build();
     }

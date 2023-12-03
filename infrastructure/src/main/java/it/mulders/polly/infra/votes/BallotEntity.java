@@ -1,7 +1,7 @@
 package it.mulders.polly.infra.votes;
 
-import it.mulders.polly.infra.polls.PollEntity;
 import it.mulders.polly.infra.PollRelatableEntity;
+import it.mulders.polly.infra.polls.PollEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;

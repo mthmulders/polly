@@ -21,14 +21,12 @@ public class VotingServiceImpl implements VotingService {
     }
 
     @Override
-    public Result<Vote> castVote(Poll poll, String clientIdentifier, Integer selectedOption) {
+    public Result<Vote> castVote(Poll poll, String ticketId, Integer selectedOption) {
         return poll.selectOption(selectedOption)
-                .map(option -> poll.getBallots().stream()
-                        .filter(ballot -> clientIdentifier.equals(ballot.getClientIdentifier()))
-                        .findAny()
+                .map(option -> poll.findBallotByTicketId(ticketId)
                         .map(ballot -> registerVote(poll, option, ballot))
                         .orElseGet(() -> {
-                            var message = String.format("Unknown ballot %s for poll %s", clientIdentifier, poll.getSlug());
+                            var message = String.format("Unknown ballot %s for poll %s", ticketId, poll.getSlug());
                             return Result.of(new IllegalArgumentException(message));
                         }))
                 .orElseGet(() -> {

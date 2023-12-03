@@ -1,7 +1,6 @@
 package it.mulders.polly.infra.polls;
 
 import it.mulders.polly.domain.votes.Ballot;
-
 import java.util.UUID;
 
 /**

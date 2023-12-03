@@ -55,4 +55,24 @@ class PollTest implements WithAssertions {
                 .withNonnullFields("slug", "question", "options")
                 .verify();
     }
+
+    @Test
+    void find_existing_ballot() {
+        var clientIdentifier = "e6PLVAM0jGcPtovnWrvYXJt";
+        var poll = new Poll("How are you?", "how-are-you", options);
+        var ballot = poll.requestBallot(clientIdentifier);
+
+        var result = poll.findBallotByTicketId(ballot.getTicketId());
+
+        assertThat(result).isPresent().contains(ballot);
+    }
+
+    @Test
+    void find_non_existing_ballot() {
+        var poll = new Poll("How are you?", "how-are-you", options);
+
+        var result = poll.findBallotByTicketId("7FSSRB7L");
+
+        assertThat(result).isEmpty();
+    }
 }

@@ -25,7 +25,7 @@ public class TransactionalVotingService extends VotingServiceImpl {
 
     @Override
     @Transactional(Transactional.TxType.REQUIRED)
-    public Result<Vote> castVote(Poll poll, String clientIdentifier, Integer selectedOption) {
-        return super.castVote(poll, clientIdentifier, selectedOption);
+    public Result<Vote> castVote(Poll poll, String ticketId, Integer selectedOption) {
+        return super.castVote(poll, ticketId, selectedOption);
     }
 }

@@ -52,7 +52,8 @@ class JpaPollRepositoryIT extends AbstractJpaRepositoryTest<PollRepository, JpaP
         var options = new Option[] {new Option(1, "I'm good"), new Option(2, "So-so")};
         preparePoll("What's up?", "test-poll-3", options);
 
-        var ballot = repository.findBySlug("test-poll-3")
+        var ballot = repository
+                .findBySlug("test-poll-3")
                 .map(poll -> {
                     var _ballot = poll.requestBallot(clientIdentifier);
                     runTransactional(() -> repository.store(poll));

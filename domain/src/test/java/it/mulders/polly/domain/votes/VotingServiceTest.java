@@ -73,7 +73,7 @@ class VotingServiceTest implements WithAssertions {
 
         @Test
         void should_mark_ballot_as_used() {
-            votingService.castVote(poll, clientIdentifier, option1.getOptionValue());
+            votingService.castVote(poll, ballot.getTicketId(), option1.getOptionValue());
 
             assertThat(ballot.getUsedAt()).isCloseToUtcNow(within(1, ChronoUnit.SECONDS));
         }
@@ -81,7 +81,7 @@ class VotingServiceTest implements WithAssertions {
         @Test
         void should_store_vote() {
             var voteCountBefore = poll.getVotes().size();
-            var result = votingService.castVote(poll, clientIdentifier, option1.getOptionValue());
+            var result = votingService.castVote(poll, ballot.getTicketId(), option1.getOptionValue());
             var voteCountAfter = poll.getVotes().size();
 
             assertThat(voteCountAfter).isGreaterThan(voteCountBefore);
@@ -95,10 +95,10 @@ class VotingServiceTest implements WithAssertions {
 
         @Test
         void should_prevent_duplicate_ballot() {
-            var result1 = votingService.castVote(poll, clientIdentifier, option1.getOptionValue());
+            var result1 = votingService.castVote(poll, ballot.getTicketId(), option1.getOptionValue());
             assertThat(result1).isInstanceOf(Result.Success.class);
 
-            var result2 = votingService.castVote(poll, clientIdentifier, option1.getOptionValue());
+            var result2 = votingService.castVote(poll, ballot.getTicketId(), option1.getOptionValue());
             assertThat(result2).isInstanceOf(Result.Failure.class)
                     .extracting(Result::getCause)
                     .extracting(Throwable::getMessage)

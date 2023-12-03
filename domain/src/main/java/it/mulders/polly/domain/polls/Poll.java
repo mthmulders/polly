@@ -58,6 +58,12 @@ public class Poll {
         return Collections.unmodifiableSet(ballots);
     }
 
+    public Optional<Ballot> findBallotByTicketId(String ticketId) {
+        return ballots.stream()
+                .filter(ballot -> ballot.getTicketId().equals(ticketId))
+                .findAny();
+    }
+
     public Ballot requestBallot(String clientIdentifier) {
         var ballot = new Ballot(clientIdentifier, RandomStringUtils.generateRandomIdentifier(8));
         ballots.add(ballot);

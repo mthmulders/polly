@@ -4,7 +4,6 @@ import it.mulders.polly.domain.polls.Option;
 import it.mulders.polly.domain.polls.Poll;
 import it.mulders.polly.domain.votes.Ballot;
 import it.mulders.polly.domain.votes.Vote;
-
 import java.util.Set;
 import java.util.UUID;
 
@@ -14,7 +13,8 @@ import java.util.UUID;
 class JpaBackedPoll extends Poll {
     private final UUID id;
 
-    public JpaBackedPoll(UUID id, String question, String slug, Set<Option> options, Set<Ballot> ballots, Set<Vote> votes) {
+    public JpaBackedPoll(
+            UUID id, String question, String slug, Set<Option> options, Set<Ballot> ballots, Set<Vote> votes) {
         super(question, slug, options, ballots, votes);
         this.id = id;
     }

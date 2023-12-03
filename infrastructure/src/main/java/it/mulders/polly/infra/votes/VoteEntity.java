@@ -1,8 +1,8 @@
 package it.mulders.polly.infra.votes;
 
+import it.mulders.polly.infra.PollRelatableEntity;
 import it.mulders.polly.infra.polls.PollEntity;
 import it.mulders.polly.infra.polls.PollOptionEntity;
-import it.mulders.polly.infra.PollRelatableEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -31,8 +31,7 @@ public class VoteEntity implements PollRelatableEntity {
     @OneToOne
     private BallotEntity ballot;
 
-    public VoteEntity() {
-    }
+    public VoteEntity() {}
 
     public UUID getId() {
         return id;
