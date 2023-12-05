@@ -31,8 +31,6 @@ public class VoteEntity implements PollRelatableEntity {
     @OneToOne
     private BallotEntity ballot;
 
-    public VoteEntity() {}
-
     public UUID getId() {
         return id;
     }
