@@ -105,7 +105,7 @@ public class PollEntity implements IdentifiableEntity<UUID> {
         return id != null && id.equals(other.getId());
     }
 
-    public Collection<PollRelatableEntity> getRelatedEntities() {
+    public Collection<PollRelatableEntity> collectRelatedEntities() {
         Collection<PollRelatableEntity> result = new HashSet<>();
         result.addAll(this.options);
         result.addAll(this.ballots);

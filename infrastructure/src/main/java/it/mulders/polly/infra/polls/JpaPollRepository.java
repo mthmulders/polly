@@ -34,8 +34,8 @@ public class JpaPollRepository implements PollRepository {
         var entity = pollMapper.pollToPollEntity(poll);
 
         if (poll instanceof JpaBackedPoll) {
-            entity.getRelatedEntities().forEach(related -> related.setPoll(entity));
-            entity.getRelatedEntities().forEach(related -> {
+            entity.collectRelatedEntities().forEach(related -> {
+                related.setPoll(entity);
                 if (related.getId() == null) {
                     em.persist(related);
                 } else {
