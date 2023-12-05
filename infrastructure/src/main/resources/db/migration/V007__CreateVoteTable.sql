@@ -9,3 +9,6 @@ CREATE
             FOREIGN KEY(option_id) REFERENCES poll_option(id),
             FOREIGN KEY(ballot_id) REFERENCES ballot(id)
         );
+
+ALTER TABLE
+    ballot ADD COLUMN used_at TIMESTAMP;

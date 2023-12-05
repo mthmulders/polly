@@ -11,7 +11,7 @@ public class Ballot {
     private final String clientIdentifier;
     private final String ticketId;
 
-    private OffsetDateTime usedAt = null;
+    protected OffsetDateTime usedAt = null;
 
     public Ballot(String clientIdentifier, String ticketId) {
         Objects.requireNonNull(clientIdentifier, "Client identifier must not be null");

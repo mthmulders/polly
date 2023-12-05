@@ -11,6 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
+import java.time.OffsetDateTime;
 import java.util.UUID;
 
 @Entity
@@ -31,6 +32,9 @@ public class BallotEntity implements PollRelatableEntity {
 
     @Column(name = "ticket_id")
     private String ticketId;
+
+    @Column(name = "used_at")
+    private OffsetDateTime usedAt;
 
     @ManyToOne(fetch = FetchType.EAGER)
     private PollEntity poll;
@@ -65,6 +69,14 @@ public class BallotEntity implements PollRelatableEntity {
 
     public void setPoll(PollEntity poll) {
         this.poll = poll;
+    }
+
+    public OffsetDateTime getUsedAt() {
+        return usedAt;
+    }
+
+    public void setUsedAt(OffsetDateTime usedAt) {
+        this.usedAt = usedAt;
     }
 
     @Override
