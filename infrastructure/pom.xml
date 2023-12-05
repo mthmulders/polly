@@ -184,6 +184,9 @@
                         <!-- Necessary for PropertyFileConfigurationServiceTest -->
                         <POLLY_CONFIGURATION_FILE>${project.basedir}/src/test/resources/valid_configuration.properties</POLLY_CONFIGURATION_FILE>
                     </environmentVariables>
+                    <systemPropertyVariables>
+                        <java.util.logging.config.file>src/test/resoources/logging.properties</java.util.logging.config.file>
+                    </systemPropertyVariables>
                 </configuration>
             </plugin>
             <plugin>
