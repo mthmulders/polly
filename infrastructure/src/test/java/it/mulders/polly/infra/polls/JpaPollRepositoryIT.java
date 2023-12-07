@@ -5,6 +5,7 @@ import it.mulders.polly.domain.polls.PollRepository;
 import it.mulders.polly.infra.MapStructHelper;
 import it.mulders.polly.infra.database.AbstractJpaRepositoryTest;
 import java.util.Arrays;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -42,6 +43,28 @@ class JpaPollRepositoryIT extends AbstractJpaRepositoryTest<PollRepository, JpaP
         assertThat(result).isPresent().hasValueSatisfying(poll -> {
             assertThat(poll.getOptions()).hasSize(2);
             assertThat(poll.getOptions()).containsOnly(options);
+        });
+    }
+
+    @Test
+    void retrieving_a_poll_should_include_the_ballots() {
+        var clientIdentifier = UUID.randomUUID().toString();
+        var options = new Option[] {new Option(1, "I'm good"), new Option(2, "So-so")};
+        preparePoll("What's up?", "test-poll-3", options);
+
+        var ballot = repository
+                .findBySlug("test-poll-3")
+                .map(poll -> {
+                    var _ballot = poll.requestBallot(clientIdentifier);
+                    runTransactional(() -> repository.store(poll));
+                    return _ballot;
+                })
+                .orElseThrow();
+
+        var result = repository.findBySlug("test-poll-3");
+
+        assertThat(result).isPresent().hasValueSatisfying(poll -> {
+            assertThat(poll.getBallots()).containsOnly(ballot);
         });
     }
 

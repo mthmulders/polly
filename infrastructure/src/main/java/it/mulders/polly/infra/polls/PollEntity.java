@@ -1,5 +1,9 @@
 package it.mulders.polly.infra.polls;
 
+import it.mulders.polly.infra.IdentifiableEntity;
+import it.mulders.polly.infra.PollRelatableEntity;
+import it.mulders.polly.infra.votes.BallotEntity;
+import it.mulders.polly.infra.votes.VoteEntity;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,14 +15,16 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
 @Entity
 @NamedQuery(name = "Poll.findBySlug", query = "select p from PollEntity p where p.slug = :slug")
 @Table(name = "poll")
-public class PollEntity {
+public class PollEntity implements IdentifiableEntity<UUID> {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -33,6 +39,14 @@ public class PollEntity {
     @JoinColumn(name = "poll_id")
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<PollOptionEntity> options = Collections.emptySet();
+
+    @JoinColumn(name = "poll_id")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<BallotEntity> ballots = Collections.emptySet();
+
+    @JoinColumn(name = "poll_id")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<VoteEntity> votes = Collections.emptySet();
 
     public UUID getId() {
         return id;
@@ -66,6 +80,22 @@ public class PollEntity {
         this.options = options;
     }
 
+    public Set<BallotEntity> getBallots() {
+        return ballots;
+    }
+
+    public void setBallots(Set<BallotEntity> ballots) {
+        this.ballots = ballots;
+    }
+
+    public Set<VoteEntity> getVotes() {
+        return votes;
+    }
+
+    public void setVotes(Set<VoteEntity> votes) {
+        this.votes = votes;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null) return false;
@@ -73,6 +103,14 @@ public class PollEntity {
         if (!(obj instanceof PollEntity other)) return false;
 
         return id != null && id.equals(other.getId());
+    }
+
+    public Collection<PollRelatableEntity> collectRelatedEntities() {
+        Collection<PollRelatableEntity> result = new HashSet<>();
+        result.addAll(this.options);
+        result.addAll(this.ballots);
+        result.addAll(this.votes);
+        return result;
     }
 
     @Override

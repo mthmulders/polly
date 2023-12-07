@@ -16,4 +16,9 @@ public class InMemoryPollRepository extends HashSet<Poll> implements PollReposit
     public Optional<Poll> findBySlug(String slug) {
         return stream().filter(poll -> slug.equals(poll.getSlug())).findAny();
     }
+
+    @Override
+    public void store(Poll poll) {
+        add(poll);
+    }
 }

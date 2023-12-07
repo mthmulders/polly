@@ -4,7 +4,6 @@ import it.mulders.polly.domain.shared.ConfigurationService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
-
 import java.util.Properties;
 
 @ApplicationScoped
@@ -28,10 +27,7 @@ public class SystemInfo {
     }
 
     public String getJavaRuntime() {
-        return "%s %s".formatted(
-                systemProperties.get("java.vm.vendor"),
-                systemProperties.get("java.runtime.version")
-        );
+        return "%s %s".formatted(systemProperties.get("java.vm.vendor"), systemProperties.get("java.runtime.version"));
     }
 
     public String getApplicationVersion() {

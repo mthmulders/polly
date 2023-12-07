@@ -19,7 +19,32 @@ public class PollVoteIT extends AbstractPlaywrightTest {
 
         var options = page.textContent("//main/form");
 
-        assertThat(options).contains("Yes!");
-        assertThat(options).contains("Of course!");
+        assertThat(options).contains("Yes!").contains("Of course!");
+    }
+
+    @Test
+    void should_accept_vote() {
+        page.navigate("http://localhost:9080/vote/jakarta-mvc");
+
+        page.click("//label[@for='option-1']");
+        page.click("//input[@type='submit']");
+
+        var text = page.textContent("//main");
+
+        assertThat(text).contains("Thanks for your vote").contains("You voted Yes!");
+    }
+
+    @Test
+    void should_not_accept_double_vote() {
+        page.navigate("http://localhost:9080/vote/jakarta-mvc");
+
+        page.click("//label[@for='option-1']");
+        page.click("//input[@type='submit']");
+
+        page.navigate("http://localhost:9080/vote/jakarta-mvc");
+
+        var text = page.textContent("//main");
+
+        assertThat(text).contains("You have already voted, thanks for your participation!");
     }
 }

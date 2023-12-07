@@ -5,13 +5,33 @@
 <layout:main title="Cast your vote on #${poll.slug}">
   <p>Question: <strong>${poll.question}</strong></p>
 
-  <form>
-    <input type="hidden" name="${mvc.csrf.name}" value="${mvc.csrf.token}"/>
-    <input type="hidden" name="ballot.ticketId" value="${ballot.ticketId()} /">
-    Your choices:
-    <c:forEach items="${poll.options}" var="option">
-      <input type="radio" name="vote.selectedOption" id="option-${option.optionValue()}" value="${option.optionValue()}">
-      <label for="option-${option.optionValue()}">${option.displayValue()}</label>
-    </c:forEach>
-  </form>
+  <c:if test="${not empty error}">
+    <strong>Error: ${error.message}</strong>
+  </c:if>
+
+  <c:if test="${not empty ballot && ballot.usedAt == null}">
+    <form method="post" action="">
+      <input type="hidden" name="${mvc.csrf.name}" value="${mvc.csrf.token}" />
+      <input type="hidden" name="ballot.ticketId" value="${ballot.ticketId}" />
+      Your choices:
+      <c:forEach items="${poll.options}" var="option">
+        <input type="radio" name="vote.selectedOption" id="option-${option.optionValue}" value="${option.optionValue}" />
+        <label for="option-${option.optionValue}">${option.displayValue}</label>
+      </c:forEach>
+      <input type="submit" value="Vote!" />
+    </form>
+
+    <h2>Debugging info</h2>
+    <dl>
+      <dt>Your Ticket ID:</dt>
+      <dd><pre>${ballot.ticketId}</pre></dd>
+
+      <dt>Your Client Identifier:</dt>
+      <dd><pre>${ballot.clientIdentifier}</pre></dd>
+    </dl>
+  </c:if>
+  <c:if test="${not empty ballot && ballot.usedAt != null}">
+    You have already voted, thanks for your participation!
+  </c:if>
+
 </layout:main>

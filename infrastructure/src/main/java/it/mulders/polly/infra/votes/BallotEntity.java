@@ -1,5 +1,6 @@
 package it.mulders.polly.infra.votes;
 
+import it.mulders.polly.infra.PollRelatableEntity;
 import it.mulders.polly.infra.polls.PollEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,6 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
+import java.time.OffsetDateTime;
 import java.util.UUID;
 
 @Entity
@@ -19,7 +21,7 @@ import java.util.UUID;
         query =
                 "select b from BallotEntity b where b.poll.slug = :poll_slug and b.clientIdentifier = :clientIdentifier")
 @Table(name = "ballot")
-public class BallotEntity {
+public class BallotEntity implements PollRelatableEntity {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -30,6 +32,9 @@ public class BallotEntity {
 
     @Column(name = "ticket_id")
     private String ticketId;
+
+    @Column(name = "used_at")
+    private OffsetDateTime usedAt;
 
     @ManyToOne(fetch = FetchType.EAGER)
     private PollEntity poll;
@@ -64,6 +69,14 @@ public class BallotEntity {
 
     public void setPoll(PollEntity poll) {
         this.poll = poll;
+    }
+
+    public OffsetDateTime getUsedAt() {
+        return usedAt;
+    }
+
+    public void setUsedAt(OffsetDateTime usedAt) {
+        this.usedAt = usedAt;
     }
 
     @Override
