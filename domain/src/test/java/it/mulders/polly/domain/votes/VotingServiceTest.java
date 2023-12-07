@@ -85,7 +85,8 @@ class VotingServiceTest implements WithAssertions {
             var voteCountAfter = poll.getVotes().size();
 
             assertThat(voteCountAfter).isGreaterThan(voteCountBefore);
-            assertThat(result).isInstanceOf(Result.Success.class)
+            assertThat(result)
+                    .isInstanceOf(Result.Success.class)
                     .extracting(Result::getValue)
                     .satisfies(vote -> {
                         assertThat(poll.getVotes()).contains(vote);
@@ -99,7 +100,8 @@ class VotingServiceTest implements WithAssertions {
             assertThat(result1).isInstanceOf(Result.Success.class);
 
             var result2 = votingService.castVote(poll, ballot.getTicketId(), option1.getOptionValue());
-            assertThat(result2).isInstanceOf(Result.Failure.class)
+            assertThat(result2)
+                    .isInstanceOf(Result.Failure.class)
                     .extracting(Result::getCause)
                     .extracting(Throwable::getMessage)
                     .satisfies(message -> assertThat(message).contains("ballot has already been used"));
@@ -109,29 +111,35 @@ class VotingServiceTest implements WithAssertions {
         void should_fail_on_non_existing_ballot() {
             var result = votingService.castVote(poll, UUID.randomUUID().toString(), option1.getOptionValue());
 
-            assertThat(result).isInstanceOf(Result.Failure.class)
+            assertThat(result)
+                    .isInstanceOf(Result.Failure.class)
                     .extracting(Result::getCause)
-                    .satisfies(cause -> assertThat(cause).hasMessageContaining("Unknown ballot"));
+                    .satisfies(cause -> assertThat(cause)
+                            .isInstanceOf(NonExistingBallotException.class)
+                            .hasMessageContaining("Unknown ballot"));
         }
 
         @Test
         void should_fail_on_non_existing_option() {
             var result = votingService.castVote(poll, UUID.randomUUID().toString(), 3);
 
-            assertThat(result).isInstanceOf(Result.Failure.class)
+            assertThat(result)
+                    .isInstanceOf(Result.Failure.class)
                     .extracting(Result::getCause)
-                    .satisfies(cause -> assertThat(cause).hasMessageContaining("Unknown option"));
+                    .satisfies(cause -> assertThat(cause)
+                            .isInstanceOf(NonExistingOptionException.class)
+                            .hasMessageContaining("Unknown option"));
         }
 
         @Test
         void ballot_cannot_belong_to_different_poll() {
             var differentPoll = new Poll("How are you?", "how-are-you", Set.of());
-
             differentPoll.requestBallot(clientIdentifier);
             pollRepository.store(poll);
 
             var result = votingService.castVote(poll, UUID.randomUUID().toString(), 1);
-            assertThat(result).isInstanceOf(Result.Failure.class)
+            assertThat(result)
+                    .isInstanceOf(Result.Failure.class)
                     .extracting(Result::getCause)
                     .extracting(Throwable::getMessage)
                     .satisfies(message -> assertThat(message).contains("Unknown ballot"));

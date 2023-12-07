@@ -22,17 +22,17 @@ public class VotingServiceImpl implements VotingService {
 
     @Override
     public Result<Vote> castVote(Poll poll, String ticketId, Integer selectedOption) {
-        return poll.selectOption(selectedOption)
-                .map(option -> poll.findBallotByTicketId(ticketId)
-                        .map(ballot -> registerVote(poll, option, ballot))
-                        .orElseGet(() -> {
-                            var message = String.format("Unknown ballot %s for poll %s", ticketId, poll.getSlug());
-                            return Result.of(new IllegalArgumentException(message));
-                        }))
-                .orElseGet(() -> {
-                    var message = String.format("Unknown option %s for poll %s", selectedOption, poll.getSlug());
-                    return Result.of(new IllegalArgumentException(message));
-                });
+        try {
+            var option = poll.selectOption(selectedOption)
+                    .orElseThrow(() -> new NonExistingOptionException(poll.getSlug(), selectedOption));
+
+            var ballot = poll.findBallotByTicketId(ticketId)
+                    .orElseThrow(() -> new NonExistingBallotException(poll.getSlug(), ticketId));
+
+            return registerVote(poll, option, ballot);
+        } catch (NonExistingOptionException | NonExistingBallotException e) {
+            return Result.of(e);
+        }
     }
 
     private Result<Vote> registerVote(Poll poll, Option option, Ballot ballot) {
