@@ -63,7 +63,7 @@ jobs:
 
       - name: Setup Pages
         id: pages
-        uses: actions/configure-pages@v3.0.7
+        uses: actions/configure-pages@v4.0.0
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2.0.0
