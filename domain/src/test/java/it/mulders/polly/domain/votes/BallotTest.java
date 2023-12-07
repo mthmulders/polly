@@ -2,8 +2,6 @@ package it.mulders.polly.domain.votes;
 
 import it.mulders.polly.domain.impl.RandomStringUtils;
 import it.mulders.polly.domain.polls.Option;
-import it.mulders.polly.domain.polls.Poll;
-import java.util.Set;
 import java.util.UUID;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import org.assertj.core.api.WithAssertions;

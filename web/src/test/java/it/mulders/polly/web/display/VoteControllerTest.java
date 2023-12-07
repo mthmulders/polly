@@ -61,7 +61,8 @@ class VoteControllerTest implements WithAssertions {
 
         assertThat(votingService.createdBallots).containsKey(poll);
         var ballot = votingService.createdBallots.get(poll);
-        assertThat(ballot.getClientIdentifier()).isEqualTo(httpRequest.getSession(false).getId());
+        assertThat(ballot.getClientIdentifier())
+                .isEqualTo(httpRequest.getSession(false).getId());
     }
 
     private static class DummmyVotingService extends VotingServiceImpl {

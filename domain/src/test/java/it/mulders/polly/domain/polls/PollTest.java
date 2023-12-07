@@ -1,8 +1,8 @@
 package it.mulders.polly.domain.polls;
 
-import java.util.Set;
 import it.mulders.polly.domain.impl.RandomStringUtils;
 import it.mulders.polly.domain.votes.Vote;
+import java.util.Set;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.DisplayNameGeneration;

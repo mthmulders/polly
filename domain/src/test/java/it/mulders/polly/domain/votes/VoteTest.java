@@ -2,7 +2,6 @@ package it.mulders.polly.domain.votes;
 
 import it.mulders.polly.domain.polls.Option;
 import it.mulders.polly.domain.polls.Poll;
-import java.util.Collections;
 import java.util.Set;
 import java.util.UUID;
 import org.assertj.core.api.WithAssertions;
@@ -24,7 +23,6 @@ class VoteTest implements WithAssertions {
         assertThat(vote.getBallot()).isEqualTo(ballot);
         assertThat(vote.getOption()).isEqualTo(option1);
     }
-
 
     @Test
     void ballot_can_not_be_null() {

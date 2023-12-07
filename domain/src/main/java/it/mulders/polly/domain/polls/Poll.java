@@ -101,9 +101,6 @@ public class Poll {
 
     public boolean isBallotUsed(Ballot ballot) {
         var ticketId = ballot.getTicketId();
-        return this.votes.stream()
-                .map(Vote::getBallot)
-                .map(Ballot::getTicketId)
-                .anyMatch(ticketId::equals);
+        return this.votes.stream().map(Vote::getBallot).map(Ballot::getTicketId).anyMatch(ticketId::equals);
     }
 }

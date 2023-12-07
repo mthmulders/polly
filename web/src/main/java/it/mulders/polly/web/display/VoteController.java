@@ -11,11 +11,11 @@ import jakarta.mvc.Controller;
 import jakarta.mvc.Models;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
-import jakarta.ws.rs.GET;
 import jakarta.ws.rs.FormParam;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
-import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.Response;
@@ -39,7 +39,8 @@ public class VoteController {
 
     public VoteController() {}
 
-    VoteController(Models models, PollRepository pollRepository, HttpServletRequest request, VotingService votingService) {
+    VoteController(
+            Models models, PollRepository pollRepository, HttpServletRequest request, VotingService votingService) {
         this.models = models;
         this.pollRepository = pollRepository;
         this.request = request;
@@ -51,7 +52,8 @@ public class VoteController {
     @Produces("text/html; charset=UTF-8")
     @Transactional
     public Response displayVotePage(@PathParam("slug") String slug) {
-        return pollRepository.findBySlug(slug)
+        return pollRepository
+                .findBySlug(slug)
                 .map(poll -> prepareResponseAfterRequestingBallot(prepareBallot(poll), poll))
                 .orElse(Response.status(Response.Status.NOT_FOUND).build());
     }
@@ -60,11 +62,14 @@ public class VoteController {
     @Path("/{slug}")
     @Produces("text/html; charset=UTF-8")
     @Transactional
-    public Response processVote(@PathParam("slug") String slug,
-                                @FormParam("ballot.ticketId") String ticketId,
-                                @FormParam("vote.selectedOption") Integer selectedOption) {
-        return pollRepository.findBySlug(slug)
-                .map(poll -> votingService.castVote(poll, ticketId, selectedOption)
+    public Response processVote(
+            @PathParam("slug") String slug,
+            @FormParam("ballot.ticketId") String ticketId,
+            @FormParam("vote.selectedOption") Integer selectedOption) {
+        return pollRepository
+                .findBySlug(slug)
+                .map(poll -> votingService
+                        .castVote(poll, ticketId, selectedOption)
                         .map(vote -> prepareResponseAfterSuccessfulVote(poll, vote))
                         .getOrElseConvertCause(error -> prepareResponseAfterUnsuccessfulVote(poll, error)))
                 .orElse(Response.status(Response.Status.NOT_FOUND).build());

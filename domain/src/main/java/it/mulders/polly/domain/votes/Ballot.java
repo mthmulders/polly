@@ -38,8 +38,8 @@ public class Ballot {
         if (obj == this) return true;
         if (!(obj instanceof Ballot other)) return false;
 
-        return Objects.equals(this.clientIdentifier, other.clientIdentifier) &&
-                Objects.equals(this.ticketId, other.ticketId);
+        return Objects.equals(this.clientIdentifier, other.clientIdentifier)
+                && Objects.equals(this.ticketId, other.ticketId);
     }
 
     @Override

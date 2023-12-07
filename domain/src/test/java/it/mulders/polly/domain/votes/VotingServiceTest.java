@@ -2,14 +2,14 @@ package it.mulders.polly.domain.votes;
 
 import it.mulders.polly.domain.polls.Option;
 import it.mulders.polly.domain.polls.Poll;
+import it.mulders.polly.domain.polls.PollRepository;
+import it.mulders.polly.domain.shared.Result;
 import java.time.temporal.ChronoUnit;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
-import it.mulders.polly.domain.polls.PollRepository;
-import it.mulders.polly.domain.shared.Result;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -54,11 +54,9 @@ class VotingServiceTest implements WithAssertions {
 
             var result = votingService.requestBallotFor(poll, clientIdentifier);
 
-            assertThat(pollRepository.findBySlug(poll.getSlug()))
-                    .isPresent()
-                    .hasValueSatisfying(updatedPoll -> {
-                        assertThat(updatedPoll.getBallots()).contains(result);
-                    });
+            assertThat(pollRepository.findBySlug(poll.getSlug())).isPresent().hasValueSatisfying(updatedPoll -> {
+                assertThat(updatedPoll.getBallots()).contains(result);
+            });
         }
     }
 
@@ -150,9 +148,7 @@ class VotingServiceTest implements WithAssertions {
 
         @Override
         public Optional<Poll> findBySlug(String slug) {
-            return stream()
-                    .filter(poll -> slug.equals(poll.getSlug()))
-                    .findAny();
+            return stream().filter(poll -> slug.equals(poll.getSlug())).findAny();
         }
 
         @Override
