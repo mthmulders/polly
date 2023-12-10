@@ -101,7 +101,7 @@
                                     <dependency>
                                         <groupId>${project.groupId}</groupId>
                                         <artifactId>polly-app</artifactId>
-                                        <type>ear</type>
+                                        <type>war</type>
                                     </dependency>
                                     <location>apps/</location>
                                     <stripVersion>true</stripVersion>
