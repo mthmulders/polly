@@ -68,6 +68,43 @@
                 </configuration>
             </plugin>
             <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <version>${flyway.version}</version>
+                <configuration>
+                    <driver>org.postgresql.Driver</driver>
+                    <locations>
+                        <location>filesystem:../infrastructure/src/main/resources/db/migration</location>
+                        <location>filesystem:../infrastructure/src/main/resources/db/migration-postgresql</location>
+                        <location>classpath:migration</location>
+                    </locations>
+                    <url>jdbc:postgresql://localhost/postgres</url>
+                    <user>postgres</user>
+                    <password>postgres</password>
+                    <!--
+                    Allows to continue with migrations from the app itself already applied
+                    to the database, even though this Flyway run can't resolve those
+                    -->
+                    <validateOnMigrate>false</validateOnMigrate>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.postgresql</groupId>
+                        <artifactId>postgresql</artifactId>
+                        <version>42.6.0</version>
+                    </dependency>
+                </dependencies>
+                <executions>
+                    <execution>
+                        <id>populate-database</id>
+                        <goals>
+                            <goal>migrate</goal>
+                        </goals>
+                        <phase>pre-integration-test</phase>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <groupId>io.openliberty.tools</groupId>
                 <artifactId>liberty-maven-plugin</artifactId>
                 <configuration>
@@ -115,41 +152,6 @@
                             <goal>test-stop</goal>
                         </goals>
                         <phase>post-integration-test</phase>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.flywaydb</groupId>
-                <artifactId>flyway-maven-plugin</artifactId>
-                <version>${flyway.version}</version>
-                <configuration>
-                    <driver>org.postgresql.Driver</driver>
-                    <locations>
-                        <location>classpath:migration</location>
-                    </locations>
-                    <url>jdbc:postgresql://localhost/postgres</url>
-                    <user>postgres</user>
-                    <password>postgres</password>
-                    <!--
-                    Allows to continue with migrations from the app itself already applied
-                    to the database, even though this Flyway run can't resolve those
-                    -->
-                    <validateOnMigrate>false</validateOnMigrate>
-                </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.postgresql</groupId>
-                        <artifactId>postgresql</artifactId>
-                        <version>42.6.0</version>
-                    </dependency>
-                </dependencies>
-                <executions>
-                    <execution>
-                        <id>populate-database</id>
-                        <goals>
-                            <goal>migrate</goal>
-                        </goals>
-                        <phase>pre-integration-test</phase>
                     </execution>
                 </executions>
             </plugin>
