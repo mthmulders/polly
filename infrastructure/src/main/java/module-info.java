@@ -6,6 +6,6 @@ module polly.infrastructure {
     requires jakarta.inject;
     requires jakarta.persistence;
     requires jakarta.transaction;
-    requires org.flywaydb.core;
+    requires flyway.core;
     requires org.mapstruct;
 }
