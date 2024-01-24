@@ -53,7 +53,7 @@ jobs:
         run: mvn -B --no-transfer-progress verify -pl :test
 
       - name: Secure OpenLiberty logs
-        uses: actions/upload-artifact@v4.2.0
+        uses: actions/upload-artifact@v4.3.0
         if: always()
         with:
           name: openliberty-logs
