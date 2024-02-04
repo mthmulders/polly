@@ -10,14 +10,14 @@ public class PollVoteIT extends AbstractPlaywrightTest {
     void should_display_question() {
         page.navigate("http://localhost:9080/app/vote/jakarta-mvc");
 
-        assertThat(page.textContent("//main/p")).contains("Do you like Jakarta MVC?");
+        assertThat(page.textContent("//main/article/p")).contains("Do you like Jakarta MVC?");
     }
 
     @Test
     void should_display_options() {
         page.navigate("http://localhost:9080/app/vote/jakarta-mvc");
 
-        var options = page.textContent("//main/form");
+        var options = page.textContent("//main/article/form");
 
         assertThat(options).contains("Yes!").contains("Of course!");
     }
