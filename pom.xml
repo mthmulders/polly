@@ -24,7 +24,7 @@
 
         <flyway.version>10.7.1</flyway.version>
         <jakarta-ee.version>10.0.0</jakarta-ee.version>
-        <junit.jupiter.version>5.10.1</junit.jupiter.version>
+        <junit.jupiter.version>5.10.2</junit.jupiter.version>
         <postgresql.jdbc.version>42.7.1</postgresql.jdbc.version>
         <openliberty.runtime.version>23.0.0.12</openliberty.runtime.version>
 
