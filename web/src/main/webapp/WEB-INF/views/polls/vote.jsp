@@ -15,10 +15,14 @@
       <input type="hidden" name="ballot.ticketId" value="${ballot.ticketId}" />
       Your choices:
       <c:forEach items="${poll.options}" var="option">
-        <input type="radio" name="vote.selectedOption" id="option-${option.optionValue}" value="${option.optionValue}" />
-        <label for="option-${option.optionValue}">${option.displayValue}</label>
+        <div class="pt-4">
+          <input type="radio" name="vote.selectedOption" id="option-${option.optionValue}" value="${option.optionValue}" />
+          <label for="option-${option.optionValue}">${option.displayValue}</label>
+        </div>
       </c:forEach>
-      <input type="submit" value="Vote!" />
+      <div class="pt-4">
+        <input type="submit" class="btn btn-sm btn-primary" value="Vote!" />
+      </div>
     </form>
 
     <h2>Debugging info</h2>
