@@ -13,8 +13,8 @@
 </head>
 
 <body>
-    <div>
-        <main>
+    <main class="md:container md:mx-auto p-2">
+        <article class="prose">
             <h1>${title}</h1>
 
             <div>
@@ -26,12 +26,12 @@
             </div>
 
             <jsp:doBody />
+        </article>
 
-            <hr />
+        <hr class="pt-4" />
 
-            Polly ${systemInfo.applicationVersion} (revision <code>${systemInfo.gitVersion}</code>) is made with ❤️ + ☕ + <a href="https://dev.java/" target="_blank">Java ${systemInfo.javaVersion}</a> + <a href="https://jakarta.ee/" target="_blank">Jakarta EE 10</a>.
-            Proudly running on ${systemInfo.javaRuntime}.
-        </main>
-    </div>
+        Polly ${systemInfo.applicationVersion} (revision <code>${systemInfo.gitVersion}</code>) is made with ❤️ + ☕ + <a href="https://dev.java/" target="_blank">Java ${systemInfo.javaVersion}</a> + <a href="https://jakarta.ee/" target="_blank">Jakarta EE 10</a>.
+        Proudly running on ${systemInfo.javaRuntime}.
+    </main>
 </body>
 </html>

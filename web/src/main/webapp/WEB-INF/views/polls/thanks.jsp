@@ -5,5 +5,7 @@
 <layout:main title="Thanks for your vote on #${poll.slug}">
     <p>Question: <strong>${poll.question}</strong></p>
 
-    You voted ${vote.option.displayValue}.
+    You voted
+
+    <blockquote>${vote.option.displayValue}</blockquote>
 </layout:main>
