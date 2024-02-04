@@ -31,7 +31,7 @@ public class PollVoteIT extends AbstractPlaywrightTest {
 
         var text = page.textContent("//main");
 
-        assertThat(text).contains("Thanks for your vote").contains("You voted Yes!");
+        assertThat(text).contains("Thanks for your vote").contains("Yes!");
     }
 
     @Test

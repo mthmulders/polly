@@ -13,7 +13,7 @@
 </head>
 
 <body>
-    <main class="md:container md:mx-auto p-2">
+    <main class="container p-4 mx-auto">
         <article class="prose">
             <h1>${title}</h1>
 
@@ -27,11 +27,10 @@
 
             <jsp:doBody />
         </article>
-
-        <hr class="pt-4" />
-
+    </main>
+    <footer class="container mx-auto p-4 border-dotted border-t-4 border-[oklch(var(--a))]">
         Polly ${systemInfo.applicationVersion} (revision <code>${systemInfo.gitVersion}</code>) is made with ❤️ + ☕ + <a href="https://dev.java/" target="_blank">Java ${systemInfo.javaVersion}</a> + <a href="https://jakarta.ee/" target="_blank">Jakarta EE 10</a>.
         Proudly running on ${systemInfo.javaRuntime}.
-    </main>
+    </footer>
 </body>
 </html>
