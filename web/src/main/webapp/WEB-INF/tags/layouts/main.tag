@@ -8,6 +8,7 @@
 <head>
     <meta charset="utf-8">
     <title>${title} | Polly</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/dist.css" />
 </head>
 
 <body>
