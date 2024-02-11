@@ -8,8 +8,8 @@
 <head>
     <meta charset="utf-8">
     <title>${title} | Polly</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/dist.css" />
-    <link rel="icon" href="${pageContext.request.contextPath}/img/poll-favicon.png" />
+    <link rel="stylesheet" href="${pageContext.servletContext.contextPath}/css/dist.css" />
+    <link rel="icon" href="${pageContext.servletContext.contextPath}/img/poll-favicon.png" />
 </head>
 
 <body>
