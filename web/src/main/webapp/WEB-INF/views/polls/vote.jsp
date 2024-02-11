@@ -25,14 +25,7 @@
       </div>
     </form>
 
-    <h2>Debugging info</h2>
-    <dl>
-      <dt>Your Ticket ID:</dt>
-      <dd><pre>${ballot.ticketId}</pre></dd>
-
-      <dt>Your Client Identifier:</dt>
-      <dd><pre>${ballot.clientIdentifier}</pre></dd>
-    </dl>
+    <!-- Debugging info: ticket_id=${ballot.ticketId}, client_identifier=${ballot.clientIdentifier} -->
   </c:if>
   <c:if test="${not empty ballot && ballot.usedAt != null}">
     You have already voted, thanks for your participation!
