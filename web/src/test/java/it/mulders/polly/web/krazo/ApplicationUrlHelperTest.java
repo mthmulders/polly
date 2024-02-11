@@ -1,6 +1,5 @@
 package it.mulders.polly.web.krazo;
 
-import it.mulders.polly.domain.polls.Poll;
 import it.mulders.polly.domain.shared.ConfigurationService;
 import jakarta.mvc.MvcContext;
 import jakarta.servlet.ServletContext;
@@ -9,7 +8,6 @@ import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.Collections;
 import java.util.stream.Stream;
 import org.assertj.core.api.WithAssertions;
 import org.eclipse.krazo.MvcContextImpl;
@@ -25,8 +23,6 @@ import org.springframework.mock.web.MockServletContext;
 class ApplicationUrlHelperTest implements WithAssertions {
     private final MvcContext mvcContext = new MvcContextImpl();
 
-    private final Poll poll = new Poll("That's the question", "my-question", Collections.emptySet());
-
     @ArgumentsSource(ApplicationUrlTestArgumentsProvider.class)
     @ParameterizedTest(name = "Should generate correct URL {0}")
     void should_generate_correct_url(final String displayName, final String applicationUrl, final String expectedResult)
@@ -41,7 +37,7 @@ class ApplicationUrlHelperTest implements WithAssertions {
 
         var configurationService = new DummyConfigurationService(applicationUrl);
 
-        var result = new ApplicationUrlHelper(configurationService, mvcContext).voteUrlForPoll(poll);
+        var result = new ApplicationUrlHelper(configurationService, mvcContext).voteUrlForPollSlug("my-question");
 
         assertThat(result).isEqualTo(expectedResult);
     }

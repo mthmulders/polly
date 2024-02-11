@@ -1,6 +1,5 @@
 package it.mulders.polly.web.krazo;
 
-import it.mulders.polly.domain.polls.Poll;
 import it.mulders.polly.domain.shared.ConfigurationService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -22,10 +21,10 @@ public class ApplicationUrlHelper {
         this.mvcContext = mvcContext;
     }
 
-    public String voteUrlForPoll(Poll poll) {
+    public String voteUrlForPollSlug(String pollSlug) {
         var applicationUrl = configurationService.applicationUrl();
 
-        var params = Map.of("slug", (Object) poll.getSlug());
+        var params = Map.of("slug", (Object) pollSlug);
         var voteUrl = mvcContext.uri("VoteController#displayVotePage", params);
 
         return "%s%s".formatted(applicationUrl.toString(), voteUrl);

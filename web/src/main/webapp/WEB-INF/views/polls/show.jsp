@@ -3,6 +3,18 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <layout:main title="Now voting #${poll.slug}">
-  <p>Question: <strong>${poll.question}</strong></p>
-  <p>Vote? Go to <a href="${voteUrl}">${voteUrl}</a></p>
+  <div class="flex flex-row">
+    <div class="basis-1/4">
+      <h2>${poll.question}</h2>
+      <h3>Vote? 👉🏻</h3>
+    </div>
+    <div class="basis-1/4">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="${qrCodeViewBox}" stroke="none" class="qr-code">
+          ${qrCodeBody}
+      </svg>
+    </div>
+    <div class="basis-1/2">
+    </div>
+  </div>
+
 </layout:main>

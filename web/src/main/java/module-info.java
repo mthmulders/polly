@@ -15,4 +15,5 @@ module confbuddy.web {
     requires krazo.core;
     requires jakarta.servlet;
     requires jakarta.annotation;
+    requires com.google.zxing;
 }
