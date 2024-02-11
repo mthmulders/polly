@@ -14,7 +14,7 @@
 
 <body>
     <main class="container p-4 mx-auto">
-        <article class="prose">
+        <article class="prose max-w-none">
             <h1>${title}</h1>
 
             <div>
