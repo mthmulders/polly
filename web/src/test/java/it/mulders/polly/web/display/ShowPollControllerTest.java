@@ -2,6 +2,7 @@ package it.mulders.polly.web.display;
 
 import it.mulders.polly.domain.polls.Poll;
 import it.mulders.polly.web.display.qr.QRCodeGenerator;
+import it.mulders.polly.web.display.qr.QRGenerationException;
 import it.mulders.polly.web.krazo.ApplicationUrlHelper;
 import it.mulders.polly.web.test.InMemoryPollRepository;
 import jakarta.mvc.Models;
@@ -62,5 +63,22 @@ class ShowPollControllerTest implements WithAssertions {
         assertThat(models.get("poll")).isEqualTo(poll);
         assertThat(models.get("qrCodeBody")).isNotNull();
         assertThat(models.get("qrCodeViewBox")).isNotNull();
+    }
+
+    @Test
+    void error_generating_qr_should_show_error() {
+        var poll = new Poll("", "whatever", Collections.emptySet());
+        pollRepository.add(poll);
+        var qrCodeGenerator = new QRCodeGenerator() {
+            @Override
+            public String generateQRCodeSvgPath(String text) throws QRGenerationException {
+                throw new QRGenerationException(new NullPointerException());
+            }
+        };
+        var controller = new ShowPollController(models, pollRepository, qrCodeGenerator, urlHelper);
+
+        controller.show("whatever");
+
+        assertThat(models.get("qrCodeBody").toString()).containsSequence("Error generating QR code");
     }
 }
