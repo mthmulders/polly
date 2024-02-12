@@ -3,11 +3,11 @@ package it.mulders.polly.web.display.qr;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
 import jakarta.enterprise.context.ApplicationScoped;
-
 import java.util.stream.IntStream;
 
-import com.google.zxing.qrcode.QRCodeWriter;
+import static java.util.stream.Collectors.joining;
 
 @ApplicationScoped
 public class QRCodeGenerator {
@@ -26,16 +26,12 @@ public class QRCodeGenerator {
     }
 
     private String convertMatrixToSvgPath(final BitMatrix matrix) {
-        var builder = new StringBuilder();
-
-        IntStream.range(0, matrix.getHeight()).forEach(x -> {
-            IntStream.range(0, matrix.getWidth()).forEach(y -> {
-                if (matrix.get(x, y)) {
-                    builder.append(" M%d,%dh1v1h-1z".formatted(x, y));
-                }
-            });
-        });
-
-        return builder.toString();
+        return IntStream.range(0, matrix.getHeight())
+                .mapToObj(x -> IntStream.range(0, matrix.getWidth())
+                        .filter(y -> matrix.get(x, y))
+                        .mapToObj(y -> " M%d,%dh1v1h-1z".formatted(x, y))
+                        .collect(joining(" "))
+                )
+                .collect(joining(" "));
     }
 }
