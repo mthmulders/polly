@@ -12,4 +12,11 @@ class PollDisplayIT extends AbstractPlaywrightTest {
 
         assertThat(page.textContent("//main")).contains("Do you like Jakarta MVC?");
     }
+
+    @Test
+    void should_display_qr_code() {
+        page.navigate("http://localhost:9080/app/show/jakarta-mvc");
+
+        assertThat(page.locator("//*[@class='qr-code']").isVisible()).isTrue();
+    }
 }

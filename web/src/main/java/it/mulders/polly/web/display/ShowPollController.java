@@ -2,6 +2,8 @@ package it.mulders.polly.web.display;
 
 import it.mulders.polly.domain.polls.Poll;
 import it.mulders.polly.domain.polls.PollRepository;
+import it.mulders.polly.web.display.qr.QRCodeGenerator;
+import it.mulders.polly.web.display.qr.QRGenerationException;
 import it.mulders.polly.web.krazo.ApplicationUrlHelper;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
@@ -24,13 +26,17 @@ public class ShowPollController {
     private PollRepository pollRepository;
 
     @Inject
+    private QRCodeGenerator qrCodeGenerator;
+
+    @Inject
     private ApplicationUrlHelper urlHelper;
 
     public ShowPollController() {}
 
-    ShowPollController(Models models, PollRepository pollRepository, ApplicationUrlHelper urlHelper) {
+    ShowPollController(Models models, PollRepository pollRepository, QRCodeGenerator qrCodeGenerator, ApplicationUrlHelper urlHelper) {
         this.models = models;
         this.pollRepository = pollRepository;
+        this.qrCodeGenerator = qrCodeGenerator;
         this.urlHelper = urlHelper;
     }
 
@@ -45,8 +51,17 @@ public class ShowPollController {
     }
 
     private Response populateModelAndPrepareResponse(final Poll poll) {
+        try {
+            var voteUrl = urlHelper.voteUrlForPollSlug(poll.getSlug());
+            var path = qrCodeGenerator.generateQRCodeSvgPath(voteUrl);
+            models.put("qrCodeBody", "<path d=\"%s\" />".formatted(path));
+        } catch (QRGenerationException e) {
+            models.put("qrCodeBody", "<text x=\"0\" y=\"0\">Error generating QR code.</text>");
+        }
+
+        models.put("qrCodeViewBox", QRCodeGenerator.QR_CODE_DIMENSION_VIEWBOX);
         models.put("poll", poll);
-        models.put("voteUrl", urlHelper.voteUrlForPoll(poll));
+
         return Response.ok("polls/show.jsp").build();
     }
 }

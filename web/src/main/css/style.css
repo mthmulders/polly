@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+svg.qr-code {
+    fill: oklch(var(--a));
+}
