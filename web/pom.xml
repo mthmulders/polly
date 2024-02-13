@@ -16,7 +16,7 @@
     <properties>
         <batik.version>1.17</batik.version>
         <krazo.version>3.0.1</krazo.version>
-        <zxing.version>3.4.0</zxing.version>
+        <zxing.version>3.5.3</zxing.version>
     </properties>
 
     <dependencies>
