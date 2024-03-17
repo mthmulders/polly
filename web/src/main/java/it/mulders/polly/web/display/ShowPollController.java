@@ -1,5 +1,7 @@
 package it.mulders.polly.web.display;
 
+import static java.util.logging.Level.SEVERE;
+
 import it.mulders.polly.domain.polls.Poll;
 import it.mulders.polly.domain.polls.PollRepository;
 import it.mulders.polly.web.display.qr.QRCodeGenerator;
@@ -14,11 +16,14 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.Response;
+import java.util.logging.Logger;
 
 @Path("/show")
 @Controller
 @RequestScoped
 public class ShowPollController {
+    private static final Logger log = Logger.getLogger(ShowPollController.class.getName());
+
     @Inject
     private Models models;
 
@@ -70,6 +75,7 @@ public class ShowPollController {
             var path = qrCodeGenerator.generateQRCodeSvgPath(voteUrl);
             return "<path d=\"%s\" />".formatted(path);
         } catch (QRGenerationException e) {
+            log.log(SEVERE, e, () -> "Error generating QR code for poll %s".formatted(poll));
             return "<text x=\"0\" y=\"0\">Error generating QR code.</text>";
         }
     }
