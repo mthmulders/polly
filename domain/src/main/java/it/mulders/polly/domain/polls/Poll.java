@@ -85,7 +85,7 @@ public class Poll {
         var percentageByOption = voteCountByOption.keySet().stream().collect(toMap(identity(), percentageOfVotes));
 
         // If an option didn't get any votes, it will be missing in the map by now.
-        options.forEach(option -> percentageByOption.computeIfAbsent(option, (ignored) -> 0d));
+        options.forEach(option -> percentageByOption.computeIfAbsent(option, ignored -> 0d));
 
         return percentageByOption;
     }
