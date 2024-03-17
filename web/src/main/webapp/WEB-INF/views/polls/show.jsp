@@ -16,11 +16,15 @@
     <div class="basis-1/2">
         <h2>${voteCount} votes so far</h2>
 
-        <ul>
-        <c:forEach var="option" items="${votePercentages}">
-          <li>Option <strong>${option.key.displayValue}</strong> got ${option.value * 100}% of the votes.</li>
-        </c:forEach>
-        </ul>
+        <div class="w-full">
+            <c:forEach var="option" items="${votePercentages}">
+            <div class="w-full"><strong>${option.key.displayValue}</strong> (${option.value * 100}%)</div>
+            <div class="w-full inline">
+                <div class="bg-accent" style="width: ${option.value * 100}%; height: 20px"></div>
+                <div style="width: ${100 - (option.value * 100)}%; height: 20px"></div>
+            </div>
+            </c:forEach>
+        </div>
     </div>
   </div>
 
