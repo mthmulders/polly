@@ -33,7 +33,11 @@ public class ShowPollController {
 
     public ShowPollController() {}
 
-    ShowPollController(Models models, PollRepository pollRepository, QRCodeGenerator qrCodeGenerator, ApplicationUrlHelper urlHelper) {
+    ShowPollController(
+            Models models,
+            PollRepository pollRepository,
+            QRCodeGenerator qrCodeGenerator,
+            ApplicationUrlHelper urlHelper) {
         this.models = models;
         this.pollRepository = pollRepository;
         this.qrCodeGenerator = qrCodeGenerator;
