@@ -1,13 +1,20 @@
 package it.mulders.polly.domain.polls;
 
+import static java.util.function.Function.identity;
+import static java.util.stream.Collectors.counting;
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.toMap;
+
 import it.mulders.polly.domain.impl.RandomStringUtils;
 import it.mulders.polly.domain.votes.Ballot;
 import it.mulders.polly.domain.votes.Vote;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Function;
 
 /**
  * Aggregate root for the <strong>Polls</strong> domain. A <strong>Poll</strong> is a question where participants can
@@ -68,6 +75,19 @@ public class Poll {
         var ballot = new Ballot(clientIdentifier, RandomStringUtils.generateRandomIdentifier(8));
         ballots.add(ballot);
         return ballot;
+    }
+
+    public Map<Option, Double> calculateVotePercentages() {
+        var voteCount = votes.size();
+        var voteCountByOption = votes.stream().collect(groupingBy(Vote::getOption, counting()));
+        var percentageOfVotes = (Function<Option, Double>)
+                (Option option) -> (double) voteCountByOption.getOrDefault(option, 0L) / voteCount;
+        var percentageByOption = voteCountByOption.keySet().stream().collect(toMap(identity(), percentageOfVotes));
+
+        // If an option didn't get any votes, it will be missing in the map by now.
+        options.forEach(option -> percentageByOption.computeIfAbsent(option, (ignored) -> 0d));
+
+        return percentageByOption;
     }
 
     @Override

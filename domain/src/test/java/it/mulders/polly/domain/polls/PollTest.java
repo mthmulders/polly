@@ -7,6 +7,7 @@ import nl.jqno.equalsverifier.EqualsVerifier;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -74,5 +75,51 @@ class PollTest implements WithAssertions {
         var result = poll.findBallotByTicketId("7FSSRB7L");
 
         assertThat(result).isEmpty();
+    }
+
+    @Nested
+    class ReportAboutVoting {
+        @Test
+        void fifty_fifty() {
+            var poll = new Poll("How are you?", "how-are-you", options);
+            var ballot = poll.requestBallot(RandomStringUtils.generateRandomIdentifier(8));
+            poll.registerVote(new Vote(ballot, option1));
+            poll.registerVote(new Vote(ballot, option2));
+
+            var result = poll.calculateVotePercentages();
+
+            assertThat(result).containsEntry(option1, 0.5d);
+            assertThat(result).containsEntry(option2, 0.5d);
+        }
+
+        @Test
+        void one_to_three() {
+            var poll = new Poll("How are you?", "how-are-you", options);
+            var ballot = poll.requestBallot(RandomStringUtils.generateRandomIdentifier(8));
+            poll.registerVote(new Vote(ballot, option1));
+            poll.registerVote(new Vote(ballot, option2));
+            poll.registerVote(new Vote(ballot, option2));
+            poll.registerVote(new Vote(ballot, option2));
+
+            var result = poll.calculateVotePercentages();
+
+            assertThat(result).containsEntry(option1, 0.25d);
+            assertThat(result).containsEntry(option2, 0.75d);
+        }
+
+        @Test
+        void all_to_one_option() {
+            var poll = new Poll("How are you?", "how-are-you", options);
+            var ballot = poll.requestBallot(RandomStringUtils.generateRandomIdentifier(8));
+            poll.registerVote(new Vote(ballot, option2));
+            poll.registerVote(new Vote(ballot, option2));
+            poll.registerVote(new Vote(ballot, option2));
+            poll.registerVote(new Vote(ballot, option2));
+
+            var result = poll.calculateVotePercentages();
+
+            assertThat(result).containsEntry(option1, 0d);
+            assertThat(result).containsEntry(option2, 1d);
+        }
     }
 }

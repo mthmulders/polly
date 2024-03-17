@@ -55,17 +55,22 @@ public class ShowPollController {
     }
 
     private Response populateModelAndPrepareResponse(final Poll poll) {
+        models.put("qrCodeBody", prepareQRCode(poll));
+        models.put("qrCodeViewBox", QRCodeGenerator.QR_CODE_DIMENSION_VIEWBOX);
+        models.put("poll", poll);
+        models.put("voteCount", poll.getVotes().size());
+        models.put("votePercentages", poll.calculateVotePercentages());
+
+        return Response.ok("polls/show.jsp").build();
+    }
+
+    private String prepareQRCode(final Poll poll) {
         try {
             var voteUrl = urlHelper.voteUrlForPollSlug(poll.getSlug());
             var path = qrCodeGenerator.generateQRCodeSvgPath(voteUrl);
-            models.put("qrCodeBody", "<path d=\"%s\" />".formatted(path));
+            return "<path d=\"%s\" />".formatted(path);
         } catch (QRGenerationException e) {
-            models.put("qrCodeBody", "<text x=\"0\" y=\"0\">Error generating QR code.</text>");
+            return "<text x=\"0\" y=\"0\">Error generating QR code.</text>";
         }
-
-        models.put("qrCodeViewBox", QRCodeGenerator.QR_CODE_DIMENSION_VIEWBOX);
-        models.put("poll", poll);
-
-        return Response.ok("polls/show.jsp").build();
     }
 }

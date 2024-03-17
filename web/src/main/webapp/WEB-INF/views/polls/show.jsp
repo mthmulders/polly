@@ -14,6 +14,13 @@
       </svg>
     </div>
     <div class="basis-1/2">
+        <h2>${voteCount} votes so far</h2>
+
+        <ul>
+        <c:forEach var="option" items="${votePercentages}">
+          <li>Option <strong>${option.key.displayValue}</strong> got ${option.value * 100}% of the votes.</li>
+        </c:forEach>
+        </ul>
     </div>
   </div>
 
