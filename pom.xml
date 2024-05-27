@@ -65,6 +65,12 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <dependency>
+                <groupId>io.openliberty</groupId>
+                <artifactId>openliberty-runtime</artifactId>
+                <version>${openliberty.runtime.version}</version>
+                <type>zip</type>
+            </dependency>
 
             <dependency>
                 <groupId>org.junit</groupId>

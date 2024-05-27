@@ -51,8 +51,6 @@
                     <runtimeArtifact>
                         <groupId>io.openliberty</groupId>
                         <artifactId>openliberty-runtime</artifactId>
-                        <version>${openliberty.runtime.version}</version>
-                        <type>zip</type>
                     </runtimeArtifact>
                 </configuration>
             </plugin>
