@@ -45,7 +45,7 @@ I don't want to learn too much new things at the same, so I stick to Java as the
 
 | OC4
 | Testing
-| Use JUnit to prove functional correctness using unit tests and optionally integration tests. Use JaCoCo to ensure a high test coverage and use PiTest to ensure high quality of tests. Use https://playwright.dev/java[Playwright] to write functional integration tests.
+| Use JUnit to prove functional correctness using unit tests and optionally integration tests. Use JaCoCo to ensure a high test coverage and use PiTest to ensure high quality of tests. Use https://playwright.dev/java[Playwright] to write functional integration tests. Use https://pitest.org/[Pitest] and the https://dashboard.stryker-mutator.io/[Stryker Dashboard] to run resp. display mutation testing (results).
 
 | OC5
 | Published under an Open Source license
@@ -65,7 +65,7 @@ I don't want to learn too much new things at the same, so I stick to Java as the
 
 | C2
 | Coding conventions
-| The project uses the https://github.com/palantir/palantir-java-format[Palantir Java format]. formatting is enforced through and can be executed using https://github.com/diffplug/spotless/tree/main/plugin-maven[Spotless].
+| The project uses the https://github.com/palantir/palantir-java-format[Palantir Java format]. Formatting is enforced through and can be executed using https://github.com/diffplug/spotless/tree/main/plugin-maven[Spotless].
 
 | C3
 | Natural language
