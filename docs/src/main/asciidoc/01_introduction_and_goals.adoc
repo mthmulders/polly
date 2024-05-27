@@ -61,6 +61,7 @@ The following lists contains the most important personas for this application.
 | Developers familiar with Java who want to learn about developing modern web applications without having to learn JavaScript/Typescript and an additional web application framework or two.
 
 | Maarten Mulders (me)
-| Improving my skills as an architect and a developer. Have some real-world, working sample code when discussing "traditional" web applications or Jakarta MVC.
+a| 1. Improving my skills as an architect and a developer. Have some real-world, working sample code when discussing "traditional" web applications or Jakarta MVC.
+2. Having a convenient way to poll attendee opinions during a talk at a conference or Java user group gathering.
 
 |===
