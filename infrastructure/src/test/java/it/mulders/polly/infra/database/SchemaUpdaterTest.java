@@ -74,7 +74,7 @@ class SchemaUpdaterTest implements WithAssertions {
         @Override
         public MigrateResult migrate() throws FlywayException {
             invoked = true;
-            return new MigrateResult("whatever", "whatever", "whatever");
+            return new MigrateResult("whatever", "whatever", "whatever", "PostgreSQL");
         }
     }
 }
