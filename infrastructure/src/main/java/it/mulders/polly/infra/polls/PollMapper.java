@@ -14,7 +14,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.SubclassMapping;
 
-@Mapper(componentModel = MappingConstants.ComponentModel.JAKARTA, nullValueIterableMappingStrategy = RETURN_DEFAULT)
+@Mapper(componentModel = MappingConstants.ComponentModel.JAKARTA_CDI, nullValueIterableMappingStrategy = RETURN_DEFAULT)
 public interface PollMapper {
 
     @BeanMapping(resultType = JpaBackedPoll.class)
