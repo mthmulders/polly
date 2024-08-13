@@ -48,7 +48,7 @@ public class PropertyFileConfigurationService implements ConfigurationService {
             var sizeBefore = properties.size();
             properties.load(input);
             var sizeAfter = properties.size();
-            logger.info(() -> "%d metadata value(s) loaded".formatted(sizeAfter - sizeBefore));
+            logger.info(() -> "Loaded %d metadata value(s)".formatted(sizeAfter - sizeBefore));
         } catch (IOException e) {
             var msg = "Could not read metadata from %s".formatted(classpathResourceName);
             logger.log(Level.SEVERE, msg, e);
@@ -68,7 +68,7 @@ public class PropertyFileConfigurationService implements ConfigurationService {
         try (var input = Files.newInputStream(Paths.get(configFileLocation))) {
             properties.load(input);
             logger.info(
-                    () -> "%d configuration value(s) loaded from %s".formatted(properties.size(), configFileLocation));
+                    () -> "Loaded %d configuration value(s) from %s".formatted(properties.size(), configFileLocation));
         } catch (IOException e) {
             var msg = "Could not read configuration from %s".formatted(configFileLocation);
             logger.log(Level.SEVERE, msg, e);
