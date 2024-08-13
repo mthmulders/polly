@@ -1,7 +1,5 @@
 package it.mulders.polly.infra.database;
 
-import java.util.Collections;
-import java.util.Map;
 import javax.sql.DataSource;
 import org.assertj.core.api.WithAssertions;
 import org.flywaydb.core.Flyway;
@@ -23,21 +21,6 @@ class SchemaUpdaterTest implements WithAssertions {
             return configuration;
         }
     };
-
-    @Test
-    void should_use_default_location_for_migrations() {
-        var locations = updater.determineFlywayLocations(Collections.emptyMap());
-
-        assertThat(locations).containsExactly("classpath:db/migration", "classpath:db/migration-postgresql");
-    }
-
-    @Test
-    void should_use_specified_location_for_migrations() {
-        var environmentVariables = Map.of("FLYWAY_LOCATIONS", "classpath:a,classpath:b");
-        var locations = updater.determineFlywayLocations(environmentVariables);
-
-        assertThat(locations).containsExactly("classpath:a", "classpath:b");
-    }
 
     @Test
     void should_produce_Flyway_configuration() {

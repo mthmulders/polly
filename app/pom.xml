@@ -17,6 +17,16 @@
         <liberty.env.POLLY_CONFIGURATION_FILE>${project.basedir}/src/main/resources/polly.properties</liberty.env.POLLY_CONFIGURATION_FILE>
     </properties>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.postgresql</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>${postgresql.jdbc.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
@@ -41,11 +51,13 @@
                 <artifactId>liberty-maven-plugin</artifactId>
                 <configuration>
                     <copyDependencies>
-                        <dependency>
-                            <groupId>org.hsqldb</groupId>
-                            <artifactId>hsqldb</artifactId>
-                            <version>2.7.1</version>
-                        </dependency>
+                        <dependencyGroup>
+                            <dependency>
+                                <groupId>org.postgresql</groupId>
+                                <artifactId>postgresql</artifactId>
+                            </dependency>
+                            <location>jdbc</location>
+                        </dependencyGroup>
                     </copyDependencies>
                     <mergeServerEnv>true</mergeServerEnv>
                     <runtimeArtifact>
