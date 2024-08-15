@@ -2,6 +2,7 @@ package it.mulders.polly.domain.polls;
 
 import it.mulders.polly.domain.impl.RandomStringUtils;
 import it.mulders.polly.domain.votes.Vote;
+import java.math.BigDecimal;
 import java.util.Set;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import org.assertj.core.api.WithAssertions;
@@ -88,8 +89,8 @@ class PollTest implements WithAssertions {
 
             var result = poll.calculateVotePercentages();
 
-            assertThat(result).containsEntry(option1, 0.5d);
-            assertThat(result).containsEntry(option2, 0.5d);
+            assertThat(result).containsEntry(option1, new BigDecimal("50"));
+            assertThat(result).containsEntry(option2, new BigDecimal("50"));
         }
 
         @Test
@@ -103,8 +104,26 @@ class PollTest implements WithAssertions {
 
             var result = poll.calculateVotePercentages();
 
-            assertThat(result).containsEntry(option1, 0.25d);
-            assertThat(result).containsEntry(option2, 0.75d);
+            assertThat(result).containsEntry(option1, new BigDecimal("25"));
+            assertThat(result).containsEntry(option2, new BigDecimal("75"));
+        }
+
+        @Test
+        void round_percentage_to_two_decimal_places() {
+            var poll = new Poll("How are you?", "how-are-you", options);
+            var ballot = poll.requestBallot(RandomStringUtils.generateRandomIdentifier(8));
+            poll.registerVote(new Vote(ballot, option1));
+            poll.registerVote(new Vote(ballot, option2));
+            poll.registerVote(new Vote(ballot, option2));
+            poll.registerVote(new Vote(ballot, option2));
+            poll.registerVote(new Vote(ballot, option2));
+            poll.registerVote(new Vote(ballot, option2));
+            poll.registerVote(new Vote(ballot, option2));
+
+            var result = poll.calculateVotePercentages();
+
+            assertThat(result).containsEntry(option1, new BigDecimal("14.3"));
+            assertThat(result).containsEntry(option2, new BigDecimal("85.7"));
         }
 
         @Test
@@ -118,8 +137,8 @@ class PollTest implements WithAssertions {
 
             var result = poll.calculateVotePercentages();
 
-            assertThat(result).containsEntry(option1, 0d);
-            assertThat(result).containsEntry(option2, 1d);
+            assertThat(result).containsEntry(option1, new BigDecimal("0"));
+            assertThat(result).containsEntry(option2, new BigDecimal("100"));
         }
     }
 }

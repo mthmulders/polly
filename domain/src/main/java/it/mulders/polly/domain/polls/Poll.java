@@ -8,6 +8,8 @@ import static java.util.stream.Collectors.toMap;
 import it.mulders.polly.domain.impl.RandomStringUtils;
 import it.mulders.polly.domain.votes.Ballot;
 import it.mulders.polly.domain.votes.Vote;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
@@ -77,15 +79,25 @@ public class Poll {
         return ballot;
     }
 
-    public Map<Option, Double> calculateVotePercentages() {
-        var voteCount = votes.size();
+    private static final BigDecimal ONE_HUNDRED = BigDecimal.valueOf(100);
+    public Map<Option, BigDecimal> calculateVotePercentages() {
+        var voteCount = BigDecimal.valueOf(votes.size());
         var voteCountByOption = votes.stream().collect(groupingBy(Vote::getOption, counting()));
-        var percentageOfVotes = (Function<Option, Double>)
-                (Option option) -> (double) voteCountByOption.getOrDefault(option, 0L) / voteCount;
+        var percentageOfVotes = (Function<Option, BigDecimal>) (Option option) -> {
+            var count = BigDecimal.valueOf(voteCountByOption.getOrDefault(option, 0L));
+            var fraction = count.divide(voteCount, 3, RoundingMode.HALF_EVEN);
+            var percentage = fraction.multiply(ONE_HUNDRED);
+            // Formatting: at most 1 decimal place, but none if it's zero. See unit test for details.
+            // Inspired by https://stackoverflow.com/a/64597273/1523342.
+            percentage = percentage.stripTrailingZeros();
+            if (percentage.scale() < 0)
+                percentage = percentage.setScale(0, RoundingMode.UNNECESSARY);
+            return percentage;
+        };
         var percentageByOption = voteCountByOption.keySet().stream().collect(toMap(identity(), percentageOfVotes));
 
         // If an option didn't get any votes, it will be missing in the map by now.
-        options.forEach(option -> percentageByOption.computeIfAbsent(option, ignored -> 0d));
+        options.forEach(option -> percentageByOption.computeIfAbsent(option, ignored -> BigDecimal.ZERO));
 
         return percentageByOption;
     }
