@@ -63,6 +63,8 @@ class ShowPollControllerTest implements WithAssertions {
         assertThat(models.get("poll")).isEqualTo(poll);
         assertThat(models.get("qrCodeBody")).isNotNull();
         assertThat(models.get("qrCodeViewBox")).isNotNull();
+        assertThat(models.get("voteCount")).isNotNull();
+        assertThat(models.get("votePercentages")).isNotNull();
     }
 
     @Test
