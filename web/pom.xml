@@ -15,6 +15,7 @@
 
     <properties>
         <batik.version>1.17</batik.version>
+        <htmx.version>2.0.1</htmx.version>
         <krazo.version>3.0.1</krazo.version>
         <zxing.version>3.5.3</zxing.version>
     </properties>
@@ -87,6 +88,12 @@
             <groupId>jakarta.ws.rs</groupId>
             <artifactId>jakarta.ws.rs-api</artifactId>
             <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.webjars.npm</groupId>
+            <artifactId>htmx.org</artifactId>
+            <version>${htmx.version}</version>
         </dependency>
 
         <!-- Framework dependencies -->

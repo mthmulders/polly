@@ -13,18 +13,8 @@
           ${qrCodeBody}
       </svg>
     </div>
-    <div class="basis-1/2">
-        <h2>${voteCount} votes so far</h2>
-
-        <div class="w-full">
-            <c:forEach var="option" items="${votePercentages}">
-            <div class="w-full"><strong>${option.key.displayValue}</strong> (${option.value * 100}%)</div>
-            <div class="w-full inline">
-                <div class="bg-accent" style="width: ${option.value * 100}%; height: 20px"></div>
-                <div style="width: ${100 - (option.value * 100)}%; height: 20px"></div>
-            </div>
-            </c:forEach>
-        </div>
+    <div class="basis-1/2" hx-get="${pageContext.servletContext.contextPath}/app/show/${poll.slug}/votes" hx-trigger="every 2s" hx-target="#poll-summary">
+        <%@ include file="../fragments/polls/_votes.jsp" %>
     </div>
   </div>
 

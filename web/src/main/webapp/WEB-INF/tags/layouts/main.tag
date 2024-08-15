@@ -32,5 +32,6 @@
         Polly ${systemInfo.applicationVersion} (revision <code>${systemInfo.gitVersion}</code>) is made with ❤️ + ☕ + <a href="https://dev.java/" target="_blank">Java ${systemInfo.javaVersion}</a> + <a href="https://jakarta.ee/" target="_blank">Jakarta EE 10</a>.
         Proudly running on ${systemInfo.javaRuntime}.
     </footer>
+    <script defer src="${pageContext.servletContext.contextPath}/webjars/htmx.org/2.0.1/dist/htmx.min.js"></script>
 </body>
 </html>
