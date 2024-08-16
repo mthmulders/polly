@@ -36,17 +36,22 @@ public class ShowPollController {
     @Inject
     private ApplicationUrlHelper urlHelper;
 
+    @Inject
+    private VoteSummaryService voteSummaryService;
+
     public ShowPollController() {}
 
     ShowPollController(
             Models models,
             PollRepository pollRepository,
             QRCodeGenerator qrCodeGenerator,
-            ApplicationUrlHelper urlHelper) {
+            ApplicationUrlHelper urlHelper,
+            VoteSummaryService voteSummaryService) {
         this.models = models;
         this.pollRepository = pollRepository;
         this.qrCodeGenerator = qrCodeGenerator;
         this.urlHelper = urlHelper;
+        this.voteSummaryService = voteSummaryService;
     }
 
     @GET
@@ -63,8 +68,8 @@ public class ShowPollController {
         models.put("qrCodeBody", prepareQRCode(poll));
         models.put("qrCodeViewBox", QRCodeGenerator.QR_CODE_DIMENSION_VIEWBOX);
         models.put("poll", poll);
-        models.put("voteCount", poll.getVotes().size());
-        models.put("votePercentages", poll.calculateVotePercentages());
+        models.put("votePercentages", voteSummaryService.calculateVotePercentages(poll));
+        models.put("voteCount", voteSummaryService.calculateVoteCount(poll));
 
         return Response.ok("polls/show.jsp").build();
     }

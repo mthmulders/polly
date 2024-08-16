@@ -23,6 +23,8 @@ import java.util.function.Function;
  * cast their votes from a predefined set of possible answers.
  */
 public class Poll {
+    private static final BigDecimal ONE_HUNDRED = BigDecimal.valueOf(100);
+
     private final String question;
     private final String slug;
     private final Set<Option> options;
@@ -79,7 +81,6 @@ public class Poll {
         return ballot;
     }
 
-    private static final BigDecimal ONE_HUNDRED = BigDecimal.valueOf(100);
     public Map<Option, BigDecimal> calculateVotePercentages() {
         var voteCount = BigDecimal.valueOf(votes.size());
         var voteCountByOption = votes.stream().collect(groupingBy(Vote::getOption, counting()));
@@ -90,8 +91,9 @@ public class Poll {
             // Formatting: at most 1 decimal place, but none if it's zero. See unit test for details.
             // Inspired by https://stackoverflow.com/a/64597273/1523342.
             percentage = percentage.stripTrailingZeros();
-            if (percentage.scale() < 0)
+            if (percentage.scale() < 0) {
                 percentage = percentage.setScale(0, RoundingMode.UNNECESSARY);
+            }
             return percentage;
         };
         var percentageByOption = voteCountByOption.keySet().stream().collect(toMap(identity(), percentageOfVotes));

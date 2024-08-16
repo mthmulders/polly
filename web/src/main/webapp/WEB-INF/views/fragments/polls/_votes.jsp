@@ -6,11 +6,11 @@
     <h2>Received ${voteCount} vote(s)</h2>
 
     <div class="w-full">
-        <c:forEach var="option" items="${votePercentages}">
-            <div class="w-full"><strong>${option.key.displayValue}</strong> (${option.value}%)</div>
+        <c:forEach var="item" items="${votePercentages}">
+            <div class="w-full"><strong>${item.optionLabel()}</strong> (${item.percentage()}%)</div>
             <div class="w-full inline">
-                <div class="bg-accent" style="width: ${option.value}%; height: 20px"></div>
-                <div style="width: ${100 - (option.value)}%; height: 20px"></div>
+                <div class="bg-accent" style="width: ${item.percentage()}%; height: 20px"></div>
+                <div style="width: ${100 - (item.percentage())}%; height: 20px"></div>
             </div>
         </c:forEach>
     </div>

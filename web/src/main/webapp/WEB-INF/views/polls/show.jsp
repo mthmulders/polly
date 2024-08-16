@@ -13,7 +13,11 @@
           ${qrCodeBody}
       </svg>
     </div>
-    <div class="basis-1/2" hx-get="${pageContext.servletContext.contextPath}/app/show/${poll.slug}/votes" hx-trigger="every 2s" hx-target="#poll-summary" hx-swap="outerHTML">
+    <div class="basis-1/2"
+         hx-get="${pageContext.servletContext.contextPath}/app/show/${poll.slug}/votes"
+         hx-trigger="every 5s"
+         hx-target="#poll-summary"
+         hx-swap="outerHTML">
         <%@ include file="../fragments/polls/_votes.jsp" %>
     </div>
   </div>

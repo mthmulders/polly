@@ -26,11 +26,16 @@ public class ShowPollVotesFragmentController {
     @Inject
     private PollRepository pollRepository;
 
+    @Inject
+    private VoteSummaryService voteSummaryService;
+
     public ShowPollVotesFragmentController() {}
 
-    ShowPollVotesFragmentController(Models models, PollRepository pollRepository) {
+    ShowPollVotesFragmentController(
+            Models models, PollRepository pollRepository, VoteSummaryService voteSummaryService) {
         this.models = models;
         this.pollRepository = pollRepository;
+        this.voteSummaryService = voteSummaryService;
     }
 
     @GET
@@ -48,8 +53,8 @@ public class ShowPollVotesFragmentController {
     }
 
     private Response populateModelAndPrepareResponse(final Poll poll) {
-        models.put("votePercentages", poll.calculateVotePercentages());
-        models.put("voteCount", poll.getVotes().size());
+        models.put("votePercentages", voteSummaryService.calculateVotePercentages(poll));
+        models.put("voteCount", voteSummaryService.calculateVoteCount(poll));
         models.put("poll", poll);
 
         return Response.ok("fragments/polls/_votes.jsp").build();
