@@ -189,7 +189,7 @@
                 <includes>
                     <include>_htmx.jspf</include>
                 </includes>
-                <targetPath>${build.outputDirectory}/web/WEB-INF/tags/layouts/_htmx.jspf</targetPath>
+                <targetPath>${project.build.outputDirectory}/web/WEB-INF/tags/layouts/_htmx.jspf</targetPath>
             </resource>
         </resources>
         <plugins>
