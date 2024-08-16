@@ -184,12 +184,12 @@
     <build>
         <resources>
             <resource>
+                <targetPath>${project.build.outputDirectory}/web/WEB-INF/tags/layouts/_htmx.jspf</targetPath>
                 <filtering>true</filtering>
                 <directory>src/main/webapp/WEB-INF/tags/layouts/</directory>
                 <includes>
                     <include>_htmx.jspf</include>
                 </includes>
-                <targetPath>${project.build.outputDirectory}/web/WEB-INF/tags/layouts/_htmx.jspf</targetPath>
             </resource>
         </resources>
         <plugins>
