@@ -182,16 +182,6 @@
     </dependencies>
 
     <build>
-        <resources>
-            <resource>
-                <targetPath>${project.build.outputDirectory}/web/WEB-INF/tags/layouts/_htmx.jspf</targetPath>
-                <filtering>true</filtering>
-                <directory>src/main/webapp/WEB-INF/tags/layouts/</directory>
-                <includes>
-                    <include>_htmx.jspf</include>
-                </includes>
-            </resource>
-        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -200,6 +190,11 @@
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                     <!-- filter WEB-INF/tags/layouts/main.tag so we can refer dependency version properties from POM -->
                     <webResources>
+                        <resource>
+                            <targetPath>${project.build.outputDirectory}/web/WEB-INF/classes/resources</targetPath>
+                            <filtering>false</filtering>
+                            <directory>src/main/resources</directory>
+                        </resource>
                         <resource>
                             <directory>src/main/webapp</directory>
                             <filtering>true</filtering>
