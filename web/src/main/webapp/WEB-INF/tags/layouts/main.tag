@@ -7,6 +7,7 @@
 <html>
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>${title} | Polly</title>
     <link rel="stylesheet" href="${pageContext.servletContext.contextPath}/css/dist.css" />
     <link rel="icon" href="${pageContext.servletContext.contextPath}/img/poll-favicon.png" />
@@ -24,6 +25,14 @@
                     </div>
                 </c:forEach>
             </div>
+
+            Tailwind sizes:
+            <div class="inline pr-2">all</div>
+            <div class="hidden sm:inline pr-2">sm and up</div>
+            <div class="hidden md:inline pr-2">md and up</div>
+            <div class="hidden lg:inline pr-2">lg and up</div>
+            <div class="hidden xl:inline pr-2">xl and up</div>
+            <div class="hidden 2xl:inline pr-2">2xl and up</div>
 
             <jsp:doBody />
         </article>

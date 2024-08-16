@@ -3,17 +3,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <layout:main title="Now voting #${poll.slug}">
-  <div class="flex flex-row">
-    <div class="basis-1/4">
+  <div class="flex flex-row flex-wrap">
+    <div class="basis-full sm:basis-1/2">
       <h2>${poll.question}</h2>
-      <h3>Vote? 👉🏻</h3>
-    </div>
-    <div class="basis-1/4">
+      <h3>Vote? 👇🏻</h3>
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="${qrCodeViewBox}" stroke="none" class="qr-code">
           ${qrCodeBody}
       </svg>
     </div>
-    <div class="basis-1/2"
+    <div class="basis-full sm:basis-1/2"
          hx-get="${pageContext.servletContext.contextPath}/app/show/${poll.slug}/votes"
          hx-trigger="every 5s"
          hx-target="#poll-summary"
