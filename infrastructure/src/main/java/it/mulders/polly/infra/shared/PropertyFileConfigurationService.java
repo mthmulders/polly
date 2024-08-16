@@ -27,7 +27,6 @@ public class PropertyFileConfigurationService implements ConfigurationService {
     @PostConstruct
     public void loadConfigurationProperties() {
         loadConfigurationProperties(System.getenv(CONFIG_PATH_VARIABLE));
-        loadMetadataProperties("/git.properties");
         loadMetadataProperties("/application.properties");
     }
 
@@ -87,15 +86,5 @@ public class PropertyFileConfigurationService implements ConfigurationService {
             logger.log(Level.SEVERE, e, () -> msg);
             throw new IllegalArgumentException(msg);
         }
-    }
-
-    @Override
-    public String applicationVersion() {
-        return properties.getProperty("polly.version");
-    }
-
-    @Override
-    public String gitVersion() {
-        return properties.getProperty("git.commit.id.abbrev");
     }
 }

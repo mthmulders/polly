@@ -29,12 +29,4 @@ public class SystemInfo {
     public String getJavaRuntime() {
         return "%s %s".formatted(systemProperties.get("java.vm.vendor"), systemProperties.get("java.runtime.version"));
     }
-
-    public String getApplicationVersion() {
-        return configurationService.applicationVersion();
-    }
-
-    public String getGitVersion() {
-        return configurationService.gitVersion();
-    }
 }

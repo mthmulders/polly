@@ -15,16 +15,6 @@ class SystemInfoTest implements WithAssertions {
     private final SystemInfo systemInfo = new SystemInfo(configurationService, systemProperties);
 
     @Test
-    void getApplicationVersion_should_return_application_version() {
-        assertThat(systemInfo.getApplicationVersion()).isEqualTo(configurationService.applicationVersion());
-    }
-
-    @Test
-    void getGitVersion_should_return_abbreviated_Git_commit_id() {
-        assertThat(systemInfo.getGitVersion()).isEqualTo(configurationService.gitVersion());
-    }
-
-    @Test
     void getJavaVersion_should_return_value_of_corresponding_system_property() {
         systemProperties.put("java.specification.version", "17");
         assertThat(systemInfo.getJavaVersion()).isEqualTo("17");
@@ -42,16 +32,6 @@ class SystemInfoTest implements WithAssertions {
         @Override
         public URL applicationUrl() {
             return null;
-        }
-
-        @Override
-        public String applicationVersion() {
-            return "42";
-        }
-
-        @Override
-        public String gitVersion() {
-            return "0123456";
         }
     }
 }

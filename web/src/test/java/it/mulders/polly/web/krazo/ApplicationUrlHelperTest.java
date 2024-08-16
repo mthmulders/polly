@@ -145,15 +145,5 @@ class ApplicationUrlHelperTest implements WithAssertions {
                 return null;
             }
         }
-
-        @Override
-        public String applicationVersion() {
-            return null;
-        }
-
-        @Override
-        public String gitVersion() {
-            return null;
-        }
     }
 }

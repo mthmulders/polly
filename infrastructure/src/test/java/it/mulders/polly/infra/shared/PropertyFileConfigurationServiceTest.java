@@ -22,8 +22,6 @@ class PropertyFileConfigurationServiceTest implements WithAssertions {
         service.loadConfigurationProperties();
 
         assertThat(service.applicationUrl()).isNotNull();
-        assertThat(service.applicationVersion()).isNotNull();
-        assertThat(service.gitVersion()).isNotNull();
     }
 
     @DisplayName("Configuration properties")
@@ -58,32 +56,6 @@ class PropertyFileConfigurationServiceTest implements WithAssertions {
             assertThatThrownBy(() -> service.applicationUrl())
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessageContaining("foo");
-        }
-    }
-
-    @DisplayName("Metadata properties")
-    @Nested
-    class MetadataProperties {
-        @Test
-        void when_metadata_path_not_existing_should_fail() {
-            assertThatThrownBy(() -> service.loadMetadataProperties("/non-existing.properties"))
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining("non-existing.properties does not exist");
-        }
-
-        @Test
-        void when_metadata_path_not_specified_should_fail() {
-            assertThatThrownBy(() -> service.loadMetadataProperties(null))
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining("No metadata resource supplied");
-        }
-
-        @Test
-        void should_read_application_version_from_valid_metadata() throws MalformedURLException {
-            service.loadMetadataProperties("/valid_metadata.properties");
-
-            assertThat(service.applicationVersion()).isEqualTo("42");
-            assertThat(service.gitVersion()).isEqualTo("0123456");
         }
     }
 }
