@@ -75,7 +75,6 @@
                     <driver>org.postgresql.Driver</driver>
                     <locations>
                         <location>filesystem:../infrastructure/src/main/resources/db/migration</location>
-                        <location>filesystem:../infrastructure/src/main/resources/db/migration-postgresql</location>
                         <location>classpath:migration</location>
                     </locations>
                     <url>jdbc:postgresql://localhost/postgres</url>
