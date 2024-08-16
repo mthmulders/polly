@@ -20,18 +20,15 @@ import java.util.logging.Logger;
 public class ShowPollVotesFragmentController {
     private static final Logger log = Logger.getLogger(ShowPollVotesFragmentController.class.getName());
 
-    @Inject
     private Models models;
-
-    @Inject
     private PollRepository pollRepository;
-
-    @Inject
     private VoteSummaryService voteSummaryService;
 
+    // Necessary for CDI beans to be proxyable.
     public ShowPollVotesFragmentController() {}
 
-    ShowPollVotesFragmentController(
+    @Inject
+    public ShowPollVotesFragmentController(
             Models models, PollRepository pollRepository, VoteSummaryService voteSummaryService) {
         this.models = models;
         this.pollRepository = pollRepository;

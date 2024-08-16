@@ -24,24 +24,17 @@ import java.util.logging.Logger;
 public class ShowPollController {
     private static final Logger log = Logger.getLogger(ShowPollController.class.getName());
 
-    @Inject
     private Models models;
-
-    @Inject
     private PollRepository pollRepository;
-
-    @Inject
     private QRCodeGenerator qrCodeGenerator;
-
-    @Inject
     private ApplicationUrlHelper urlHelper;
-
-    @Inject
     private VoteSummaryService voteSummaryService;
 
+    // Necessary for CDI beans to be proxyable.
     public ShowPollController() {}
 
-    ShowPollController(
+    @Inject
+    public ShowPollController(
             Models models,
             PollRepository pollRepository,
             QRCodeGenerator qrCodeGenerator,
