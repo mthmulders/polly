@@ -12,10 +12,11 @@
       </svg>
     </div>
     <div class="basis-full sm:basis-1/2 px-2"
+         id="poll-summary"
          hx-get="${pageContext.servletContext.contextPath}/app/show/${poll.slug}/votes"
          hx-trigger="every 5s"
          hx-target="#poll-summary"
-         hx-swap="outerHTML">
+         hx-swap="innerHTML">
         <%@ include file="../fragments/polls/_votes.jsp" %>
     </div>
   </div>
