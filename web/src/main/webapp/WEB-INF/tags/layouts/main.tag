@@ -26,14 +26,6 @@
                 </c:forEach>
             </div>
 
-            Tailwind sizes:
-            <div class="inline pr-2">all</div>
-            <div class="hidden sm:inline pr-2">sm and up</div>
-            <div class="hidden md:inline pr-2">md and up</div>
-            <div class="hidden lg:inline pr-2">lg and up</div>
-            <div class="hidden xl:inline pr-2">xl and up</div>
-            <div class="hidden 2xl:inline pr-2">2xl and up</div>
-
             <jsp:doBody />
         </article>
     </main>
