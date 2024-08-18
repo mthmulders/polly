@@ -5,8 +5,7 @@
              xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd">
     <persistence-unit name="polly-pu" transaction-type="JTA">
         <jta-data-source>jdbc/polly-ds</jta-data-source>
-        <!-- TODO Dynamically replace with project version -->
-        <jar-file>/WEB-INF/lib/infrastructure-0.1-SNAPSHOT.jar</jar-file>
+        <jar-file>/WEB-INF/lib/infrastructure-${project.version}.jar</jar-file>
 
         <properties>
             <property name="eclipselink.logging.level" value="FINER" />
