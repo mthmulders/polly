@@ -26,7 +26,7 @@
         <jakarta-ee.version>10.0.0</jakarta-ee.version>
         <junit.jupiter.version>5.11.0</junit.jupiter.version>
         <postgresql.jdbc.version>42.7.4</postgresql.jdbc.version>
-        <openliberty.runtime.version>24.0.0.8</openliberty.runtime.version>
+        <openliberty.runtime.version>24.0.0.9</openliberty.runtime.version>
 
         <!-- spotless:off -->
         <jacocoArgLine></jacocoArgLine>
