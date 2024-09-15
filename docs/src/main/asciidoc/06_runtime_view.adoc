@@ -1,2 +1,107 @@
 [[section-runtime-view]]
 == Runtime View
+Polly leverages the Jakarta MVC specification and its reference implementation Krazo.
+The typical implementation for a page that _displays_ information is depicted below.
+
+[plantuml]
+....
+@startuml
+
+hide footbox
+
+actor user as "User/Browser"
+control controller as "Controller"
+entity model as "Model"
+participant view as "View"
+
+user -> controller : Request page
+
+activate controller
+controller -> model : Retrieve
+
+activate model
+controller <- model
+deactivate model
+
+create view
+controller -> view : Select
+controller -> view : Render
+deactivate controller
+
+activate view
+view -> model : Read
+activate model
+view <- model
+deactivate model
+
+view -> user : Rendered page
+destroy view
+@enduml
+....
+
+
+The typical implementation for a page that _modifies_ information is slightly more complicated.
+
+[plantuml]
+....
+@startuml
+
+hide footbox
+
+actor user as "User/Browser"
+control controller as "Controller"
+entity model as "Model"
+participant view as "View"
+
+user -> controller : Request page
+
+activate controller
+controller -> controller : Validate input
+controller -> model : Retrieve
+
+activate model
+controller <- model
+deactivate model
+
+controller -> controller : Verify input
+
+opt Input validation/verification failed
+controller -> model : Add error messages
+activate model
+controller <- model
+deactivate model
+create view
+controller -> view : Select
+controller -> view : Render
+deactivate controller
+
+activate view
+view -> model : Read
+activate model
+view <- model
+deactivate model
+
+view -> user : Rendered page
+destroy view
+end
+
+controller -> model : Modify
+activate model
+controller <- model
+deactivate model
+
+create view
+controller -> view : Select
+controller -> view : Render
+deactivate controller
+
+activate view
+view -> model : Read
+activate model
+view <- model
+deactivate model
+
+view -> user : Rendered page
+destroy view
+@enduml
+....

@@ -1,2 +1,76 @@
 [[section-deployment-view]]
 == Deployment View
+
+=== Network infrastructure
+The solution is deployed on virtual machines in the Oracle Cloud.
+The deployment is spread across three virtual machines, each with their own role.
+
+* The machine labelled "proxy" is a virtual machine running nginx.
+  nginx is configured to act as a reverse proxy for an upstream HTTP server.
+* The machine labelled "apps" is a virtual machine running the https://openliberty.io/[OpenLiberty] application server.
+* The machine labelled "database" is a virtual machine running the https://www.postgresql.org/[PostgreSQL] database server.
+
+These machines are connected through a Virtual Cloud Network.
+Only the machine labelled "proxy" is exposed to the internet.
+
+NOTE: All machines can be deployed in the https://www.oracle.com/cloud/free/[_free tier_], which allows (among other things) for 2 AMD-based virtual machines up to 4 Arm-based virtual machines, and 2 Virtual Cloud Networks.
+
+The deployment design is depicted below.
+
+[plantuml]
+....
+@startuml
+'Define the main location to the OCI icons for PlantUML
+!define OCIPuml https://raw.githubusercontent.com/rUser75/OCI-icons-for-plantuml/v1.2/dist
+'Include main OCICommon and then resource files
+!include OCIPuml/OCICommon.puml
+!include OCIPuml/Groups/all.puml
+!include OCIPuml/Compute/all.puml
+
+oci_RegionGroup(eu-frankfurt-1, eu-frankfurt-1) {
+  oci_VCNGroup(apps) {
+    oci_VirtualMachine(proxy, Proxy, AMD-based VM) {
+    }
+    oci_VirtualMachine(apps, Applications, Arm-based VM) {
+    }
+    oci_VirtualMachine(database, Database, Arm-based VM) {
+    }
+  }
+}
+@enduml
+....
+
+The application components are distributed over the infrastructure according to the following diagram
+
+[plantuml]
+....
+@startuml
+actor User
+
+cloud "Oracle Cloud" {
+    node proxy {
+        stack nginx {
+            component "Proxy server"
+        }
+    }
+
+    node apps {
+        stack OpenLiberty {
+            component "Polly Application"
+        }
+    }
+
+    node database {
+
+        database PostgreSQL {
+            artifact "database\nschema"
+        }
+    }
+
+}
+
+User -> "Proxy server"
+"Proxy server" -> "Polly Application"
+"Polly Application" -> "database\nschema"
+@enduml
+....
