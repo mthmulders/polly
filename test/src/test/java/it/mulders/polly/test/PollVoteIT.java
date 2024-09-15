@@ -47,4 +47,18 @@ public class PollVoteIT extends AbstractPlaywrightTest {
 
         assertThat(text).contains("You have already voted, thanks for your participation!");
     }
+
+    @Test
+    void should_be_protected_against_crsf() {
+        page.navigate("http://localhost:9080/app/vote/jakarta-mvc");
+
+        page.click("//label[@for='option-1']");
+
+        page.evaluate("document.getElementsByName('_csrf')[0].value = 'whatever'");
+        page.onResponse(response -> {
+            assertThat(response.status()).isEqualTo(403);
+        });
+
+        page.click("//input[@type='submit']");
+    }
 }
