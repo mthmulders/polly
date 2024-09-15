@@ -9,6 +9,7 @@ import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.mvc.Controller;
 import jakarta.mvc.Models;
+import jakarta.mvc.security.CsrfProtected;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.FormParam;
@@ -58,6 +59,7 @@ public class VoteController {
                 .orElse(Response.status(Response.Status.NOT_FOUND).build());
     }
 
+    @CsrfProtected
     @POST
     @Path("/{slug}")
     @Produces("text/html; charset=UTF-8")
