@@ -52,7 +52,7 @@ public class PollVoteIT extends AbstractPlaywrightTest {
     void should_be_protected_against_crsf() {
         page.navigate("http://localhost:9080/app/vote/jakarta-mvc");
 
-        page.evaluate("document.getElementById('_csrf').value = 'whatever'");
+        page.evaluate("document.getElementsByName('_csrf')[0].value = 'whatever'");
 
         page.click("//label[@for='option-1']");
         page.click("//input[@type='submit']");
