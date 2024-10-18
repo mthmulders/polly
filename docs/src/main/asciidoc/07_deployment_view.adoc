@@ -69,8 +69,8 @@ cloud "Oracle Cloud" {
 
 }
 
-User -> "Proxy server"
-"Proxy server" -> "Polly Application"
-"Polly Application" -> "database\nschema"
+User -right-> "Proxy server"
+"Proxy server" -right-> "Polly Application"
+"Polly Application" -right-> "database\nschema"
 @enduml
 ....
