@@ -13,7 +13,7 @@
     <name>Polly :: Infrastructure</name>
 
     <properties>
-        <mapstruct.version>1.6.2</mapstruct.version>
+        <mapstruct.version>1.6.3</mapstruct.version>
         <testcontainers.version>1.20.3</testcontainers.version>
     </properties>
 
