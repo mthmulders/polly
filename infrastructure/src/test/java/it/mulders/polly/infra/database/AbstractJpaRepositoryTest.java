@@ -22,7 +22,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 public abstract class AbstractJpaRepositoryTest<Int, Impl extends Int> implements WithAssertions {
     @Container
     protected static final PostgreSQLContainer<?> POSTGRESQL_CONTAINER =
-            new PostgreSQLContainer<>("postgres:14.6-alpine");
+            new PostgreSQLContainer<>("postgres:16.6-alpine");
 
     protected EntityManager entityManager;
     protected Int repository;
