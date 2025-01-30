@@ -16,7 +16,6 @@ const config: Config = {
   },
   darkMode: 'class',
   plugins: [
-    require("daisyui"),
     require('@tailwindcss/typography'),
   ],
   daisyui: {
