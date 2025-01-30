@@ -2,16 +2,25 @@ package it.mulders.polly.infra.polls;
 
 import it.mulders.polly.domain.polls.Poll;
 import it.mulders.polly.domain.polls.PollRepository;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
+import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import java.util.Optional;
 
+@ApplicationScoped
 public class JpaPollRepository implements PollRepository {
-    private final EntityManager em;
-    private final PollMapper pollMapper;
+    @PersistenceContext
+    private EntityManager em;
 
-    public JpaPollRepository(EntityManager em, PollMapper pollMapper) {
+    @Inject
+    private PollMapper pollMapper;
+
+    public JpaPollRepository() {}
+
+    protected JpaPollRepository(EntityManager em, PollMapper pollMapper) {
         this.em = em;
         this.pollMapper = pollMapper;
     }
