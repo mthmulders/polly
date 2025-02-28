@@ -1,5 +1,6 @@
 package it.mulders.polly.infra.polls;
 
+import static org.mapstruct.InjectionStrategy.CONSTRUCTOR;
 import static org.mapstruct.NullValueMappingStrategy.RETURN_DEFAULT;
 
 import it.mulders.polly.domain.polls.Option;
@@ -14,7 +15,10 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.SubclassMapping;
 
-@Mapper(componentModel = MappingConstants.ComponentModel.JAKARTA_CDI, nullValueIterableMappingStrategy = RETURN_DEFAULT)
+@Mapper(
+        componentModel = MappingConstants.ComponentModel.JAKARTA_CDI,
+        nullValueIterableMappingStrategy = RETURN_DEFAULT,
+        injectionStrategy = CONSTRUCTOR)
 public interface PollMapper {
 
     @BeanMapping(resultType = JpaBackedPoll.class)

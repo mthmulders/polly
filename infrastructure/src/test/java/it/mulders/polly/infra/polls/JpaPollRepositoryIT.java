@@ -2,7 +2,6 @@ package it.mulders.polly.infra.polls;
 
 import it.mulders.polly.domain.polls.Option;
 import it.mulders.polly.domain.polls.PollRepository;
-import it.mulders.polly.infra.MapStructHelper;
 import it.mulders.polly.infra.database.AbstractJpaRepositoryTest;
 import java.util.Arrays;
 import java.util.UUID;
@@ -14,7 +13,7 @@ import org.junit.jupiter.api.Test;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class JpaPollRepositoryIT extends AbstractJpaRepositoryTest<PollRepository, JpaPollRepository> {
-    private final PollMapper pollMapper = MapStructHelper.getMapper(PollMapper.class);
+    private final PollMapper pollMapper = new PollMapperImpl();
 
     @BeforeEach
     void prepare() {

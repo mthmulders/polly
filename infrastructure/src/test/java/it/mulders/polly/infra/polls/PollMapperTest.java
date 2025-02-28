@@ -5,7 +5,6 @@ import static java.util.UUID.randomUUID;
 
 import it.mulders.polly.domain.polls.Option;
 import it.mulders.polly.domain.votes.Ballot;
-import it.mulders.polly.infra.MapStructHelper;
 import it.mulders.polly.infra.votes.BallotEntity;
 import it.mulders.polly.infra.votes.VoteEntity;
 import java.util.UUID;
@@ -17,7 +16,7 @@ import org.junit.jupiter.api.Test;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class PollMapperTest implements WithAssertions {
-    private final PollMapper mapper = MapStructHelper.getMapper(PollMapper.class);
+    private final PollMapper mapper = new PollMapperImpl();
 
     @Nested
     class PollMapping {
