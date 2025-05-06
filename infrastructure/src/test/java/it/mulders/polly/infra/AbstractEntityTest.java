@@ -4,9 +4,9 @@ import it.mulders.polly.infra.polls.PollEntity;
 import it.mulders.polly.infra.polls.PollOptionEntity;
 import java.util.Set;
 import java.util.UUID;
-import nl.jqno.equalsverifier.ConfiguredEqualsVerifier;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
+import nl.jqno.equalsverifier.api.ConfiguredEqualsVerifier;
 
 public abstract class AbstractEntityTest {
     private final PollEntity poll1 = preparePollEntity(1);
