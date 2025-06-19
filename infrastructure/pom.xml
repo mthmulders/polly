@@ -14,7 +14,7 @@
 
     <properties>
         <mapstruct.version>1.6.3</mapstruct.version>
-        <testcontainers.version>1.21.1</testcontainers.version>
+        <testcontainers.version>1.21.2</testcontainers.version>
     </properties>
 
     <dependencies>
