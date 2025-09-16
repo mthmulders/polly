@@ -123,13 +123,6 @@
                     <configuration>
                         <argLine>@{jacocoArgLine}</argLine>
                     </configuration>
-                    <dependencies>
-                        <dependency>
-                            <groupId>org.junit.jupiter</groupId>
-                            <artifactId>junit-jupiter-engine</artifactId>
-                            <version>${junit.jupiter.version}</version>
-                        </dependency>
-                    </dependencies>
                 </plugin>
 
                 <plugin>
@@ -238,7 +231,7 @@
                 <plugin>
                     <groupId>org.pitest</groupId>
                     <artifactId>pitest-maven</artifactId>
-                    <version>1.20.2</version>
+                    <version>1.20.3</version>
                     <configuration combine.children="append">
                         <excludedClasses>
                             <excludedClass>it.mulders.polly.**.*Entity</excludedClass>
