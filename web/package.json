@@ -10,6 +10,6 @@
     "@tailwindcss/typography": "0.5.19",
     "daisyui": "5.3.8",
     "tailwindcss": "4.1.16",
-    "@tailwindcss/cli": "4.1.15"
+    "@tailwindcss/cli": "4.1.16"
   }
 }
