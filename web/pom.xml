@@ -17,7 +17,7 @@
         <batik.version>1.19</batik.version>
         <htmx.version>2.0.8</htmx.version>
         <krazo.version>3.0.1</krazo.version>
-        <zxing.version>3.5.3</zxing.version>
+        <zxing.version>3.5.4</zxing.version>
     </properties>
 
     <dependencies>
