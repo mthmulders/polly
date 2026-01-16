@@ -22,7 +22,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.release>17</maven.compiler.release>
 
-        <flyway.version>11.20.1</flyway.version>
+        <flyway.version>11.20.2</flyway.version>
         <jakarta-ee.version>10.0.0</jakarta-ee.version>
         <junit.jupiter.version>6.0.2</junit.jupiter.version>
         <postgresql.jdbc.version>42.7.8</postgresql.jdbc.version>
