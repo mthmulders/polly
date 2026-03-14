@@ -20,13 +20,16 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.release>17</maven.compiler.release>
+        <maven.compiler.release>21</maven.compiler.release>
 
         <flyway.version>12.1.0</flyway.version>
         <jakarta-ee.version>10.0.0</jakarta-ee.version>
         <junit.jupiter.version>6.0.3</junit.jupiter.version>
         <postgresql.jdbc.version>42.7.10</postgresql.jdbc.version>
         <openliberty.runtime.version>26.0.0.2</openliberty.runtime.version>
+
+        <!-- plugin dependencies -->
+        <spotless.palantir.version>2.68.0</spotless.palantir.version>
 
         <!-- spotless:off -->
         <jacocoArgLine></jacocoArgLine>
@@ -90,6 +93,14 @@
                 <artifactId>equalsverifier</artifactId>
                 <version>4.4.1</version>
                 <scope>test</scope>
+            </dependency>
+
+            <!-- plugin dependencies -->
+            <!-- explicit mention palantir so dependabot, renovate etc. can find it. -->
+            <dependency>
+                <groupId>com.palantir.javaformat</groupId>
+                <artifactId>palantir-java-format</artifactId>
+                <version>${spotless.palantir.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -176,7 +187,7 @@
                     <configuration combine.children="append">
                         <java>
                             <palantirJavaFormat>
-                                <version>2.50.0</version>
+                                <version>${spotless.palantir.version}</version>
                             </palantirJavaFormat>
                             <toggleOffOn />
                         </java>
