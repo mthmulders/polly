@@ -23,10 +23,10 @@
                 <artifactId>maven-resources-plugin</artifactId>
                 <executions>
                     <execution>
-                        <phase>generate-resources</phase>
                         <goals>
                             <goal>copy-resources</goal>
                         </goals>
+                        <phase>generate-resources</phase>
                         <configuration>
                             <outputDirectory>${project.build.directory}/doc-src</outputDirectory>
                             <resources>
@@ -45,10 +45,10 @@
                 <executions>
                     <execution>
                         <id>render-diagrams</id>
-                        <phase>generate-resources</phase>
                         <goals>
                             <goal>exec</goal>
                         </goals>
+                        <phase>generate-resources</phase>
                         <configuration>
                             <executable>structurizr</executable>
                             <arguments>
