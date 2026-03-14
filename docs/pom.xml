@@ -19,6 +19,55 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>clean-images-in-srcdir</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                        <configuration>
+                            <filesets>
+                                <fileset>
+                                    <directory>${project.basedir}/src/main/asciidoc/img</directory>
+                                    <includes>
+                                        <include>structurizr-*</include>
+                                    </includes>
+                                </fileset>
+                            </filesets>
+                        </configuration>
+                    </execution>
+                </executions>
+
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>render-diagrams</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>structurizr</executable>
+                            <arguments>
+                                <argument>export</argument>
+                                <argument>-o</argument>
+                                <argument>${project.basedir}/src/main/asciidoc/img</argument>
+                                <argument>-w</argument>
+                                <argument>${project.basedir}/src/main/structurizr/workspace.dsl</argument>
+                                <argument>-f</argument>
+                                <argument>plantuml</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <groupId>org.asciidoctor</groupId>
                 <artifactId>asciidoctor-maven-plugin</artifactId>
                 <version>3.2.0</version>
