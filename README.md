@@ -20,7 +20,7 @@ In addition, I use this project to:
 ## Technologies
 
 The project uses the following technologies
-- Java 17
+- Java 21
 - [Jakarta EE](https://jakarta.ee/)
 - [Jakarta MVC](https://jakarta.ee/specifications/mvc/)
 - [Playwright](https://playwright.dev/java)
