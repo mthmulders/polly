@@ -3,7 +3,7 @@
 
 Polly is a single deployable application using a relational database.
 
-plantuml::img/structurizr-polly-container.puml[format=svg]
+plantuml::img/polly-container.puml[format=svg]
 
 The architecture of Polly follows the ideas of https://en.wikipedia.org/wiki/Hexagonal_architecture_(software)[hexagonal architecture].
 This means that its domain model is unaware of the technology that powers it.
