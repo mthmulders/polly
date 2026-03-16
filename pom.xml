@@ -28,6 +28,9 @@
         <postgresql.jdbc.version>42.7.10</postgresql.jdbc.version>
         <openliberty.runtime.version>26.0.0.2</openliberty.runtime.version>
 
+        <!-- plugin dependencies -->
+        <spotless.palantir.version>2.50.0</spotless.palantir.version>
+
         <!-- spotless:off -->
         <jacocoArgLine></jacocoArgLine>
         <!-- spotless:on -->
@@ -90,6 +93,13 @@
                 <artifactId>equalsverifier</artifactId>
                 <version>4.4.1</version>
                 <scope>test</scope>
+            </dependency>
+
+            <!-- Explicitly mention Palantir so Dependabot can find it. -->
+            <dependency>
+                <groupId>com.palantir.javaformat</groupId>
+                <artifactId>palantir-java-format</artifactId>
+                <version>${spotless.palantir.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -176,7 +186,7 @@
                     <configuration combine.children="append">
                         <java>
                             <palantirJavaFormat>
-                                <version>2.50.0</version>
+                                <version>${spotless.palantir.version}</version>
                             </palantirJavaFormat>
                             <toggleOffOn />
                         </java>
