@@ -10,6 +10,7 @@
     <name>Polly :: Parent</name>
 
     <modules>
+        <module>structurizr-maven-plugin</module>
         <module>docs</module>
         <module>domain</module>
         <module>infrastructure</module>
@@ -241,6 +242,12 @@
                             </goals>
                         </execution>
                     </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>exec-maven-plugin</artifactId>
+                    <version>3.6.3</version>
                 </plugin>
 
                 <plugin>

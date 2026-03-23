@@ -16,8 +16,56 @@
         <maven.build.timestamp.format>yyyy-MM-dd HH:mm:ss</maven.build.timestamp.format>
     </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>it.mulders.polly</groupId>
+            <artifactId>polly-structurizr-maven-plugin</artifactId>
+            <version>0.1.5-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
     <build>
         <plugins>
+            <plugin>
+                <groupId>it.mulders.polly</groupId>
+                <artifactId>polly-structurizr-maven-plugin</artifactId>
+                <version>0.1.5-SNAPSHOT</version>
+                <executions>
+                    <execution>
+                        <id>generate-plantuml</id>
+                        <goals>
+                            <goal>export</goal>
+                        </goals>
+                        <phase>generate-resources</phase>
+                        <configuration>
+                            <inputDsl>${project.basedir}/src/main/structurizr/workspace.dsl</inputDsl>
+                            <outputDir>${project.build.directory}/doc-src/img</outputDir>
+                            <format>plantuml</format>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <phase>generate-resources</phase>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/doc-src</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${project.basedir}/src/main/asciidoc</directory>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
             <plugin>
                 <groupId>org.asciidoctor</groupId>
                 <artifactId>asciidoctor-maven-plugin</artifactId>
@@ -52,7 +100,7 @@
                             <requires>
                                 <require>asciidoctor-diagram</require>
                             </requires>
-                            <sourceDirectory>${project.basedir}/src/main/asciidoc</sourceDirectory>
+                            <sourceDirectory>${project.build.directory}/doc-src</sourceDirectory>
                             <sourceDocumentName>index.adoc</sourceDocumentName>
                         </configuration>
                     </execution>
