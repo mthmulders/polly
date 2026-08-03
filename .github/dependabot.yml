@@ -6,6 +6,12 @@ updates:
       interval: daily
       time: "04:00"
     open-pull-requests-limit: 10
+    groups:
+      development-dependencies:
+        dependency-type: "development"
+      production-dependencies-patch-updates:
+        dependency-type: "production"
+        update-types: [ "patch" ]
   - package-ecosystem: docker
     directory: /runtime
     schedule:
@@ -17,10 +23,18 @@ updates:
     schedule:
       interval: daily
       time: "04:00"
+    groups:
+      development-dependencies:
+        dependency-type: "development"
+      production-dependencies-patch-updates:
+        dependency-type: "production"
+        update-types: [ "patch" ]
     open-pull-requests-limit: 10
   - package-ecosystem: github-actions
     directory: /
     schedule:
-      interval: daily
-      time: "04:00"
-    open-pull-requests-limit: 10
+      interval: weekly
+    groups:
+      github-actions:
+        patterns:
+          - "*"
