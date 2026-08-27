@@ -27,7 +27,7 @@ jobs:
         uses: actions/setup-java@v5.7.0
         with:
           java-version: 21
-          distribution: 'adopt'
+          distribution: 'temurin'
 
       - name: SonarCloud Scan
         run: |

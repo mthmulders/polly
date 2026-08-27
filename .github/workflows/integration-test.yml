@@ -37,7 +37,7 @@ jobs:
         uses: actions/setup-java@v5.7.0
         with:
           java-version: 21
-          distribution: 'adopt'
+          distribution: 'temurin'
 
       - name: Cache Maven packages
         uses: actions/cache@v6.1.0
