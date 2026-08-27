@@ -15,14 +15,12 @@ updates:
   - package-ecosystem: docker
     directory: /runtime
     schedule:
-      interval: daily
-      time: "04:00"
+      interval: weekly
     open-pull-requests-limit: 10
   - package-ecosystem: npm
     directory: /web
     schedule:
-      interval: daily
-      time: "04:00"
+      interval: weekly
     groups:
       development-dependencies:
         dependency-type: "development"
