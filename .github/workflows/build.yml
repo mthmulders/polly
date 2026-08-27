@@ -42,3 +42,4 @@ jobs:
           retention-days: 30
           path: |
             app/target/polly.war
+        if: success() && github.event_name != 'pull_request'
