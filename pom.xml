@@ -29,7 +29,7 @@
         <openliberty.runtime.version>26.0.0.9</openliberty.runtime.version>
 
         <!-- plugin dependencies -->
-        <spotless.palantir.version>2.97.0</spotless.palantir.version>
+        <spotless.palantir.version>2.98.0</spotless.palantir.version>
 
         <!-- spotless:off -->
         <jacocoArgLine></jacocoArgLine>
