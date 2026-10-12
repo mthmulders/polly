@@ -43,6 +43,6 @@ workspace polly {
             }
         }
         
-        theme default
+        theme https://raw.githubusercontent.com/structurizr/themes/refs/heads/master/default/theme.json
     }
 }
