@@ -14,7 +14,7 @@
     <name>Polly :: Web</name>
 
     <properties>
-        <batik.version>1.19</batik.version>
+        <batik.version>1.20</batik.version>
         <htmx.version>4.0.0</htmx.version>
         <krazo.version>3.0.1</krazo.version>
         <zxing.version>3.5.4</zxing.version>
